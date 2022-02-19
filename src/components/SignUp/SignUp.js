@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import * as Input from "./InputField.js";
 
 import "assets/css/login.css";
@@ -7,6 +9,7 @@ import "assets/css/login.css";
 function SignUp(props) {
   //akshdfjl@gmail.com
   let formRef = useRef(null);
+  let navigate = useNavigate();
 
   /*const [state, setState] = useState({
     email: null,
@@ -33,6 +36,7 @@ function SignUp(props) {
   let signInRedirection = (event) => {
     event.preventDefault();
     event.stopPropagation();
+    navigate("/signIn");
   };
 
   return (
