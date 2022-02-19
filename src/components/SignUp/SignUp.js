@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 
 import * as Input from "./InputField.js";
 
-import "assets/css/signup.css";
+import "assets/css/login.css";
 
 function SignUp(props) {
   //akshdfjl@gmail.com
@@ -36,7 +36,7 @@ function SignUp(props) {
   };
 
   return (
-    <form id="signUpForm" ref={formRef} onSubmit={onSubmit.bind(this)}>
+    <form id="loginForm" ref={formRef} onSubmit={onSubmit.bind(this)}>
       <h3 className="text-white">Register</h3>
       <div className="form-item">
         <div className="form-group">{<Input.Email />}</div>
@@ -50,14 +50,15 @@ function SignUp(props) {
             className="btn btn-primary"
             id="submitButton"
             value="Submit"
+            //onChange is added to suppress form uncontrollable due value provided in submit input
             onChange={() => {}}
           />
         </div>
-        <div className="text-center text-black" id="signinLink">
+        <div className="signinRedirection text-center text-black">
           Already a user?{" "}
-          <a href="login.html" onClick={signInRedirection.bind(this)}>
+          <span id="signinLink" onClick={signInRedirection.bind(this)}>
             Login
-          </a>
+          </span>
         </div>
       </div>
     </form>

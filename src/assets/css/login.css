@@ -1,4 +1,4 @@
-#signUpForm {
+#loginForm {
   width: 100%;
   height: 100%;
   padding: 40px 50px 0 50px;
@@ -10,25 +10,32 @@
     rgba(93, 93, 116, 1) 100%
   );
 }
-#signUpForm div {
+#loginForm div {
   padding: 10px;
 }
-#signUpForm form {
+#loginForm form {
   width: 100%;
   border: 1px solid #dfdfdf;
   padding: 20px;
   border-radius: 5px;
   background: #fff;
 }
-#signUpForm h3 {
+#loginForm h3 {
   padding: 10px;
   text-align: center;
   border: solid;
   color: #dfdfdf;
   background-color: #77773c;
 }
-#signUpForm .form-item {
+#loginForm .form-item {
   border: 1px solid brown;
   background-color: #80ffe5;
   padding: 10px;
+}
+
+.signupRedirection #signupLink,
+.signinRedirection #signinLink {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
 }
