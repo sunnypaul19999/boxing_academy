@@ -1,0 +1,79 @@
+.navbar-custom
+{
+	background-color: #33831a;
+}
+
+#useracademy,#userenrolledcourse
+{
+	padding: 0 100px;
+}
+.flex-fill
+{
+	padding: 50px;
+}
+#searchBox
+{
+	padding: 5px;
+	width: 70%;
+}
+#searchButton
+{
+	background: #33831a;
+	color: aliceblue;
+	padding: 5px;
+	width: 20%;
+	border: 1px;
+}
+table {
+    border-collapse: collapse;
+		margin-bottom: 2em;
+}
+td
+{
+	padding: .8em;
+	background-color: rgb(219, 219, 219);
+}
+
+.navbar-collapse {
+	justify-content: center;
+}
+
+.option {
+	display: flex;
+	justify-content: space-between;
+	padding: 0.1em;
+}
+
+.far {
+	cursor: pointer;
+}
+
+.container.add-academy-btn {
+	display: block;
+	text-align: right;
+	right: 0;
+	bottom: 0;
+}
+
+#add-academy-btn {
+	background-color: rgb(211, 211, 211);
+	width: fit-content;
+	padding: .6em 1em;
+	text-align: right;
+	margin-bottom: 2em;
+}
+
+li {
+	padding: 0 25px;
+}
+
+th {
+	padding: .8em;
+	font-weight: normal;
+  background-color: #33831a;
+	color: #fff;
+}
+i{
+	color: black;
+	padding: 0 2px;
+}

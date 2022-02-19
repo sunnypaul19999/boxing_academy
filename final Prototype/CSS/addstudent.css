@@ -1,0 +1,46 @@
+.navbar-custom
+{
+	background-color: #33831a;
+}
+.navbar-collapse{
+    justify-content: center;
+}
+li
+{
+	padding: 0 30px;
+}
+#addstudent,#updatestudent,#addcourse,#addacademy,#updatecourse,#updateacademy
+{
+    background-color: #80ffe5;
+}
+form
+{
+    padding: 50px 100px 10px 100px;
+}
+h2
+{
+    padding: 10px;
+    text-align: center;
+    color:#cf2121;
+}
+.form-group
+{
+    justify-content: center;
+    padding:10px;
+    width: 100%;
+
+}
+.form-item
+{
+    padding: 10px;
+}
+select
+{
+    padding: 5px 2px; 
+    width: 100%;  
+    border: none;   
+}
+#addstudentButton,#updatestudentButton
+{
+    width: 150px;
+}
