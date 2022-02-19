@@ -28,11 +28,15 @@ function SignUp(props) {
       confirmPassword: formData.get("confirmPassword"),
     };
     console.log(Object.values(credentials));
+  };
 
+  let signInRedirection = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
   };
 
   return (
-    <form id="signUpForm" ref={formRef} onSubmit={onSubmit}>
+    <form id="signUpForm" ref={formRef} onSubmit={onSubmit.bind(this)}>
       <h3 className="text-white">Register</h3>
       <div className="form-item">
         <div className="form-group">{<Input.Email />}</div>
@@ -50,7 +54,10 @@ function SignUp(props) {
           />
         </div>
         <div className="text-center text-black" id="signinLink">
-          Already a user? <a href="login.html">Login</a>
+          Already a user?{" "}
+          <a href="login.html" onClick={signInRedirection.bind(this)}>
+            Login
+          </a>
         </div>
       </div>
     </form>
