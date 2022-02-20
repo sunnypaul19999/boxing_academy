@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import * as Input from "components/SignUp/InputField.js";
+import * as Input from "components/LoginInputField/InputField.js";
 
 import "assets/css/login.css";
 
@@ -35,21 +35,21 @@ function SignIn(props) {
 
   return (
     <form id="loginForm" ref={formRef} onSubmit={onSubmit.bind(this)}>
-      <h3 class="text-white">Login</h3>
-      <div class="form-item">
-        <div class="form-group">
-          <div class="form-group">{<Input.Email />}</div>
-          <div class="form-group">{<Input.Password />}</div>
-          <div class="text-center">
+      <h3 className="text-white">Login</h3>
+      <div className="form-item">
+        <div className="form-group">
+          <div className="form-group">{<Input.Email />}</div>
+          <div className="form-group">{<Input.Password />}</div>
+          <div className="text-center">
             <input
               type="submit"
               id="loginButton"
-              class="btn btn-primary"
+              className="btn btn-primary"
               value="Login"
-              onChange={() => {}}
+              onChange={() => { }}
             />
           </div>
-          <div class="signupRedirection text-center text-black">
+          <div className="signupRedirection text-center text-black">
             New user?{" "}
             <span id="signupLink" onClick={signUpRedirection.bind(this)}>
               Register

@@ -40,7 +40,7 @@ export function MobileNumber() {
       maxLength="10"
       pattern="[6-9]{1}[0-9]{9}"
       placeholder="Enter Mobilenumber"
-      required
+      
     />
   );
 
@@ -70,7 +70,7 @@ export function ConfirmPassword() {
       name="confirmPassword"
       className="form-control"
       placeholder="Confirm Password"
-      required
+      
     />
   );
 
