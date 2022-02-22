@@ -35,12 +35,8 @@ function SignUp(props) {
       confirmPassword: formData.get("confirmPassword"),
     };
     console.log(Object.values(credentials));
-    let loginToken = await SignUpAPI.createUser(credentials);
-    if (loginToken) {
-      toast('SignUp Successfull');
-    } else {
-      toast('User already exits');
-    }
+    let res = await SignUpAPI.createUser(credentials);
+    toast(res.msg);
   };
 
   let signInRedirection = (event) => {
