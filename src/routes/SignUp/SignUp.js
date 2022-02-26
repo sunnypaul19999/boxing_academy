@@ -1,6 +1,8 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
+
+import { useDispatch, useSelector } from 'react-redux';
 
 import SignUpAPI from "server/SignUpAPI/SignUpAPI.js";
 
@@ -15,17 +17,23 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 function SignUp(props) {
-  //akshdfjl@gmail.com
   let formRef = useRef(null);
   let navigate = useNavigate();
 
-  /*const [state, setState] = useState({
-    email: null,
-    username: null,
-    mobileNumber: null,
-    password: null,
-    confirmPassword: null,
-  });*/
+  let tokenStoreDispatch = useDispatch();
+
+  let jwtToken = useSelector((state) => {
+    if (state) {
+      return state.token;
+    } else {
+      return 'SignUp component: TokenStore is accessed using useSelector, state is null';
+    }
+  });
+
+  useEffect(() => {
+    console.log('SignUp component: updated');
+    console.log(`SignUp component: jwtToken in TokenStore ---> ${jwtToken}`);
+  });
 
   let onSubmit = async (event) => {
     event.preventDefault();
@@ -46,7 +54,8 @@ function SignUp(props) {
         //toast(signInMsgPacket.msg);
         if (signInMsgPacket.token) {
           //navigate to proper dashboard
-          console.log(`SignIn token generated in SignUp \n${signInMsgPacket.token}`);
+          //console.log(`SignIn token generated in SignUp \n${signInMsgPacket.token}`);
+          tokenStoreDispatch({ type: 'saveAuthToken', payload: { token: signInMsgPacket.token } });
         }
       }
     } else {

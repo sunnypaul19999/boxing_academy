@@ -1,8 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import { useDispatch, useSelector } from 'react-redux';
+
 import { signInHandler } from './SignInHandler.js';
+
+//import TokenStore from 'store/Token/TokenStore.js';
 
 import * as Input from "components/LoginInputField/InputField.js";
 import "assets/css/login.css";
@@ -10,14 +14,26 @@ import "assets/css/login.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 function SignIn(props) {
   let formRef = useRef(null);
+
   let navigate = useNavigate();
 
-  /*const [state, setState] = useState({
-    email: null,
-    password: null,
-  });*/
+  let tokenStoreDispatch = useDispatch();
+
+  let jwtToken = useSelector((state) => {
+    if (state) {
+      return state.token;
+    } else {
+      return 'SignIn component: TokenStore is accessed using useSelector, state is null';
+    }
+  });
+
+  useEffect(() => {
+    console.log('SignIn component: updated');
+    console.log(`SignIn component: jwtToken in TokenStore ---> ${jwtToken}`);
+  });
 
 
   let onSubmit = async (event) => {
@@ -31,8 +47,9 @@ function SignIn(props) {
     let signInMsgPacket = await signInHandler(credentials);
     toast(signInMsgPacket.msg);
     if (signInMsgPacket.token) {
-      //navigate to proper dashboard here
-      console.log(signInMsgPacket.token);
+      //TODO: navigate to proper dashboard here
+      //console.log(signInMsgPacket.token);
+      tokenStoreDispatch({ type: 'saveAuthToken', payload: { token: signInMsgPacket.token } });
     }
   };
 

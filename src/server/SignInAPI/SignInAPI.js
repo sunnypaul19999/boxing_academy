@@ -15,10 +15,12 @@ export default class SignInAPI {
             Authorization: `Bearer`
           }
         }).then((req) => {
-          console.log(req);
+          //console.log(req);
           let token = req.data.token;
-          let tokenPayload = atob(`${token}`.split('.')[1]);
-          console.log(`SignIn successfull payload:  ${tokenPayload}`);
+          //-----------
+          //let tokenPayload = atob(`${token}`.split('.')[1]);
+          //console.log(`SignIn successfull payload:  ${tokenPayload}`);
+          //-----------
           return {
             token: token,
             msg: 'Welcome to boxing academy',
@@ -40,7 +42,10 @@ export default class SignInAPI {
       return token;
     } catch (err) {
       console.log(`Error occurred at 42 SignInAPI\n${err}`);
-      return null;
+      return {
+        token: null,
+        msg: 'Internal Error occurred!',
+      };
     }
   }
 }
