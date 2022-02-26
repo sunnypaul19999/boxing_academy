@@ -4,25 +4,42 @@ import { serverURL } from "server/config";
 
 export default class SignInAPI {
 
-  static async signIn(username, password, email) {
+  static async signIn({ email, password }) {
     try {
       let token = await axios
-        .post(`${serverURL}/user/signin`, {
-          username: username,
-          password: password,
+        .post(`${serverURL}/generate-token`, {
           email: email,
-        }).then((res) => {
-          let token = `${res.data.token}`.split('.');
-          let tokenPayload = atob(token[1]);
-          console.log(`signin successfull payload:  ${tokenPayload}`);
-          return res.data.token;
+          password: password,
+        }, {
+          headers: {
+            Authorization: `Bearer`
+          }
+        }).then((req) => {
+          console.log(req);
+          let token = req.data.token;
+          let tokenPayload = atob(`${token}`.split('.')[1]);
+          console.log(`SignIn successfull payload:  ${tokenPayload}`);
+          return {
+            token: token,
+            msg: 'Welcome to boxing academy',
+          };
         }).catch((err) => {
-          //console.log(`login failed ${err['response'].status}`);
-          return null;
+          console.log(`SignIn failed ${err['response'].status}`);
+          if (err['response'].status === 401) {
+            return {
+              token: null,
+              msg: 'Invalid Credentials',
+            };
+          } else {
+            return {
+              token: null,
+              msg: 'OPPS! Network error',
+            };
+          }
         });
       return token;
     } catch (err) {
-      console.log(Object.define(err));
+      console.log(`Error occurred at 42 SignInAPI\n${err}`);
       return null;
     }
   }

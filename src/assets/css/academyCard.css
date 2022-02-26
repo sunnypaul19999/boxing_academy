@@ -1,0 +1,99 @@
+.academy-card .navbar-custom {
+  background-color: #33831a;
+}
+
+.academy-card li {
+  padding: 0 25px;
+}
+.academy-card .checked {
+  color: orange;
+}
+.academy-card .navbar-collapse {
+  justify-content: center;
+}
+
+.academy-card .view-group {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+.academy-card .thumbnail {
+  margin-bottom: 30px;
+  padding: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+
+.academy-card .item.list-group-item {
+  float: none;
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 30px;
+  -ms-flex: 0 0 100%;
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding: 0 1rem;
+  border: 0;
+}
+.academy-card .item.list-group-item .img-event {
+  float: left;
+  width: 30%;
+}
+
+.academy-card .item.list-group-item .list-group-image {
+  margin-right: 10px;
+}
+.academy-card .item.list-group-item .thumbnail {
+  margin-bottom: 0px;
+  display: inline-block;
+}
+.academy-card .item.list-group-item .caption {
+  float: left;
+  width: 70%;
+  margin: 0;
+}
+
+.academy-card .item.list-group-item:before,
+.academy-card .item.list-group-item:after {
+  display: table;
+  content: " ";
+}
+
+.academy-card .item.list-group-item:after {
+  clear: both;
+}
+.academy-card .flex-fill {
+  padding: 50px;
+}
+
+.academy-card #searchBox {
+  padding: 5px;
+  width: 70%;
+}
+.academy-card #searchButton {
+  background: #33831a;
+  color: aliceblue;
+  padding: 5px;
+  width: 20%;
+  border: 1px;
+}
+.academy-card .container.add-academy-btn {
+  width: 100vw;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.academy-card #add-academy-btn {
+  background-color: rgb(211, 211, 211);
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.6em 1em;
+  text-align: right;
+  margin-bottom: 2em;
+}

@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import SignInAPI from "server/SignInAPI/SignInAPI";
+import { signInHandler } from './SignInHandler.js';
 
 import * as Input from "components/LoginInputField/InputField.js";
 import "assets/css/login.css";
@@ -11,7 +11,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function SignIn(props) {
-  //akshdfjl@gmail.com
   let formRef = useRef(null);
   let navigate = useNavigate();
 
@@ -19,6 +18,7 @@ function SignIn(props) {
     email: null,
     password: null,
   });*/
+
 
   let onSubmit = async (event) => {
     event.preventDefault();
@@ -28,12 +28,11 @@ function SignIn(props) {
       email: formData.get("email"),
       password: formData.get("password"),
     };
-    console.log(Object.values(credentials));
-    let loginToken = await SignInAPI.createUser(credentials);
-    if (loginToken) {
-      toast('Welcome to Boxing Academy');
-    } else {
-      toast('Invalid login credentials');
+    let signInMsgPacket = await signInHandler(credentials);
+    toast(signInMsgPacket.msg);
+    if (signInMsgPacket.token) {
+      //navigate to proper dashboard here
+      console.log(signInMsgPacket.token);
     }
   };
 
