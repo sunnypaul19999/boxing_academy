@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -7,12 +7,12 @@ import { Provider } from 'react-redux';
 import SignUp from "routes/SignUp/SignUp.js";
 import SignIn from "routes/SignIn/SignIn.js";
 
-import TokenStore from "store/Token/TokenStore";
+import MainStore from "store/Main/MainStore";
 
 function MainUI(props) {
 
   return (
-    <Provider store={TokenStore.store}>
+    <Provider store={MainStore.store}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignUp />}></Route>

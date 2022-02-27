@@ -35,21 +35,34 @@ function SignIn(props) {
     console.log(`SignIn component: jwtToken in TokenStore ---> ${jwtToken}`);
   });
 
-
-  let onSubmit = async (event) => {
-    event.preventDefault();
-    event.stopPropagation();
+  let formData = (formRef) => {
     let formData = new FormData(formRef.current);
     let credentials = {
       email: formData.get("email"),
       password: formData.get("password"),
     };
+    return credentials;
+  }
+
+
+  let onSubmit = async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    let credentials = formData(formRef);
+
     let signInMsgPacket = await signInHandler(credentials);
     toast(signInMsgPacket.msg);
     if (signInMsgPacket.token) {
       //TODO: navigate to proper dashboard here
       //console.log(signInMsgPacket.token);
-      tokenStoreDispatch({ type: 'saveAuthToken', payload: { token: signInMsgPacket.token } });
+      tokenStoreDispatch({
+        type: 'userDetails',
+        payload: {
+          token: signInMsgPacket.token,
+          email: credentials.email,
+          authority: signInMsgPacket.authority,
+        },
+      });
     }
   };
 

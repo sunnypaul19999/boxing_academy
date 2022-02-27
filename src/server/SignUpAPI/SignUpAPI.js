@@ -18,8 +18,8 @@ export default class SignUpAPI {
               //console.log(res.data);
               let authority = res.data.authorities[0].authority;
               return {
-                authority: authority,
                 isCreated: true,
+                authority: authority,
                 msg: 'Welcome to Boxing Academy',
               };
             }

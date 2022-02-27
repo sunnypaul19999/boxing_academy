@@ -30,14 +30,21 @@ function SignUp(props) {
     }
   });
 
+  let email = useSelector((state) => {
+    if (state) {
+      return state.email;
+    } else {
+      return 'SignUp component: TokenStore is accessed using useSelector, state is null';
+    }
+  });
+
   useEffect(() => {
     console.log('SignUp component: updated');
+    console.log(`SignUp component: email in TokenStore ---> ${email}`);
     console.log(`SignUp component: jwtToken in TokenStore ---> ${jwtToken}`);
   });
 
-  let onSubmit = async (event) => {
-    event.preventDefault();
-    event.stopPropagation();
+  let formDetails = (formRef) => {
     let formData = new FormData(formRef.current);
     let credentials = {
       email: formData.get("email"),
@@ -46,20 +53,35 @@ function SignUp(props) {
       password: formData.get("password"),
       confirmPassword: formData.get("confirmPassword"),
     };
-    if (credentials.password === credentials.confirmPassword) {
+    return credentials;
+  }
+
+  let onSubmit = async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    let credentials = formDetails(formRef);
+
+    if (credentials.password === credentials.confirmPassword || true) {
       let signUpMsgPacket = await SignUpAPI.createUser(credentials);
       toast(signUpMsgPacket.msg);
       if (signUpMsgPacket.isCreated) {
         let signInMsgPacket = await signInHandler(credentials);
         //toast(signInMsgPacket.msg);
         if (signInMsgPacket.token) {
-          //navigate to proper dashboard
+          //TODO: navigate to proper dashboard
           //console.log(`SignIn token generated in SignUp \n${signInMsgPacket.token}`);
-          tokenStoreDispatch({ type: 'saveAuthToken', payload: { token: signInMsgPacket.token } });
+          tokenStoreDispatch({
+            type: 'userDetails',
+            payload: {
+              token: signInMsgPacket.token,
+              email: credentials.email,
+              authority: signInMsgPacket.authority,
+            },
+          });
         }
       }
     } else {
-      toast('password and confirm password does not match');
+      toast('Mismatch: Password and Confirm Passoword');
     }
   };
 

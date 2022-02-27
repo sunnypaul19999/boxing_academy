@@ -15,7 +15,7 @@ export default class SignInAPI {
             Authorization: `Bearer`
           }
         }).then((req) => {
-          //console.log(req);
+          console.log(req);
           let token = req.data.token;
           //-----------
           //let tokenPayload = atob(`${token}`.split('.')[1]);
@@ -23,6 +23,7 @@ export default class SignInAPI {
           //-----------
           return {
             token: token,
+            authority: null,
             msg: 'Welcome to boxing academy',
           };
         }).catch((err) => {
