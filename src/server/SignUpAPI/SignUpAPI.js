@@ -13,6 +13,7 @@ export default class SignUpAPI {
             username: username,
             password: password,
             email: email,
+            mobileNumber: mobileNumber,
           }).then(
             (res) => {
               //console.log(res.data);
