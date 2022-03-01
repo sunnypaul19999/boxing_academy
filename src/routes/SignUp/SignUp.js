@@ -61,7 +61,7 @@ function SignUp(props) {
     event.stopPropagation();
     let credentials = formDetails(formRef);
 
-    if (credentials.password === credentials.confirmPassword || true) {
+    if (credentials.password === credentials.confirmPassword) {
       let signUpMsgPacket = await SignUpAPI.createUser(credentials);
       toast(signUpMsgPacket.msg);
       if (signUpMsgPacket.isCreated) {
