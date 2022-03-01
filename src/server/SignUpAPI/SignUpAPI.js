@@ -5,6 +5,12 @@ import { serverURL } from "server/config";
 export default class SignUpAPI {
 
   static async createUser(credentials) {
+
+    let response = {
+      isCreated: false,
+      msg: null,
+    };
+
     try {
       let { username, password, email, mobileNumber } = credentials;
       let msgPacket =
@@ -17,35 +23,32 @@ export default class SignUpAPI {
           }).then(
             (res) => {
               //console.log(res.data);
-              let authority = res.data.authorities[0].authority;
-              return {
-                isCreated: true,
-                authority: authority,
-                msg: 'Welcome to Boxing Academy',
-              };
+              //let authority = res.data.authorities[0].authority;
+              response.isCreated = true;
+              response.msg = 'Welcome to Boxing Academy';
+
+              return response;
             }
           ).catch((err) => {
-            console.log(`signup failed ${err['response'].status}`);
             let status = err['response'].status;
+            let msg = 'Unhandled Status Code in SignUpAPI';
+
             if (status === 500) {
-              return {
-                isCreated: false,
-                msg: 'OOPS! Network Error',
-              };
+              msg = 'OOPS! Network Error';
             }
-            return {
-              isCreated: false,
-              msg: 'Unhandled status'
-            }
+
+            response.msg = msg;
+
+            console.log(`SignInAPI: Failed ${status}`);
+            return response;
           });
-      //console.log(msgPacket);
+
       return msgPacket;
     } catch (err) {
+      response.msg = 'Please try again';
+      
       console.log(err);
-      return {
-        isCreated: false,
-        msg: 'Please try again'
-      }
+      return response;
     }
   }
 }

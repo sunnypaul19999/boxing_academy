@@ -5,48 +5,52 @@ import { serverURL } from "server/config";
 export default class SignInAPI {
 
   static async signIn({ email, password }) {
+    let response = {
+      payload: null,
+      msg: null,
+    };
+
     try {
       let token = await axios
         .post(`${serverURL}/generate-token`, {
           email: email,
           password: password,
-        }, {
-          headers: {
-            Authorization: `Bearer`
-          }
         }).then((req) => {
-          console.log(req);
           let token = req.data.token;
-          //-----------
-          //let tokenPayload = atob(`${token}`.split('.')[1]);
-          //console.log(`SignIn successfull payload:  ${tokenPayload}`);
-          //-----------
-          return {
+
+          response.payload = {
             token: token,
-            authority: null,
-            msg: 'Welcome to boxing academy',
+            email: email,
           };
+
+          response.msg = 'Welcome to boxing academy';
+
+          return response;
         }).catch((err) => {
-          console.log(`SignIn failed ${err['response'].status}`);
+          let status = err['response'].status;
+          let msg = 'Unhandled Status Code in SignInAPI';
+
           if (err['response'].status === 401) {
-            return {
-              token: null,
-              msg: 'Invalid Credentials',
-            };
+            msg = 'Invalid Credentials'
           } else {
-            return {
-              token: null,
-              msg: 'OPPS! Network error',
-            };
+            msg = 'OPPS! Network error';
           }
+
+          //payload is kept null
+          response.msg = msg;
+
+          console.log(`SignInAPI: Failed ${status}`);
+          return response;
         });
+
       return token;
     } catch (err) {
       console.log(`Error occurred at 42 SignInAPI\n${err}`);
-      return {
-        token: null,
-        msg: 'Internal Error occurred!',
-      };
+
+      //payload is kept null
+      response.msg = 'Internal Error occurred!';
+
+      return response;
     }
   }
 }

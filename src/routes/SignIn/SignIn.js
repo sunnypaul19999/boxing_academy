@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { signInHandler } from './SignInHandler.js';
+import signInHandler from '../../Handler/SignInHandler/SignInHandler.js';
 
 //import TokenStore from 'store/Token/TokenStore.js';
 
@@ -13,6 +13,7 @@ import "assets/css/login.css";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SignInError from "Handler/SignInHandler/SignInError.js";
 
 
 function SignIn(props) {
@@ -20,11 +21,11 @@ function SignIn(props) {
 
   let navigate = useNavigate();
 
-  let tokenStoreDispatch = useDispatch();
+  let mainStoreDispatch = useDispatch();
 
-  let jwtToken = useSelector((state) => {
+  let state = useSelector((state) => {
     if (state) {
-      return state.token;
+      return state;
     } else {
       return 'SignIn component: TokenStore is accessed using useSelector, state is null';
     }
@@ -32,7 +33,8 @@ function SignIn(props) {
 
   useEffect(() => {
     console.log('SignIn component: updated');
-    console.log(`SignIn component: jwtToken in TokenStore ---> ${jwtToken}`);
+    console.log(`SignIn component: Email in MainStore ---> ${state.email}`);
+    console.log(`SignIn component: JwtToken in MainStore ---> ${state.token}`);
   });
 
   let formData = (formRef) => {
@@ -44,25 +46,27 @@ function SignIn(props) {
     return credentials;
   }
 
+  let onSignInSuccess = (signInMsgPacket) => {
+    mainStoreDispatch({
+      type: 'userDetails',
+      payload: signInMsgPacket.payload
+    });
+    toast(signInMsgPacket.msg);
+  }
+
 
   let onSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
+
     let credentials = formData(formRef);
 
-    let signInMsgPacket = await signInHandler(credentials);
-    toast(signInMsgPacket.msg);
-    if (signInMsgPacket.token) {
-      //TODO: navigate to proper dashboard here
-      //console.log(signInMsgPacket.token);
-      tokenStoreDispatch({
-        type: 'userDetails',
-        payload: {
-          token: signInMsgPacket.token,
-          email: credentials.email,
-          authority: signInMsgPacket.authority,
-        },
-      });
+    try {
+      await signInHandler(credentials, onSignInSuccess);
+    } catch (err) {
+      if (err instanceof SignInError) {
+        toast(err.message);
+      }
     }
   };
 

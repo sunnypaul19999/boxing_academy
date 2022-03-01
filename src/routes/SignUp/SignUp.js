@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import SignUpAPI from "server/SignUpAPI/SignUpAPI.js";
-
-import { signInHandler } from 'routes/SignIn/SignInHandler.js';
+import signUpHandler from "Handler/SignUpHandler/SignUpHanlder.js";
+import SignUpError from "Handler/SignUpHandler/SignUpError.js";
 
 import * as Input from "../../components/LoginInputField/InputField.js";
 import "assets/css/login.css";
@@ -16,23 +15,16 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 
+
 function SignUp(props) {
   let formRef = useRef(null);
   let navigate = useNavigate();
 
-  let tokenStoreDispatch = useDispatch();
+  let mainStoreDispatch = useDispatch();
 
-  let jwtToken = useSelector((state) => {
+  let state = useSelector((state) => {
     if (state) {
-      return state.token;
-    } else {
-      return 'SignUp component: TokenStore is accessed using useSelector, state is null';
-    }
-  });
-
-  let email = useSelector((state) => {
-    if (state) {
-      return state.email;
+      return state;
     } else {
       return 'SignUp component: TokenStore is accessed using useSelector, state is null';
     }
@@ -40,8 +32,8 @@ function SignUp(props) {
 
   useEffect(() => {
     console.log('SignUp component: updated');
-    console.log(`SignUp component: email in TokenStore ---> ${email}`);
-    console.log(`SignUp component: jwtToken in TokenStore ---> ${jwtToken}`);
+    console.log(`SignUp component: Email in MainStore ---> ${state.email}`);
+    console.log(`SignUp component: JwtToken in MainStore ---> ${state.token}`);
   });
 
   let formDetails = (formRef) => {
@@ -56,28 +48,25 @@ function SignUp(props) {
     return credentials;
   }
 
+  let onSignUpSuccess = (signInMsgPacket) => {
+    mainStoreDispatch({
+      type: 'userDetails',
+      payload: signInMsgPacket.payload
+    });
+    toast(signInMsgPacket.msg);
+  }
+
   let onSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
     let credentials = formDetails(formRef);
 
     if (credentials.password === credentials.confirmPassword) {
-      let signUpMsgPacket = await SignUpAPI.createUser(credentials);
-      toast(signUpMsgPacket.msg);
-      if (signUpMsgPacket.isCreated) {
-        let signInMsgPacket = await signInHandler(credentials);
-        //toast(signInMsgPacket.msg);
-        if (signInMsgPacket.token) {
-          //TODO: navigate to proper dashboard
-          //console.log(`SignIn token generated in SignUp \n${signInMsgPacket.token}`);
-          tokenStoreDispatch({
-            type: 'userDetails',
-            payload: {
-              token: signInMsgPacket.token,
-              email: credentials.email,
-              authority: signInMsgPacket.authority,
-            },
-          });
+      try {
+        await signUpHandler(credentials, onSignUpSuccess);
+      } catch (err) {
+        if (err instanceof SignUpError) {
+          toast(err.message);
         }
       }
     } else {
