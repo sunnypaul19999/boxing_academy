@@ -6,7 +6,7 @@ async function fetchUserDetails(email) {
     if (userDetailsPacket.payload) {
         return userDetailsPacket.payload;
     } else {
-        throw new UserDetailFetchError(userDetailsPacket.msg);
+        throw new UserDetailFetchError(userDetailsPacket.message);
     }
 }
 

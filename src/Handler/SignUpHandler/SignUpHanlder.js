@@ -22,7 +22,7 @@ async function signUpHandler(credentials, onSuccess) {
             }
         }
     } else {
-        throw new SignUpError(signUpMsgPacket.msg);
+        throw new SignUpError(signUpMsgPacket.message);
     }
 
 }

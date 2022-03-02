@@ -5,13 +5,11 @@ import MainStore from "store/Main/MainStore";
 
 export default class UserDetailsAPI {
   _email;
+
   _response = {
     payload: null,
-    msg: null,
-    hasError: false,
+    message: null,
   };
-
-  static _userDetailsAPI;
 
   constructor(email) {
     this._email = email;
@@ -22,12 +20,8 @@ export default class UserDetailsAPI {
   }
 
   static _api(email) {
-    if (!UserDetailsAPI._userDetailsAPI) {
-      console.log('UserDetailsAPI: Creating UserDetailsAPI object');
-      UserDetailsAPI._userDetailsAPI = new UserDetailsAPI(email);
-    }
-
-    return UserDetailsAPI._userDetailsAPI;
+    let api = new UserDetailsAPI(email);
+    return api;
   }
 
   _createRequest() {
@@ -56,7 +50,7 @@ export default class UserDetailsAPI {
     msgPacket.mobileNo = res.data.mobileNo;
 
     this._response.payload = msgPacket;
-    this._response.msg = 'Fetched User details';
+    this._response.message = 'Fetched User details';
 
     console.log(`UserDetailsAPI: User details`);
     console.log(this._response);
@@ -65,9 +59,9 @@ export default class UserDetailsAPI {
 
   _onFetchError(err) {
     let status = err['response'].status;
-    let msg = 'Failed to fetch User details';
+    let message = 'Failed to fetch User details';
 
-    this._response.msg = msg;
+    this._response.message = message;
     this._response.hasError = true;
 
     console.log(`UserDetailsAPI: Failed to fetch details ${status}`);

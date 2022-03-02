@@ -32,9 +32,8 @@ function SignIn(props) {
   });
 
   useEffect(() => {
-    //console.log('SignIn component: updated');
-    //console.log(`SignIn component: Email in MainStore ---> ${state.email}`);
-    //console.log(`SignIn component: JwtToken in MainStore ---> ${state.token}`);
+    console.log('SignIn Component: state');
+    console.log(state);
   });
 
   let formData = (formRef) => {
@@ -51,7 +50,7 @@ function SignIn(props) {
       type: 'userDetails',
       payload: signInMsgPacket.payload
     });
-    toast(signInMsgPacket.msg);
+    toast(signInMsgPacket.message);
   }
 
 

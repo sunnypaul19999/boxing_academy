@@ -12,7 +12,7 @@ async function signInHandler(credentials, onSuccess) {
     if (signInMsgPacket.payload) {
         onSuccess(signInMsgPacket);
     } else {
-        throw new SignInError(signInMsgPacket.msg);
+        throw new SignInError(signInMsgPacket.message);
     }
 }
 

@@ -10,11 +10,20 @@ export default class MainStore {
     }
 
     tokenStoreReducer = (state, action) => {
+        /*
+        token: action.payload.token ?? null,
+                name: action.payload.name ?? null,
+                email: action.payload.email ?? null,
+                authority: action.payload.authority ?? null,
+                mobileNo: action.payload.authority ?? null,
+        */
         if (action.type === 'userDetails') {
             return {
                 token: action.payload.token,
+                name: action.payload.name,
                 email: action.payload.email,
                 authority: action.payload.authority,
+                mobileNo: action.payload.authority,
             };
         }
     }

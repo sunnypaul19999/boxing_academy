@@ -31,9 +31,9 @@ function SignUp(props) {
   });
 
   useEffect(() => {
-    console.log('SignUp component: updated');
-    console.log(`SignUp component: Email in MainStore ---> ${state.email}`);
-    console.log(`SignUp component: JwtToken in MainStore ---> ${state.token}`);
+    //console.log('SignUp component: updated');
+    //console.log(`SignUp component: Email in MainStore ---> ${state.email}`);
+    //console.log(`SignUp component: JwtToken in MainStore ---> ${state.token}`);
   });
 
   let formDetails = (formRef) => {
@@ -53,7 +53,7 @@ function SignUp(props) {
       type: 'userDetails',
       payload: signInMsgPacket.payload
     });
-    toast(signInMsgPacket.msg);
+    toast(signInMsgPacket.message);
   }
 
   let onSubmit = async (event) => {
