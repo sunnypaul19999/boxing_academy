@@ -23,9 +23,9 @@ function SignIn(props) {
 
   let mainStoreDispatch = useDispatch();
 
-  let state = useSelector((state) => {
+  let userDetails = useSelector((state) => {
     if (state) {
-      return state;
+      return state.userDetails;
     } else {
       return 'SignIn component: TokenStore is accessed using useSelector, state is null';
     }
@@ -33,7 +33,7 @@ function SignIn(props) {
 
   useEffect(() => {
     console.log('SignIn Component: state');
-    console.log(state);
+    console.log(userDetails);
   });
 
   let formData = (formRef) => {

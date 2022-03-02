@@ -22,18 +22,17 @@ function SignUp(props) {
 
   let mainStoreDispatch = useDispatch();
 
-  let state = useSelector((state) => {
+  let userDetails = useSelector((state) => {
     if (state) {
-      return state;
+      return state.userDetails;
     } else {
       return 'SignUp component: TokenStore is accessed using useSelector, state is null';
     }
   });
 
   useEffect(() => {
-    //console.log('SignUp component: updated');
-    //console.log(`SignUp component: Email in MainStore ---> ${state.email}`);
-    //console.log(`SignUp component: JwtToken in MainStore ---> ${state.token}`);
+    console.log('SignIn Component: state');
+    console.log(userDetails);
   });
 
   let formDetails = (formRef) => {

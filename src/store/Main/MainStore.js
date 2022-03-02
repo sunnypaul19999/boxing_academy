@@ -19,11 +19,13 @@ export default class MainStore {
         */
         if (action.type === 'userDetails') {
             return {
-                token: action.payload.token,
-                name: action.payload.name,
-                email: action.payload.email,
-                authority: action.payload.authority,
-                mobileNo: action.payload.authority,
+                userDetails: {
+                    token: action.payload.token,
+                    name: action.payload.name,
+                    email: action.payload.email,
+                    authority: action.payload.authority,
+                    mobileNo: action.payload.authority,
+                }
             };
         }
     }
