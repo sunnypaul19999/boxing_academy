@@ -9,17 +9,18 @@ export default class SignUpAPI {
     let response = {
       isCreated: false,
       msg: null,
+      hasInternalError: false,
     };
 
     try {
       let { username, password, email, mobileNumber } = credentials;
       let msgPacket =
         await axios
-          .post(`${serverURL}/user/`, {
+          .post(`${serverURL}/user/signup`, {
             username: username,
             password: password,
             email: email,
-            //mobileNo: mobileNumber,
+            mobileNo: mobileNumber,
           }).then(
             (res) => {
               //console.log(res.data);
@@ -46,7 +47,8 @@ export default class SignUpAPI {
       return msgPacket;
     } catch (err) {
       response.msg = 'Please try again';
-      
+      response.hasInternalError = true;
+
       console.log(err);
       return response;
     }

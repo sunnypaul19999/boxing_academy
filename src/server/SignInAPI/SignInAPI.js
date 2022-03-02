@@ -8,6 +8,7 @@ export default class SignInAPI {
     let response = {
       payload: null,
       msg: null,
+      hasInternalError: false,
     };
 
     try {
@@ -49,7 +50,8 @@ export default class SignInAPI {
 
       //payload is kept null
       response.msg = 'Internal Error occurred!';
-
+      response.hasInternalError = true;
+      
       return response;
     }
   }

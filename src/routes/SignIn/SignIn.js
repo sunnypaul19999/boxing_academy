@@ -32,9 +32,9 @@ function SignIn(props) {
   });
 
   useEffect(() => {
-    console.log('SignIn component: updated');
-    console.log(`SignIn component: Email in MainStore ---> ${state.email}`);
-    console.log(`SignIn component: JwtToken in MainStore ---> ${state.token}`);
+    //console.log('SignIn component: updated');
+    //console.log(`SignIn component: Email in MainStore ---> ${state.email}`);
+    //console.log(`SignIn component: JwtToken in MainStore ---> ${state.token}`);
   });
 
   let formData = (formRef) => {
