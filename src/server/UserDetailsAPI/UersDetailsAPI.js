@@ -15,8 +15,13 @@ export default class UserDetailsAPI {
     this._email = email;
   }
 
+  get mainStoreState() {
+    return MainStore.store.getState();
+  }
+
   get _token() {
-    return MainStore.store.getState()['token'];
+    let token = this.mainStoreState.userDetails.token;
+    return token;
   }
 
   static _api(email) {

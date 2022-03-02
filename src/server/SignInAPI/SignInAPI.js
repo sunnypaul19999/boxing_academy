@@ -30,7 +30,7 @@ export default class SignInAPI {
   _onSuccess(res) {
     let token = res.data.token;
 
-    this._response.payload = { token: token, };
+    this._response.payload = { token: token, email: this._credentials.email };
     this._response.message = 'Welcome to boxing academy';
 
     return this._response;
