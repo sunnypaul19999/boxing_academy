@@ -12,7 +12,6 @@ async function signInHandler(credentials, onSuccess) {
 
     if (signInMsgPacket.payload) {
         onSuccess(signInMsgPacket);
-        UserDetailsAPI.fetch(credentials.email);
     } else {
         throw new SignInError(signInMsgPacket.msg);
     }
