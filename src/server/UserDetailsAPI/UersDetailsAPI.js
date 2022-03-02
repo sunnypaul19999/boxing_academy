@@ -36,18 +36,12 @@ export default class UserDetailsAPI {
 
   _onFetchSuccess(res) {
     let msgPacket = {
-      id: null,
-      name: null,
-      email: null,
-      authority: null,
-      mobileNo: null,
+      id: res.data.id,
+      name: res.data.user_name,
+      email: res.data.email,
+      authority: res.data.authorities[0].authority,
+      mobileNo: res.data.mobileNo,
     };
-
-    msgPacket.id = res.data.id;
-    msgPacket.name = res.data.user_name;
-    msgPacket.email = res.data.email;
-    msgPacket.authority = res.data.authorities[0].authority;
-    msgPacket.mobileNo = res.data.mobileNo;
 
     this._response.payload = msgPacket;
     this._response.message = 'Fetched User details';
