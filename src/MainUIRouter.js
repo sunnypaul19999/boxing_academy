@@ -27,19 +27,19 @@ function MainUIRouter(props) {
               <Route path='viewInstitutes' element={
                 <>
                   <SearchBar academy />
-                  <CardContainer list fetch={{ admin: true, academy: true }} />
+                  <CardContainer fetch={{ admin: true, academy: true }} />
                 </>
               }></Route>
               <Route path='viewInstitutes/:instituteId' element={
                 <>
                   <SearchBar course />
-                  <CardContainer list fetch={{ admin: true, course: true }} />
+                  <CardContainer fetch={{ admin: true, course: true }} />
                 </>
               }></Route>
               <Route path='viewCourse' element={
                 <>
                   <SearchBar course />
-                  <CardContainer list fetch={{ admin: true, course: true }} />
+                  <CardContainer fetch={{ admin: true, course: true }} />
                 </>
               }></Route>
             </Route>

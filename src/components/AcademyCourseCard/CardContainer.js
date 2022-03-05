@@ -93,7 +93,7 @@ function fetch() {
 export default function CardContainer(props) {
     let cardProps = fetch();
 
-    let [state, setState] = useState({ viewType: 'grid' });
+    let [state, setState] = useState({ viewType: 'list' });
 
     let onGridViewChangeClick = () => {
         console.log('grid view clicked');
