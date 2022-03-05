@@ -7,10 +7,10 @@ import { Provider } from 'react-redux';
 import SignUp from "routes/SignUp/SignUp.js";
 import SignIn from "routes/SignIn/SignIn.js";
 
-import MainUI from "components/MainUI/MainUI";
-import MainStore from "store/Main/MainStore";
-import AdminDashboard from "components/AdminDashboard/AdminDashboard";
-import SearchBar from "components/SearchBar/SearchBar";
+import MainUI from "components/MainUI/MainUI.js";
+import MainStore from "store/Main/MainStore.js";
+import AdminDashboard from "components/AdminDashboard/AdminDashboard.js";
+import SearchBar from "components/SearchBar/SearchBar.js";
 import CardContainer from "components/AcademyCourseCard/CardContainer.js";
 
 //<SignUp />

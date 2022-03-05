@@ -2,9 +2,6 @@ import AdminToolbar from './AdminToolbar.js';
 import CardInfoOne from './CardInfoOne.js';
 import CardInfoTwo from './CardInfoTwo.js';
 
-
-
-import 'assets/css/card/grid-card-display-details.css';
 //--------props----------------
 //id (id received from server must be passed here)
 //admin | user & academy | course
@@ -18,12 +15,11 @@ export default function AcademyCourseCard(props) {
 
     let cardImage = () => {
         if (cardProp.academy) {
-            console.log('card image')
-            /*return (
+            return (
                 <div class="display-card-image">
                     <img src={cardProp.url} alt="ss" />
                 </div>
-            );*/
+            );
         }
         return (<></>);
     }
@@ -51,11 +47,11 @@ export default function AcademyCourseCard(props) {
                         description={cardProp.description} />
                     <CardInfoTwo
                         fullCardId={getFullCardId()}
-                        duration='3 months'
-                        timing='6pm -8pm'
-                        location='Hyderabad'
-                        strength='103'
-                        zipcode='721305'
+                        duration={cardProp.duration}
+                        timing={cardProp.timing}
+                        location={cardProp.location}
+                        strength={cardProp.strength}
+                        zipcode={cardProp.zipcode}
                         rating={cardProp.rating} />
                     {toolbar()}
                 </div>
@@ -85,12 +81,18 @@ export default function AcademyCourseCard(props) {
         }
     }
 
+    let getViewClassName = () => {
+        if (props.list) {
+            return 'view-display-card-list';
+        } else {
+            return 'view-display-card-grid';
+        }
+    }
+
     return (
-        <div id={getFullCardId()} class="display-card p-2">
+        <div id={getFullCardId()} class={`${getViewClassName()} display-card p-2`}>
             <div class="card">
-                {<div class="display-card-image">
-                    <img src={cardProp.url} alt="ss" />
-                </div>}
+                {cardImage()}
                 {cardBody()}
             </div>
         </div>

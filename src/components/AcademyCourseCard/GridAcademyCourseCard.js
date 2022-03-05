@@ -1,13 +1,8 @@
 import AcademyCourseCard from './AcademyCourseCard';
 
+import 'assets/css/card/grid-card-display-details.css';
 
 export default function GridAcademyCourseCard(props) {
-
-    let d = () => {
-        console.log('GridAcademyCourseCard');
-        return (<AcademyCourseCard {...props} />);
-    }
-    return (
-        d()
-    );
+    
+    return (<AcademyCourseCard {...props} />);
 }
