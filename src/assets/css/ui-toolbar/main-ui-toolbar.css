@@ -107,13 +107,13 @@
     cursor: pointer;
 }
 
-.menu .menu-item:hover {
+/*.menu .menu-item:hover {
     background-color: rgb(185, 179, 176);
     border-radius: 3px;
     color: black;
     background-color: rgb(218, 216, 216);
     border-radius: 3px;
-}
+}*/
 
 .menu .menu-item.active {
     color: black;

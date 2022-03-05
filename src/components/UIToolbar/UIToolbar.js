@@ -37,7 +37,7 @@ function UIToolbar(props) {
                         </span>
                     </div>
                 </div>
-            </div >
+            </div>
         );
     }
 
