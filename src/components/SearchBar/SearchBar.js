@@ -50,8 +50,8 @@ export default function SearchBar(props) {
     let viewChangers = () => {
         return (
             <>
-                <span class="material-icons list-view">view_list</span>
-                <span class="material-icons grid-view">grid_view</span>
+                <span id='academyCourseCardAsList' class="material-icons list-view">view_list</span>
+                <span id='academyCourseCardAsGrid' class="material-icons grid-view">grid_view</span>
             </>
         )
     }

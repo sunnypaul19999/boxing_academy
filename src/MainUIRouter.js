@@ -27,34 +27,26 @@ function MainUIRouter(props) {
               <Route path='viewInstitutes' element={
                 <>
                   <SearchBar academy />
-                  <CardContainer
-                    grid
-                    cardProps={[
-                      {
-                        id: '1',
-                        admin: true,
-                        academy: true,
-                        url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
-                        title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
-                        description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
-                                      Thymeleaf, JPA & Hibernate`,
-                        duration: '3 months',
-                        timing: '6pm - 8pm',
-                        strength: '103',
-                        location: 'Hyderabad',
-                        zipcode: '721305',
-                        rating: '3',
-                      }
-                    ]} />
+                  <CardContainer list fetch={{ admin: true, academy: true }} />
                 </>
               }></Route>
-              <Route path='viewInstitutes/:instituteId' element={<SearchBar course />}></Route>
-              <Route path='viewCourse' element={<SearchBar course />}></Route>
+              <Route path='viewInstitutes/:instituteId' element={
+                <>
+                  <SearchBar course />
+                  <CardContainer list fetch={{ admin: true, course: true }} />
+                </>
+              }></Route>
+              <Route path='viewCourse' element={
+                <>
+                  <SearchBar course />
+                  <CardContainer list fetch={{ admin: true, course: true }} />
+                </>
+              }></Route>
             </Route>
           </Routes>
         </BrowserRouter>
-      </MainUI >
-    </Provider >
+      </MainUI>
+    </Provider>
   );
 }
 

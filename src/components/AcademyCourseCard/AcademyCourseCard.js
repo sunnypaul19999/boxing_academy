@@ -1,9 +1,10 @@
-import AdminToolbar from './AdminToolbar.js';
+import CardToolbar from './CardToolbar.js';
 import CardInfoOne from './CardInfoOne.js';
 import CardInfoTwo from './CardInfoTwo.js';
 
 //--------props----------------
 //id (id received from server must be passed here)
+//grid | list
 //admin | user & academy | course
 //url (if academy pass image url)
 //title & description
@@ -27,14 +28,18 @@ export default function AcademyCourseCard(props) {
     let toolbar = () => {
         if (cardProp.admin) {
             if (cardProp.academy) {
-                return (<AdminToolbar academy />);
+                return (<CardToolbar admin academy />);
             } else {
                 if (cardProp.course) {
-                    return (<AdminToolbar course />);
+                    return (<CardToolbar admin course />);
                 }
             }
         } else {
-            return (<></>);
+            if (cardProp.user) {
+                if (cardProp.course) {
+                    return (<CardToolbar user course />);
+                }
+            }
         }
     }
 
@@ -90,10 +95,12 @@ export default function AcademyCourseCard(props) {
     }
 
     return (
-        <div id={getFullCardId()} class={`${getViewClassName()} display-card p-2`}>
-            <div class="card">
-                {cardImage()}
-                {cardBody()}
+        <div class="col-auto">
+            <div id={getFullCardId()} class={`${getViewClassName()} display-card p-2`}>
+                <div class="card">
+                    {cardImage()}
+                    {cardBody()}
+                </div>
             </div>
         </div>
     );

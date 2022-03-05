@@ -3,49 +3,135 @@ import ListAcademyCourseCard from './ListAcademyCourseCard';
 
 import 'assets/css/card-container/card-container.css';
 import AcademyCourseCard from './AcademyCourseCard';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 //-----------props----------
 //grid | list
 //cardProps (card properties mentioned in AcademyCourseCard)
 //--------------------------
+
+function fetch() {
+    return [
+        {
+            id: '1',
+            admin: true,
+            academy: true,
+            url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
+            title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
+            description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
+                        Thymeleaf, JPA & Hibernate`,
+            duration: '3 months',
+            timing: '6pm - 8pm',
+            strength: '103',
+            location: 'Hyderabad',
+            zipcode: '721305',
+            rating: '3',
+        },
+        {
+            id: '2',
+            admin: true,
+            academy: true,
+            url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
+            title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
+            description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
+                        Thymeleaf, JPA & Hibernate`,
+            duration: '3 months',
+            timing: '6pm - 8pm',
+            strength: '103',
+            location: 'Hyderabad',
+            zipcode: '721305',
+            rating: '3',
+        },
+        {
+            id: '3',
+            admin: true,
+            academy: true,
+            url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
+            title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
+            description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
+                        Thymeleaf, JPA & Hibernate`,
+            duration: '3 months',
+            timing: '6pm - 8pm',
+            strength: '103',
+            location: 'Hyderabad',
+            zipcode: '721305',
+            rating: '3',
+        },
+        {
+            id: '4',
+            admin: true,
+            academy: true,
+            url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
+            title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
+            description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
+                        Thymeleaf, JPA & Hibernate`,
+            duration: '3 months',
+            timing: '6pm - 8pm',
+            strength: '103',
+            location: 'Hyderabad',
+            zipcode: '721305',
+            rating: '3',
+        },
+        {
+            id: '5',
+            admin: true,
+            academy: true,
+            url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
+            title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
+            description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
+                        Thymeleaf, JPA & Hibernate`,
+            duration: '3 months',
+            timing: '6pm - 8pm',
+            strength: '103',
+            location: 'Hyderabad',
+            zipcode: '721305',
+            rating: '3',
+        },
+    ];
+}
 export default function CardContainer(props) {
-    /*let cardProp = {
-        id: '1',
-        admin: true,
-        academy: true,
-        url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
-        title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
-        description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
-                  Thymeleaf, JPA & Hibernate`,
-        duration: '3 months',
-        timing: '6pm - 8pm',
-        strength: '103',
-        location: 'Hyderabad',
-        zipcode: '721305',
-        rating: '3',
-    };*/
+    let cardProps = fetch();
+
+    let [state, setState] = useState({ viewType: 'grid' });
+
+    let onGridViewChangeClick = () => {
+        console.log('grid view clicked');
+        setState({ viewType: 'grid' });
+    }
+
+    let onListViewChangeClick = () => {
+        console.log('list view clicked');
+        setState({ viewType: 'list' });
+    }
+
+    useEffect(() => {
+        let gridViewChangeButton = document.getElementById('academyCourseCardAsGrid');
+        let listViewChangeButton = document.getElementById('academyCourseCardAsList');
+        gridViewChangeButton.addEventListener('click', onGridViewChangeClick);
+        listViewChangeButton.addEventListener('click', onListViewChangeClick);
+        return () => {
+            gridViewChangeButton.removeEventListener('click', onGridViewChangeClick);
+            listViewChangeButton.removeEventListener('click', onListViewChangeClick);
+        };
+    });
 
     let getCards = () => {
         let cards = [];
 
-        if (props.grid) {
-            for (const cardProp of props.cardProps) {
-                //console.log(cardProp);
+        if (state.viewType === 'grid') {
+            for (const cardProp of cardProps) {
                 cards.push(
                     <GridAcademyCourseCard
                         key={`displayCard_grid_${cardProp.id}`}
-                        grid
                         cardProp={cardProp} />);
             }
         } else {
-            if (props.list) {
-                for (const cardProp of props.cardProps) {
-                    cards.push(
-                        <ListAcademyCourseCard
-                            key={`displayCard_list_${cardProp.id}`}
-                            list
-                            cardProp={cardProp} />);
-                }
+            for (const cardProp of cardProps) {
+                cards.push(
+                    <ListAcademyCourseCard
+                        key={`displayCard_list_${cardProp.id}`}
+                        cardProp={cardProp} />);
             }
         }
         return cards;
@@ -53,6 +139,6 @@ export default function CardContainer(props) {
 
 
     return (
-        <div class="card-container">{getCards()}</div>
+        <div class="row row-col-5 justify-content-center card-container">{getCards()}</div>
     );
 }
