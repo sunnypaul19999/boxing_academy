@@ -1,10 +1,9 @@
+import { useEffect, useState } from 'react';
+
 import GridAcademyCourseCard from './GridAcademyCourseCard';
 import ListAcademyCourseCard from './ListAcademyCourseCard';
 
 import 'assets/css/card-container/card-container.css';
-import AcademyCourseCard from './AcademyCourseCard';
-import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 //-----------props----------
 //grid | list
