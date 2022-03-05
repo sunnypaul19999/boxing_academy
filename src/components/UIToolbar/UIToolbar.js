@@ -19,20 +19,25 @@ function UIToolbar(props) {
         );
     }
 
+    let toolbarType = () => {
+        if (props.admin) return 'admin';
+        return 'user';
+    }
+
 
     let toolbar = () => {
         return (
             <div class="component-ui-toolbar">
                 <div class="card">
                     <div class="card-body">
-                        <span class="toolbar">
+                        <span class={`${toolbarType()} toolbar`}>
                             <section class="sec-1">{appName()}</section>
                             <section class="sec-2">{logout()}</section>
                             <ToolbarMenu {...props} />
                         </span>
                     </div>
                 </div>
-            </div>
+            </div >
         );
     }
 
