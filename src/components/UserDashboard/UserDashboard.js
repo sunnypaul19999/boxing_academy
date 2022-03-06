@@ -7,7 +7,7 @@ import SetupContainer from 'components/SetupContainer/SetupContainer.js';
 export default function UserDashboard(props) {
     return (
         <>
-            <UIToolbar userF />
+            <UIToolbar user />
             <SetupContainer>
                 <Outlet />
             </SetupContainer>
