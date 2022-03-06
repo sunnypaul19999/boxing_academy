@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { serverURL } from "server/config";
+import { serverURL } from "config/serverConfig";
 import MainStore from "store/Main/MainStore";
 
 export default class UserDetailsAPI {

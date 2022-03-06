@@ -2,20 +2,20 @@ import CardToolbar from './CardToolbar.js';
 import CardInfoOne from './CardInfoOne.js';
 import CardInfoTwo from './CardInfoTwo.js';
 
-//--------props----------------
-//id (id received from server must be passed here)
+//--------props--------------------------------------->
 //grid | list
 //admin | user & academy | course
+//  ---------cardProp-------
+//id (id received from server must be passed here)
 //url (if academy pass image url)
-//title & description
-//duration & timing & strength & location & zipcode & rating
-//-------------------------------
+//title, description, duration, timing, strength, location, zipcode, rating
+//  --------------------------
+//------------------------------------------------------>
 export default function AcademyCourseCard(props) {
-
     let cardProp = props.cardProp;
 
     let cardImage = () => {
-        if (cardProp.academy) {
+        if (props.academy) {
             return (
                 <div class="display-card-image">
                     <img src={cardProp.url} alt="ss" />
@@ -26,17 +26,17 @@ export default function AcademyCourseCard(props) {
     }
 
     let toolbar = () => {
-        if (cardProp.admin) {
-            if (cardProp.academy) {
+        if (props.admin) {
+            if (props.academy) {
                 return (<CardToolbar admin academy />);
             } else {
-                if (cardProp.course) {
+                if (props.course) {
                     return (<CardToolbar admin course />);
                 }
             }
         } else {
-            if (cardProp.user) {
-                if (cardProp.course) {
+            if (props.user) {
+                if (props.course) {
                     return (<CardToolbar user course />);
                 }
             }
@@ -65,20 +65,20 @@ export default function AcademyCourseCard(props) {
     }
 
     let getFullCardId = () => {
-        if (cardProp.admin) {
-            if (cardProp.academy) {
+        if (props.admin) {
+            if (props.academy) {
                 return `adminAcademyGrid${cardProp.id}`;
             } else {
-                if (cardProp.course) {
+                if (props.course) {
                     return `courseGrid${cardProp.id}`;
                 }
             }
         } else {
-            if (cardProp.user) {
-                if (cardProp.academy) {
+            if (props.user) {
+                if (props.academy) {
                     return `userAcademyGrid${cardProp.id}`;
                 } else {
-                    if (cardProp.course) {
+                    if (props.course) {
                         return `userCourseGrid${cardProp.id}`;
                     }
                 }

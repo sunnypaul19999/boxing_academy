@@ -5,77 +5,17 @@ import ListAcademyCourseCard from './ListAcademyCourseCard';
 
 import 'assets/css/card-container/card-container.css';
 
+
 //-----------props----------
-//grid | list
+//admin | user & academy | course
 //cardProps (card properties mentioned in AcademyCourseCard)
 //--------------------------
 
+//card container fetches data
 function fetch() {
     return [
         {
             id: '1',
-            admin: true,
-            academy: true,
-            url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
-            title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
-            description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
-                        Thymeleaf, JPA & Hibernate`,
-            duration: '3 months',
-            timing: '6pm - 8pm',
-            strength: '103',
-            location: 'Hyderabad',
-            zipcode: '721305',
-            rating: '3',
-        },
-        {
-            id: '2',
-            admin: true,
-            academy: true,
-            url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
-            title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
-            description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
-                        Thymeleaf, JPA & Hibernate`,
-            duration: '3 months',
-            timing: '6pm - 8pm',
-            strength: '103',
-            location: 'Hyderabad',
-            zipcode: '721305',
-            rating: '3',
-        },
-        {
-            id: '3',
-            admin: true,
-            academy: true,
-            url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
-            title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
-            description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
-                        Thymeleaf, JPA & Hibernate`,
-            duration: '3 months',
-            timing: '6pm - 8pm',
-            strength: '103',
-            location: 'Hyderabad',
-            zipcode: '721305',
-            rating: '3',
-        },
-        {
-            id: '4',
-            admin: true,
-            academy: true,
-            url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
-            title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
-            description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
-                        Thymeleaf, JPA & Hibernate`,
-            duration: '3 months',
-            timing: '6pm - 8pm',
-            strength: '103',
-            location: 'Hyderabad',
-            zipcode: '721305',
-            rating: '3',
-        },
-        {
-            id: '5',
-            admin: true,
-            academy: true,
             url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
             title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
             description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
@@ -122,6 +62,7 @@ export default function CardContainer(props) {
             for (const cardProp of cardProps) {
                 cards.push(
                     <GridAcademyCourseCard
+                        {...props}
                         key={`displayCard_grid_${cardProp.id}`}
                         cardProp={cardProp} />);
             }
@@ -129,6 +70,7 @@ export default function CardContainer(props) {
             for (const cardProp of cardProps) {
                 cards.push(
                     <ListAcademyCourseCard
+                        {...props}
                         key={`displayCard_list_${cardProp.id}`}
                         cardProp={cardProp} />);
             }

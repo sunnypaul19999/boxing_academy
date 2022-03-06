@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { serverURL } from "server/config";
+import { serverURL } from "config/serverConfig";
 
 export default class SignUpAPI {
   _credentials;

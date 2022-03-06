@@ -7,15 +7,18 @@ export default function SearchBar(props) {
 
     let idStore = {
         academy: {
-            searchInput: 'searchButton',
+            searchInputId: 'searchAcademyInput',
+            searchButtonId: 'searchButton',
             placeholder: 'search academy...',
         },
         course: {
-            searchInput: 'searchCourse',
+            searchInputId: 'searchCourseInput',
+            searchButtonId: 'searchCourse',
             placeholder: 'search course...',
         },
         students: {
-            searchInput: 'searchStudents',
+            searchInputId: 'searchStudentsInput',
+            searchButtonId: 'searchStudents',
             placeholder: 'search students...',
         }
     }
@@ -24,23 +27,23 @@ export default function SearchBar(props) {
         if (props.academy) {
             return (
                 <>
-                    <input class="form-control search" type="text" placeholder={idStore.academy.placeholder} />
-                    <span id={idStore.academy.searchInput} class="material-icons search-icon">search</span>
+                    <input id={idStore.academy.searchInputId} class="form-control search" type="text" placeholder={idStore.academy.placeholder} />
+                    <span id={idStore.academy.searchButtonId} class="material-icons search-icon">search</span>
                 </>
             );
         } else if (props.course) {
             return (
                 <>
-                    <input class="form-control search" type="text" placeholder={idStore.course.placeholder} />
-                    <span id={idStore.course.searchInput} class="material-icons search-icon">search</span>
+                    <input id={idStore.course.searchInputId} class="form-control search" type="text" placeholder={idStore.course.placeholder} />
+                    <span id={idStore.course.searchButtonId} class="material-icons search-icon">search</span>
                 </>
             );
         } else {
             if (props.students) {
                 return (
                     <>
-                        <input class="form-control search" type="text" placeholder={idStore.students.placeholder} />
-                        <span id={idStore.students.searchInput} class="material-icons search-icon">search</span>
+                        <input id={idStore.students.searchInputId} class="form-control search" type="text" placeholder={idStore.students.placeholder} />
+                        <span id={idStore.students.searchButtonId} class="material-icons search-icon">search</span>
                     </>
                 );
             }
@@ -54,7 +57,7 @@ export default function SearchBar(props) {
                 <span id='academyCourseCardAsGrid' class="material-icons grid-view">grid_view</span>
             </>
         )
-    }
+    };
 
     return (
         <div class="search-bar">
