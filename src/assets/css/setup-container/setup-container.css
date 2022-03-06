@@ -9,3 +9,31 @@
     overflow: hidden;
     position: relative;
 }
+
+.setup-container .hover-button {
+    position: absolute;
+    z-index: 10;
+    bottom: 0px;
+    right: 0px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.setup-container .hover-button button{
+    background-color: rgba(10, 192, 34, 0.952);
+    padding: 4px;
+}
+
+.setup-container .hover-button button.brown{
+    background-color: brown;
+    padding: 4px;
+}
+
+.setup-container .hover-button button:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.setup-container .extra-scroll{
+    padding-bottom: 55px;
+}

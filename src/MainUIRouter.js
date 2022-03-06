@@ -29,16 +29,16 @@ function MainUIRouter(props) {
               <Route path='academy' element={<AcademyElement />}>
                 <Route index element={AdminRoute.academyElement}></Route>
                 <Route path='add' element={AdminRoute.addAcademyElement}></Route>
-                <Route path=':id' element={AdminRoute.academyCoursesElement}></Route>
                 <Route path=':id/edit' element={AdminRoute.updateAcademyElement}></Route>
+                <Route path=':id/courses' element={AdminRoute.academyCoursesElement}></Route>
                 <Route path=':id/courses/add' element={AdminRoute.addCourseElement}></Route>
                 <Route path=':id/courses/:id/edit' element={AdminRoute.updateCourseElement}></Route>
               </Route>
               <Route path='courses' element={AdminRoute.allCoursesElement}></Route>
               <Route path='students' element={<StudentsElement />}>
                 <Route index element={AdminRoute.allStudents}></Route>
-                <Route path='students/:id/add' element={AdminRoute.addStudentElement}></Route>
-                <Route path='students/:id/edit' element={AdminRoute.updateStudentElement}></Route>
+                <Route path='add' element={AdminRoute.addStudentElement}></Route>
+                <Route path=':id/edit' element={AdminRoute.updateStudentElement}></Route>
               </Route>
             </Route>
             <Route path='/user' element={UserRoute.userElement}>

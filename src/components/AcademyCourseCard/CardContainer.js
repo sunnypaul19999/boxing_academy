@@ -27,6 +27,58 @@ function fetch() {
             zipcode: '721305',
             rating: '3',
         },
+        {
+            id: '2',
+            url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
+            title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
+            description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
+                        Thymeleaf, JPA & Hibernate`,
+            duration: '3 months',
+            timing: '6pm - 8pm',
+            strength: '103',
+            location: 'Hyderabad',
+            zipcode: '721305',
+            rating: '3',
+        },
+        {
+            id: '3',
+            url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
+            title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
+            description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
+                        Thymeleaf, JPA & Hibernate`,
+            duration: '3 months',
+            timing: '6pm - 8pm',
+            strength: '103',
+            location: 'Hyderabad',
+            zipcode: '721305',
+            rating: '3',
+        },
+        {
+            id: '4',
+            url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
+            title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
+            description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
+                        Thymeleaf, JPA & Hibernate`,
+            duration: '3 months',
+            timing: '6pm - 8pm',
+            strength: '103',
+            location: 'Hyderabad',
+            zipcode: '721305',
+            rating: '3',
+        },
+        {
+            id: '5',
+            url: 'https://images.indianexpress.com/2020/06/the-matrix-759.jpg',
+            title: 'Spring & Hibernate for Beginners (includes Spring Boot)',
+            description: `Spring 5: Learn Spring 5 Core, AOP, Spring MVC, Spring Security, Spring REST, Spring Boot 2,
+                        Thymeleaf, JPA & Hibernate`,
+            duration: '3 months',
+            timing: '6pm - 8pm',
+            strength: '103',
+            location: 'Hyderabad',
+            zipcode: '721305',
+            rating: '3',
+        },
     ];
 }
 export default function CardContainer(props) {
@@ -80,6 +132,9 @@ export default function CardContainer(props) {
 
 
     return (
-        <div class="row row-col-5 justify-content-center card-container">{getCards()}</div>
+        <div class="row row-col-5 justify-content-center card-container">
+            {getCards()}
+            <div class="extra-scroll"></div>
+        </div>
     );
 }

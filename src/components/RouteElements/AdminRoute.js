@@ -1,9 +1,10 @@
 import AdminDashboard from "components/AdminDashboard/AdminDashboard.js";
 import SearchBar from "components/SearchBar/SearchBar.js";
 import CardContainer from "components/AcademyCourseCard/CardContainer.js";
+import HoverButton from '../Button/HoverButton';
 
 export class AdminRoute {
-    
+
     static get adminElement() {
         return (<AdminDashboard />);
     }
@@ -13,6 +14,7 @@ export class AdminRoute {
             <>
                 <SearchBar academy />
                 <CardContainer admin academy />
+                <HoverButton buttonId='addAcademyHoverButton' name='Add Academy' />
             </>
         );
     }
@@ -38,6 +40,7 @@ export class AdminRoute {
             <>
                 <SearchBar course />
                 <CardContainer admin course />
+                <HoverButton buttonId='addCourseHoverButton' name='Add Course' />
             </>
         );
     }
@@ -79,7 +82,7 @@ export class AdminRoute {
     static get addStudentElement() {
         return (
             <>
-
+               
             </>
         );
     }
