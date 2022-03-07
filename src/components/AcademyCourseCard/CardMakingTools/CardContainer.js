@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import GridAcademyCourseCard from './GridAcademyCourseCard';
-import ListAcademyCourseCard from './ListAcademyCourseCard';
+import GridAcademyCourseCard from '../GridAcademyCourseCard';
+import ListAcademyCourseCard from '../ListAcademyCourseCard';
 
 import 'assets/css/card-container/card-container.css';
 

@@ -1,7 +1,7 @@
 import AdminDashboard from "components/AdminDashboard/AdminDashboard.js";
 import SearchBar from "components/SearchBar/SearchBar.js";
-import CardContainer from "components/AcademyCourseCard/CardContainer.js";
-import HoverButton from 'components/AcademyCourseCard/HoverButton.js';
+import CardContainer from "components/AcademyCourseCard/CardMakingTools/CardContainer.js";
+import HoverButton from 'components/AcademyCourseCard/CardMakingTools/HoverButton.js';
 
 export class AdminRoute {
 
