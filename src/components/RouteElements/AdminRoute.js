@@ -1,7 +1,7 @@
 import AdminDashboard from "components/AdminDashboard/AdminDashboard.js";
 import SearchBar from "components/SearchBar/SearchBar.js";
 import CardContainer from "components/AcademyCourseCard/CardContainer.js";
-import HoverButton from '../Button/HoverButton';
+import HoverButton from 'components/AcademyCourseCard/HoverButton.js';
 
 export class AdminRoute {
 
@@ -82,7 +82,7 @@ export class AdminRoute {
     static get addStudentElement() {
         return (
             <>
-               
+
             </>
         );
     }
