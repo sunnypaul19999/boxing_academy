@@ -1,4 +1,5 @@
 //props: fullCardId & duration & timing & strength & location & zipcode & rating
+//rating can be zero
 export default function CardInfoTwo(props) {
     let duration = () => {
         return (
@@ -64,21 +65,21 @@ export default function CardInfoTwo(props) {
         let unfilledStar = (id) => {
             return (
                 <span
-                    key={`${props.fullCardId}_star_${id}`}
-                    id={`${props.fullCardId}_star_${id}`}
+                    key={`${props.fullCardId}_star_border_${id}`}
+                    id={`${props.fullCardId}_star_border_${id}`}
                     class="material-icons">star_border</span>
             );
         }
 
         for (let i = 1; i <= 5; i++) {
-            if (Boolean(props.rating)) {
-                if (i <= props.rating) {
-                    stars.push(filledStar(i));
-                }
+            if (Boolean(props.rating) && i <= props.rating) {
+                stars.push(filledStar(i));
             } else {
                 stars.push(unfilledStar(i));
             }
         }
+
+        return stars;
     }
 
     return (
