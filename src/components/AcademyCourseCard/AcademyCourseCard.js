@@ -1,6 +1,6 @@
-import CardToolbar from './CardToolbar.js';
-import CardInfoOne from './CardInfoOne.js';
-import CardInfoTwo from './CardInfoTwo.js';
+import CardToolbar from 'components/AcademyCourseCard/CardMakingTools/CardToolbar.js';
+import CardInfoOne from 'components/AcademyCourseCard/CardMakingTools/CardInfoOne.js';
+import CardInfoTwo from 'components/AcademyCourseCard/CardMakingTools/CardInfoTwo.js';
 
 //--------props--------------------------------------->
 //grid | list

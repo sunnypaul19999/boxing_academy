@@ -1,6 +1,6 @@
 import SearchBar from "components/SearchBar/SearchBar.js";
 import CardContainer from "components/AcademyCourseCard/CardContainer.js";
-import UserDashboard from "components/UserDashboard/UserDashboard";
+import UserDashboard from "components/Dashboard/UserDashboard/UserDashboard.js";
 
 export class UserRoute {
 
