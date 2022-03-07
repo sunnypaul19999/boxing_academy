@@ -1,4 +1,4 @@
-import AdminDashboard from "components/AdminDashboard/AdminDashboard.js";
+import AdminDashboard from "components/Dashboard/AdminDashboard/AdminDashboard.js";
 import SearchBar from "components/SearchBar/SearchBar.js";
 import CardContainer from "components/AcademyCourseCard/CardContainer.js";
 import HoverButton from 'components/AcademyCourseCard/CardMakingTools/HoverButton.js';
