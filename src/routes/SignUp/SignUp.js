@@ -35,7 +35,7 @@ function SignUp(props) {
     console.log(userDetails);
   });
 
-  let formDetails = (formRef) => {
+  let formDetails = () => {
     let formData = new FormData(formRef.current);
     let credentials = {
       email: formData.get("email"),
