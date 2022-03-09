@@ -37,14 +37,14 @@ function SignUp(props) {
 
   let formDetails = () => {
     let formData = new FormData(formRef.current);
-    let credentials = {
+    //credentials being returned
+    return {
       email: formData.get("email"),
       username: formData.get("username"),
       mobileNumber: formData.get("mobileNumber"),
       password: formData.get("password"),
       confirmPassword: formData.get("confirmPassword"),
     };
-    return credentials;
   }
 
   let onSignUpSuccess = (signInMsgPacket) => {
