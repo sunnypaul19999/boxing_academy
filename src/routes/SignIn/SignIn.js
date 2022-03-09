@@ -35,7 +35,7 @@ function SignIn(props) {
     console.log(userDetails);
   });
 
-  let formData = () => {
+  let formDetails = () => {
     let formData = new FormData(formRef.current);
     let credentials = {
       email: formData.get("email"),
@@ -57,7 +57,7 @@ function SignIn(props) {
     event.preventDefault();
     event.stopPropagation();
 
-    let credentials = formData(formRef);
+    let credentials = formDetails(formRef);
 
     try {
       await signInHandler(credentials, onSignInSuccess);
@@ -88,7 +88,7 @@ function SignIn(props) {
                 id="loginButton"
                 className="btn btn-primary"
                 value="Login"
-                onChange={() => { }}
+                onChange={() => { return 'not be admintired'; }}
               />
             </div>
             <div className="signupRedirection text-center text-black">
