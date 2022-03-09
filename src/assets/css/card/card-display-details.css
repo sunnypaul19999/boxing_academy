@@ -129,10 +129,6 @@
     align-items: center;
 }
 
-.display-card .details>.sec.three {
-    width: 100%;
-}
-
 .display-card .details>.sec.three>.level.one {
     width: 100%;
     display: flex;
