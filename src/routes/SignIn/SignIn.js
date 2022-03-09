@@ -57,7 +57,7 @@ function SignIn(props) {
     event.preventDefault();
     event.stopPropagation();
 
-    let credentials = formDetails(formRef);
+    let credentials = formDetails();
 
     try {
       await signInHandler(credentials, onSignInSuccess);

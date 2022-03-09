@@ -58,7 +58,7 @@ function SignUp(props) {
   let onSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
-    let credentials = formDetails(formRef);
+    let credentials = formDetails();
 
     if (credentials.password === credentials.confirmPassword) {
       try {
