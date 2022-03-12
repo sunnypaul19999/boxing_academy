@@ -15,7 +15,10 @@ export default function AdminAcademy(props) {
         <>
             <SearchBar academy />
             <CardContainer admin academy />
-            <HoverButton id='addAcademyHoverButton' text='Add Academy' onClick={onAddAcademyClicked} />
+            <HoverButton
+                id='addAcademyHoverButton'
+                text='Add Academy'
+                onClick={onAddAcademyClicked} />
         </>
     );
 }
