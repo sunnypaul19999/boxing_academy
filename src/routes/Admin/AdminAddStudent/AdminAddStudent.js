@@ -1,4 +1,3 @@
-import SearchBar from "components/SearchBar/SearchBar.js";
 import UserDetailsForm from "components/Forms/LayoutOne/UserDetailsForm";
 
 

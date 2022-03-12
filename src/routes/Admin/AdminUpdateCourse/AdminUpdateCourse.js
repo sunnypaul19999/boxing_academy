@@ -1,4 +1,3 @@
-import SearchBar from "components/SearchBar/SearchBar.js";
 import AcademyCourseDetailsForm from "components/Forms/LayoutTwo/AcademyCourseDetailsForm";
 import { academyCourseDetailsFormFormat } from "components/Forms/LayoutTwo/academyCourseDetailsFormFormat.js";
 
@@ -16,6 +15,7 @@ export default function AdminUpdateCourse(props) {
     let onFormSubmit = (event) => {
         event.preventDefault();
         event.stopPropagation();
+        //let formData = new FormData(event.target);
         console.log('AdminAddCourse submitted');
     }
 
