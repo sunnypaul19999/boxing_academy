@@ -1,8 +1,7 @@
-import { useNavigate } from "react-router-dom";
-
 import { editCard, deleteCard } from "components/AcademyCourseCard/Actions/Admin/Toolbar/cardToolbarAdminAction";
 
-//props: academy | course
+//props: cardOf(academy | course)
+//authorityType: admin | course
 export default function CardToolbar(props) {
     let idStore = {
         admin: {
@@ -22,11 +21,10 @@ export default function CardToolbar(props) {
         }
     };
 
-    let nav = useNavigate();
 
     let adminButtons = () => {
-        let editButtonId = (props.academy) ? idStore.admin.academy.edit : idStore.admin.course.edit;
-        let delButtonId = (props.academy) ? idStore.admin.academy.delete : idStore.admin.course.delete;
+        let editButtonId = (props.cardOf === 'academy') ? idStore.admin.academy.edit : idStore.admin.course.edit;
+        let delButtonId = (props.cardOf === 'academy') ? idStore.admin.academy.delete : idStore.admin.course.delete;
         return (
             <>
                 <span class="toolbar-item one">
@@ -50,22 +48,24 @@ export default function CardToolbar(props) {
     let userCourseEnrollButton = () => {
         return (
             <span class="toolbar-item one">
-                <button id={idStore.user.course.enroll} type="button" class="btn btn-primary">Enroll Course</button>
+                <button
+                    id={idStore.user.course.enroll}
+                    type="button"
+                    class="btn btn-primary">Enroll Course
+                </button>
             </span>
         );
     };
 
     let getButtons = () => {
-        if (props.admin) {
+        if (props.authorityType === 'admin') {
             return adminButtons();
-        } else {
-            if (props.user) {
-                if (props.course) {
-                    return userCourseEnrollButton();
-                } else {
-                    return (<></>);
-                }
+        } else if (props.authorityType === 'user') {
+            if (props.cardOf === 'course') {
+                return userCourseEnrollButton();
             }
+        } else {
+            return (<></>);
         }
     };
 

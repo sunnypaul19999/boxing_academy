@@ -21,12 +21,84 @@ import { adminDeleteCardEvent } from './Actions/Admin/Card/cardAdminOnDelete';
 //  --------------------------
 //------------------------------------------------------>
 
+let getFullCardId = (authorityType, cardOf, srsIDCount) => {
+    if (authorityType === 'admin') {
+        if (cardOf === 'academy') {
+            return `adminAcademyGrid${srsIDCount}`;
+        }
+        if (cardOf === 'course') {
+            return `courseGrid${srsIDCount}`;
+        }
+    } else {
+        if (authorityType === 'user') {
+            if (cardOf === 'academy') {
+                return `userAcademyGrid${srsIDCount}`;
+            }
+            if (cardOf === 'course') {
+                return `userCourseGrid${srsIDCount}`;
+            }
+        }
+    }
+}
+
+function CardToolbarWrapper(props) {
+    let authorityType = props.authorityType;
+    let cardOf = props.cardOf;
+    return <CardToolbar authorityType={authorityType} cardOf={cardOf} />
+}
+
+function CardImage(props) {
+    let url = props.url;
+    let cardOf = props.cardOf;
+
+    if (cardOf === 'academy') {
+        return (
+            <div class="display-card-image">
+                <img src={url} alt="ss" />
+            </div>
+        );
+    }
+    return (<></>);
+}
+
+function CardBody(props) {
+    let authorityType = props.authorityType;//admin or user
+    let cardOf = props.cardOf;//academy or course
+    let srsIDCount = props.srsIDCount;//integer count
+    let cardProp = props.cardProp;//card details
+
+    return (
+        <div class="card-body">
+            <div class="details">
+                <CardInfoOne
+                    title={cardProp.title}
+                    description={cardProp.description} />
+                <CardInfoTwo
+                    fullCardId={getFullCardId(authorityType, cardOf, srsIDCount)}
+                    duration={cardProp.duration}
+                    timing={cardProp.timing}
+                    location={cardProp.location}
+                    strength={cardProp.strength}
+                    zipcode={cardProp.zipcode}
+                    rating={cardProp.rating} />
+                <CardToolbarWrapper authorityType={authorityType} cardOf={cardOf} />
+            </div>
+        </div>
+    );
+}
+
 export default function AcademyCourseCard(props) {
     let cardProp = props.cardProp;
-
     let nav = useNavigate();
 
-    let [state] = useState({ cardProp: cardProp });
+
+    let [state] = useState({
+        authorityType: (props.admin) ? 'admin' : 'user',
+        cardOf: (props.academy) ? 'academy' : 'course',
+        cardType: (props.list) ? 'list' : 'grid',
+        srsIDCount: props.srsIDCount,
+        cardProp: cardProp,
+    });
 
     let cardRef = useRef(null);
 
@@ -34,120 +106,66 @@ export default function AcademyCourseCard(props) {
         let cardElement = cardRef.current;
         cardElement.addEventListener('editCardEvent', onEditCardEvent);
         cardElement.addEventListener('deleteCardEvent', onDeleteCardEvent);
+        cardElement.addEventListener('enrollCardEvent', onEnrollCardEvent);
 
         return () => {
             cardElement.removeEventListener('editCardEvent', onEditCardEvent);
             cardElement.removeEventListener('deleteCardEvent', onDeleteCardEvent);
+            cardElement.removeEventListener('enrollCardEvent', onEnrollCardEvent);
         };
-    })
-
-    let cardImage = () => {
-        //let cardProp = props.state.cardProp;
-
-        if (props.academy) {
-            return (
-                <div class="display-card-image">
-                    <img src={cardProp.url} alt="ss" />
-                </div>
-            );
-        }
-        return (<></>);
-    }
-
-    let toolbar = () => {
-        if (props.admin) {
-            if (props.academy) {
-                return (<CardToolbar admin academy />);
-            }
-            if (props.course) {
-                return (<CardToolbar admin course />);
-            }
-        } else {
-            if (props.user) {
-                if (props.course) {
-                    return (<CardToolbar user course />);
-                }
-            }
-        }
-    }
-
-    let cardBody = () => {
-        return (
-            <div class="card-body">
-                <div class="details">
-                    <CardInfoOne
-                        title={cardProp.title}
-                        description={cardProp.description} />
-                    <CardInfoTwo
-                        fullCardId={getFullCardId()}
-                        duration={cardProp.duration}
-                        timing={cardProp.timing}
-                        location={cardProp.location}
-                        strength={cardProp.strength}
-                        zipcode={cardProp.zipcode}
-                        rating={cardProp.rating} />
-                    {toolbar()}
-                </div>
-            </div>
-        );
-    }
-
-    let getFullCardId = () => {
-        if (props.admin) {
-            if (props.academy) {
-                return `adminAcademyGrid${props.srsIDCount}`;
-            }
-            if (props.course) {
-                return `courseGrid${props.srsIDCount}`;
-            }
-        } else {
-            if (props.user) {
-                if (props.academy) {
-                    return `userAcademyGrid${props.srsIDCount}`;
-                }
-                if (props.course) {
-                    return `userCourseGrid${props.srsIDCount}`;
-                }
-            }
-        }
-    }
+    });
 
     let getViewClassName = () => {
-        if (props.list) {
+        if (state.cardType === 'list') {
             return 'view-display-card-list';
         }
         return 'view-display-card-grid';
     }
 
     let cardOnClickHandler = (event) => {
-        if (props.academy) {
-            if (props.admin) {
+        if (state.cardOf === 'academy') {
+            if (state.authorityType === 'admin') {
                 cardAdminOnClickAction(event, state, nav);
             }
-            if (props.user) {
+            if (state.authorityType === 'user') {
                 cardUserOnClickAction(event, state, nav);
             }
         }
     }
 
     let onEditCardEvent = (event) => {
-        if (props.admin) {
+        if (state.authorityType === 'admin') {
             adminEditCardEvent(event, state, nav);
         }
     }
 
     let onDeleteCardEvent = (event) => {
-        if (props.admin) {
+        if (state.authorityType === 'admin') {
             adminDeleteCardEvent(event, state, nav);
+        }
+    }
+
+    let onEnrollCardEvent = (event) => {
+        if (state.authorityType === 'user') {
+
         }
     }
 
     return (
         <div class="col-auto">
-            <div id={getFullCardId()} class={`${getViewClassName()} display-card p-2`}>
-                <div ref={cardRef} class="card" onClick={cardOnClickHandler}>
-                    {cardImage()}
-                    {cardBody()}
+            <div
+                id={getFullCardId(state.authorityType, state.cardOf, state.srsIDCount)}
+                class={`${getViewClassName()} display-card p-2`}>
+                <div
+                    ref={cardRef}
+                    class="card"
+                    onClick={cardOnClickHandler}>
+                    <CardImage url={state.cardProp.url} cardOf={state.cardOf} />
+                    <CardBody
+                        authorityType={state.authorityType}
+                        cardOf={state.cardOf}
+                        srsIDCount={state.srsIDCount}
+                        cardProp={state.cardProp} />
                 </div>
             </div>
         </div>

@@ -116,7 +116,7 @@ export default function CardContainer(props) {
                 cards.push(
                     <GridAcademyCourseCard
                         {...props}
-                        key={`displayCard_grid_${srsIDCount}`}
+                        key={`displayCard_grid_${Math.random() * 10}`}
                         srsIDCount={srsIDCount++}
                         cardProp={cardProp} />);
             }
@@ -125,7 +125,7 @@ export default function CardContainer(props) {
                 cards.push(
                     <ListAcademyCourseCard
                         {...props}
-                        key={`displayCard_list_${srsIDCount}`}
+                        key={`displayCard_list_${Math.random() * 10}`}
                         srsIDCount={srsIDCount++}
                         cardProp={cardProp} />);
             }
