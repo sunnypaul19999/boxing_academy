@@ -10,7 +10,6 @@ import SignIn from "routes/SignIn/SignIn.js";
 import MainUI from "components/MainUI/MainUI.js";
 import MainStore from "store/Main/MainStore.js";
 
-import { UserRoute } from "components/RouteElements/UserRoute";
 
 import AdminDashboard from "components/Dashboard/AdminDashboard/AdminDashboard";
 import AdminAcademy from "routes/Admin/AdminAcademy/AdminAcademy";
@@ -23,6 +22,10 @@ import AdminAllCourse from "routes/Admin/AdminAllCourses/AdminAllCourses";
 import AdminAllStudents from "routes/Admin/AdminAllStudents/AdminAllStudents";
 import AdminAddStudent from "routes/Admin/AdminAddStudent/AdminAddStudent";
 import AdminUpdateStudent from "routes/Admin/AdminUpdateStudent/AdminUpdateStudent";
+import UserDashboard from "components/Dashboard/UserDashboard/UserDashboard";
+import UserAcademy from "routes/User/UserAcademy/UserAcademy";
+import UserCourse from "routes/User/UserCourse/UserCourse";
+import UserEnrolledCourses from "routes/User/UserEnrolledCourses/UserEnrolledCourses";
 
 
 function MainUIRouter(props) {
@@ -50,12 +53,12 @@ function MainUIRouter(props) {
                 <Route path=':id/edit' element={<AdminUpdateStudent />}></Route>
               </Route>
             </Route>
-            <Route path='/user' element={UserRoute.userElement}>
+            <Route path='/user' element={<UserDashboard />}>
               <Route path='academy' element={<Outlet />}>
-                <Route index element={UserRoute.academyElement}></Route>
-                <Route path=':id/courses' element={UserRoute.academyCoursesElement}></Route>
+                <Route index element={<UserAcademy />}></Route>
+                <Route path=':id/courses' element={<UserCourse />}></Route>
               </Route>
-              <Route path='courses' element={UserRoute.enrolledCourses}></Route>
+              <Route path='courses' element={<UserEnrolledCourses />}></Route>
             </Route>
           </Routes>
         </BrowserRouter>
