@@ -14,6 +14,7 @@ import { adminDeleteCardEvent } from './Actions/Admin/Card/cardAdminOnDelete';
 //--------props--------------------------------------->
 //grid | list
 //admin | user & academy | course
+//srsIDCount
 //  ---------cardProp-------
 //id (id received from server must be passed here)
 //url (if academy pass image url)
