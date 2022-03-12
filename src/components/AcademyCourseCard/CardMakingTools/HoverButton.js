@@ -1,6 +1,7 @@
 //props:
 //id
 //text (button name)
+//onClick
 //color='brown' (for brown button, default is green)
 export default function HoverButton(props) {
     return (
