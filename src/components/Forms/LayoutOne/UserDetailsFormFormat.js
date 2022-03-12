@@ -26,14 +26,14 @@ export let userDetailsFormFormat = {
                 email_id: {
                     id: 'emailId',
                     name: 'email_id',
-                    type: 'text',
+                    type: 'email',
                     placeholder: 'Email',
                     required: true
                 },
                 age: {
                     id: 'age',
                     name: 'age',
-                    type: 'text',
+                    type: 'number',
                     placeholder: 'Age',
                     required: true
                 },
@@ -54,14 +54,16 @@ export let userDetailsFormFormat = {
                 phone_number: {
                     id: 'phoneNumber1',
                     name: 'phone_number',
-                    type: 'text',
+                    type: 'tel',
+                    pattern: `^[0-9]{10}$`,
                     placeholder: 'Primary Phone Number',
                     required: true
                 },
                 alternate_number: {
                     id: 'phoneNumber2',
                     name: 'alternate_number',
-                    type: 'text',
+                    type: 'tel',
+                    pattern: `^[0-9]{10}$`,
                     placeholder: 'Alternate Phone Number'
                 },
                 house_no: {
@@ -89,6 +91,7 @@ export let userDetailsFormFormat = {
                     id: 'pincode',
                     name: 'pincode',
                     type: 'text',
+                    pattern: "^[1-9][0-9]{5}$",
                     placeholder: 'Pincode',
                     required: true
                 },
@@ -141,14 +144,14 @@ export let userDetailsFormFormat = {
                 email_id: {
                     id: 'editEmailId',
                     name: 'email_id',
-                    type: 'text',
+                    type: 'email',
                     placeholder: 'Email',
                     required: true
                 },
                 age: {
                     id: 'editAge',
                     name: 'age',
-                    type: 'text',
+                    type: 'number',
                     placeholder: 'Age',
                     required: true
                 },
@@ -169,14 +172,16 @@ export let userDetailsFormFormat = {
                 phone_number: {
                     id: 'editPhoneNumber1',
                     name: 'phone_number',
-                    type: 'text',
+                    type: 'tel',
+                    pattern: `^[0-9]{10}$`,
                     placeholder: 'Primary Phone Number',
                     required: true
                 },
                 alternate_number: {
                     id: 'editPhoneNumber2',
                     name: 'alternate_number',
-                    type: 'text',
+                    type: 'tel',
+                    pattern: `^[0-9]{10}$`,
                     placeholder: 'Alternate Phone Number'
                 },
                 house_no: {
@@ -204,6 +209,7 @@ export let userDetailsFormFormat = {
                     id: 'editPincode',
                     name: 'pincode',
                     type: 'text',
+                    pattern: "^[1-9][0-9]{5}$",
                     placeholder: 'Pincode',
                     required: true
                 },

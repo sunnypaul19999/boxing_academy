@@ -8,7 +8,8 @@ export default function HoverButton(props) {
             <button
                 id={props.buttonId}
                 type="button"
-                class={`btn ${props.color ?? ''}`}>
+                class={`btn ${props.color ?? ''}`}
+                onClick={props.onClick}>
                 <b>{props.text}</b>
             </button>
         </span>

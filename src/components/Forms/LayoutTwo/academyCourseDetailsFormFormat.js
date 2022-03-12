@@ -26,7 +26,8 @@ export let academyCourseDetailsFormFormat = {
                 academy_contact_number: {
                     name: 'academy_contact_number',
                     id: 'contactNumber',
-                    type: 'text',
+                    type: 'tel',
+                    pattern: `^[0-9]{10}$`,
                     placeholder: 'Contact Number',
                     required: true,
                 },
@@ -81,7 +82,8 @@ export let academyCourseDetailsFormFormat = {
                 academy_contact_number: {
                     name: 'academy_contact_number',
                     id: 'editContactNumber',
-                    type: 'text',
+                    type: 'tel',
+                    pattern: `^[0-9]{10}$`,
                     placeholder: 'Contact Number',
                     required: true,
                 },

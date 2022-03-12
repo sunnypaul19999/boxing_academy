@@ -20,21 +20,21 @@ export default function UserDetailsForm(props) {
     let formData = () => {
         let data = new FormData(formRef.current);
         return {
-            firstName: data['first_name'],
-            fatherName: data['father_name'],
-            motherName: data['mother_name'],
-            emailId: data['email_id'],
-            age: data['age'],
-            lastName: data['last_name'],
-            gender: data['gender'],
-            phoneNumber: data['phone_number'],
-            alternateNumber: data['alternate_number'],
-            houseNo: data['house_no'],
-            streetName: data['street_name'],
-            areaName: data['area_name'],
-            pincode: data['pincode'],
-            state: data['state'],
-            nationality: data['nationality'],
+            firstName: data.get("first_name"),
+            fatherName: data.get("father_name"),
+            motherName: data.get("mother_name"),
+            emailId: data.get("email_id"),
+            age: data.get("age"),
+            lastName: data.get("last_name"),
+            gender: data.get("gender"),
+            phoneNumber: data.get("phone_number"),
+            alternateNumber: data.get("alternate_number"),
+            houseNo: data.get("house_no"),
+            streetName: data.get("street_name"),
+            areaName: data.get("area_name"),
+            pincode: data.get("pincode"),
+            state: data.get("state"),
+            nationality: data.get("nationality"),
         };
     }
 
@@ -47,12 +47,7 @@ export default function UserDetailsForm(props) {
     let onButtonClick = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        formRef.current.submit();
-    }
-
-
-    let formInputFormat = (type) => {
-        return (inputFormFormat[type]);
+        formRef.current.requestSubmit();
     }
 
     let formButtonFormat = (type) => {
@@ -61,45 +56,45 @@ export default function UserDetailsForm(props) {
 
     return (
         <>
-            <div class="form-layout">
-                <form action="" key={formRef} onSubmit={onFormSubmit}>
-                    <div class="form-field">
-                        <div class="form-field-left">
+            <div className="form-layout">
+                <form action="" ref={formRef} onSubmit={onFormSubmit}>
+                    <div className="form-field">
+                        <div className="form-field-left">
                             <input {...inputFormFormat['first_name']} />
                             <input {...inputFormFormat['father_name']} />
                             <input {...inputFormFormat['mother_name']} />
                             <input {...inputFormFormat['email_id']} />
                             <input {...inputFormFormat['age']} />
                         </div>
-                        <div class="form-field-right">
-                            <div class="form-field-right-top">
+                        <div className="form-field-right">
+                            <div className="form-field-right-top">
                                 <input {...inputFormFormat['last_name']} />
                                 <input {...inputFormFormat['gender']} />
                             </div>
-                            <div class="form-field-right-middle">
+                            <div className="form-field-right-middle">
                                 <input {...inputFormFormat['phone_number']} />
                                 <input   {...inputFormFormat['alternate_number']} />
                             </div>
-                            <div class="form-field-right-bottom">
+                            <div className="form-field-right-bottom">
                                 <fieldset>
                                     <legend>Address Information</legend>
-                                    <label for="house_no">House No: </label>
+                                    <label htmlFor="house_no">House No: </label>
                                     <input  {...inputFormFormat['house_no']} />
                                     <br />
-                                    <label for="street_name">Street Name: </label>
+                                    <label htmlFor="street_name">Street Name: </label>
                                     <input {...inputFormFormat['street_name']} />
                                     <br />
-                                    <span class="span-label">
-                                        <label for="area_name">Area name: </label>
+                                    <span className="span-label">
+                                        <label htmlFor="area_name">Area name: </label>
                                         <input  {...inputFormFormat['area_name']} />
-                                        <label for="pincode">Pincode : </label>
+                                        <label htmlFor="pincode">Pincode : </label>
                                         <input  {...inputFormFormat['pincode']} />
                                         <br />
                                     </span>
-                                    <span class="span-label">
-                                        <label for="state">State : </label>
-                                        <input {...inputFormFormat['pincode']} />
-                                        <label for="nationality">Nationality : </label>
+                                    <span className="span-label">
+                                        <label htmlFor="state">State : </label>
+                                        <input {...inputFormFormat['state']} />
+                                        <label htmlFor="nationality">Nationality : </label>
                                         <input {...inputFormFormat['nationality']} />
                                         <br />
                                     </span>

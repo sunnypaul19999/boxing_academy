@@ -14,13 +14,13 @@ export default function AcademyCourseDetailsForm(props) {
     let onButtonClick = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        formRef.current.submit();
+        formRef.current.requestSubmit();
     }
 
     return (
         <>
             <div class="form-layout">
-                <form action="" onSubmit={props.submitButton.onSubmit}>
+                <form ref={formRef} action="" onSubmit={props.submitButton.onSubmit}>
                     <div class="form-field">
                         <div class="form-field-left">
                             {props.children[0] ?? (<></>)}

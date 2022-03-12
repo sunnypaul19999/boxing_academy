@@ -15,6 +15,7 @@ export default function AdminAddAcademy(props) {
     let onFormSubmit = (event) => {
         event.preventDefault();
         event.stopPropagation();
+        let formData = new FormData(event.target);
         console.log('AdminAddAcademy submitted');
     }
 
