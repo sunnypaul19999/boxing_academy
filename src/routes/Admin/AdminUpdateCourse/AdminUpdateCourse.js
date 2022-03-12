@@ -30,7 +30,7 @@ export default function AdminUpdateCourse(props) {
             <input {...formInputFormat('course_duration')} />
             <input {...formInputFormat('course_timing')} />
             <input {...formInputFormat('course_total_students')} />
-            <input {...formInputFormat('course_description')} />
+            <textarea {...formInputFormat('course_description')}></textarea>
         </AcademyCourseDetailsForm>
     );
 }
