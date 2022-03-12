@@ -152,8 +152,17 @@ export default function AcademyCourseCard(props) {
         }
     }
 
+    let columnClass = () => {
+        if (state.cardType === 'list') {
+            return 'col-12 col-md-10';
+        }
+
+        //when grid
+        return 'col-auto';
+    }
+
     return (
-        <div class="col-auto">
+        <div class={columnClass()}>
             <div
                 id={getFullCardId(state.authorityType, state.cardOf, state.srsIDCount)}
                 class={`${getViewClassName()} display-card p-2`}>
