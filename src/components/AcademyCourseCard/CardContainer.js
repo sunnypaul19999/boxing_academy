@@ -109,13 +109,15 @@ export default function CardContainer(props) {
 
     let getCards = () => {
         let cards = [];
+        let srsIDCount = 1;
 
         if (state.viewType === 'grid') {
             for (const cardProp of cardProps) {
                 cards.push(
                     <GridAcademyCourseCard
                         {...props}
-                        key={`displayCard_grid_${cardProp.id}`}
+                        key={`displayCard_grid_${srsIDCount}`}
+                        srsIDCount={srsIDCount++}
                         cardProp={cardProp} />);
             }
         } else {
@@ -123,7 +125,8 @@ export default function CardContainer(props) {
                 cards.push(
                     <ListAcademyCourseCard
                         {...props}
-                        key={`displayCard_list_${cardProp.id}`}
+                        key={`displayCard_list_${srsIDCount}`}
+                        srsIDCount={srsIDCount++}
                         cardProp={cardProp} />);
             }
         }
