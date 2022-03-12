@@ -158,7 +158,7 @@ export default function AcademyCourseCard(props) {
         }
 
         //when grid
-        return 'col-auto';
+        return 'col';
     }
 
     return (
