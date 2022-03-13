@@ -54,7 +54,7 @@ function CardImage(props) {
 
     if (cardOf === 'academy') {
         return (
-            <div class="display-card-image">
+            <div className="display-card-image">
                 <img src={url} alt="ss" />
             </div>
         );
@@ -69,8 +69,8 @@ function CardBody(props) {
     let cardProp = props.cardProp;//card details
 
     return (
-        <div class="card-body">
-            <div class="details">
+        <div className="card-body">
+            <div className="details">
                 <CardInfoOne
                     title={cardProp.title}
                     description={cardProp.description} />
@@ -158,17 +158,17 @@ export default function AcademyCourseCard(props) {
         }
 
         //when grid
-        return 'col';
+        return 'col-auto';
     }
 
     return (
-        <div class={columnClass()}>
+        <div className={columnClass()}>
             <div
                 id={getFullCardId(state.authorityType, state.cardOf, state.srsIDCount)}
-                class={`${getViewClassName()} display-card p-2`}>
+                className={`${getViewClassName()} display-card p-2`}>
                 <div
                     ref={cardRef}
-                    class="card"
+                    className="card"
                     onClick={cardOnClickHandler}>
                     <CardImage url={state.cardProp.url} cardOf={state.cardOf} />
                     <CardBody

@@ -3,19 +3,19 @@ export default function CardInfoOne(props) {
 
     let title = () => {
         return (
-            <div class="item one">
+            <div className="item one">
                 <b>{props.title}</b>
             </div>
         );
     };
 
     let description = () => {
-        return (<div class="item two">{props.description}</div>);
+        return (<div className="item two">{props.description}</div>);
     };
 
     return (
-        <section class="sec one">
-            <div class="level one">
+        <section className="sec one">
+            <div className="level one">
                 {title()}
                 {description()}
             </div>
