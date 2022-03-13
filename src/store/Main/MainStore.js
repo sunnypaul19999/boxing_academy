@@ -27,6 +27,14 @@ export default class MainStore {
                     mobileNo: action.payload.authority,
                 }
             };
+        } else if (action.type === 'academyDetails') {
+            return {
+                academyDetails: action.payload,
+            };
+        } else if (action.type === 'courseDetails') {
+            return {
+                courseDetails: action.payload,
+            };
         }
     }
 
