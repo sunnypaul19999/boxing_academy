@@ -1,4 +1,5 @@
 import { editCard, deleteCard } from "components/AcademyCourseCard/Actions/Admin/Toolbar/cardToolbarAdminAction";
+import { userEnrollCourse } from "../Actions/User/Toolbar/cardToolbarUserAction";
 
 //props: cardOf(academy | course)
 //authorityType: admin | course
@@ -32,14 +33,14 @@ export default function CardToolbar(props) {
                         id={editButtonId}
                         type="button"
                         class="btn btn-primary"
-                        onClick={(event) => { editCard(event) }}>Edit</button>
+                        onClick={editCard}>Edit</button>
                 </span>
                 <span class="toolbar-item two">
                     <button
                         id={delButtonId}
                         type="button"
                         class="btn btn-primary"
-                        onClick={(event) => { deleteCard(event) }}>Delete</button>
+                        onClick={deleteCard}>Delete</button>
                 </span>
             </>
         );
@@ -51,7 +52,8 @@ export default function CardToolbar(props) {
                 <button
                     id={idStore.user.course.enroll}
                     type="button"
-                    class="btn btn-primary">Enroll Course
+                    class="btn btn-primary"
+                    onClick={userEnrollCourse}>Enroll Course
                 </button>
             </span>
         );
