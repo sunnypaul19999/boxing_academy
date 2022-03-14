@@ -93,13 +93,10 @@ function SpinnerLoader() {
     );
 }
 
-let testSetCount = 1;
+let testSetCount = 0;
 export default function CardContainer(props) {
 
-    let [state, setState] = useState({
-        viewType: 'list',
-        cardProps: null,
-    });
+    let [state, setState] = useState({ viewType: 'list', });
 
     let mainStoreDispatch = useDispatch();
 
@@ -108,7 +105,7 @@ export default function CardContainer(props) {
             if (props.academy) {
                 return state.academyDetails;
             } else {
-                return state.courseDetails
+                return state.courseDetails;
             }
         } else {
             return null;
@@ -129,6 +126,8 @@ export default function CardContainer(props) {
 
 
     useEffect(() => {
+        console.log('CardContainer: rendering ' + testSetCount);
+        testSetCount++;
         let gridViewChangeButton = document.getElementById('academyCourseCardAsGrid');
         let listViewChangeButton = document.getElementById('academyCourseCardAsList');
         gridViewChangeButton.addEventListener('click', onGridViewChangeClick);
@@ -142,19 +141,17 @@ export default function CardContainer(props) {
 
 
     let fetchCardProps = () => {
-        setTimeout(() => {
-            console.log('executing set timeout' + testSetCount++);
-            new Promise((resolve) => {
-                if (props.academy) mainStoreDispatch({ type: 'academyDetails', payload: cardPropsData });
-                if (props.course) mainStoreDispatch({ type: 'courseDetails', payload: cardPropsData });
-                resolve(cardPropsData);
-            });
-        }, 1000);
+        console.trace();
+        console.log('executing promise ' + testSetCount);
+        if (props.academy) mainStoreDispatch({ type: 'academyDetails', payload: cardPropsData });
+        if (props.course) mainStoreDispatch({ type: 'courseDetails', payload: cardPropsData });
     };
 
 
     let getCards = () => {
+        //console.log('getCards called ' + testSetCount);
         if (cardProps) {
+            //console.log(`testSetCount: ${testSetCount} \n${Object.values(cardProps ?? {})}`);
             let cards = [];
             let srsIDCount = 1;
             if (state.viewType === 'grid') {
@@ -179,7 +176,9 @@ export default function CardContainer(props) {
             }
             return cards;
         } else {
-            fetchCardProps();
+            console.log('fetching data ' + testSetCount);
+            //fetchCardProps();
+            setTimeout(fetchCardProps, 3000);
             return (<SpinnerLoader />);
         }
     };
