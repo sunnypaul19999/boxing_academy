@@ -1,4 +1,4 @@
-export let userDetailsFormFormat = {
+let userDetailsFormFormat = {
     student: {
         add: {
             input: {
@@ -117,6 +117,16 @@ export let userDetailsFormFormat = {
                     text: 'Add Student',
                 }
             },
+        },
+        enroll: {
+            input: {},
+            button: {
+                enroll_student: {
+                    id: 'enrollStudent',
+                    name: 'enroll_student',
+                    text: 'Enroll Course',
+                }
+            }
         },
         edit: {
             input: {
@@ -238,3 +248,7 @@ export let userDetailsFormFormat = {
         },
     },
 };
+
+userDetailsFormFormat.student.enroll.input = userDetailsFormFormat.student.add.input;
+
+export { userDetailsFormFormat };

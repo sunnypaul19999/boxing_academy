@@ -8,14 +8,24 @@ import 'assets/css/form/form-layout-one.css';
 
 //---------------props----------------
 //student(optional for now)
-//add | edit
+//add | edit | enroll
 //handleFormData (to pass form data on form submitted)
 //-------------------------------------
 export default function UserDetailsForm(props) {
 
     let formRef = useRef(null);
-    let inputFormFormat = (props.add) ? userDetailsFormFormat.student.add.input : userDetailsFormFormat.student.edit.input;
-    let buttonFormFormat = (props.add) ? userDetailsFormFormat.student.add.button : userDetailsFormFormat.student.edit.button;
+    let inputFormFormat, buttonFormFormat;
+
+    if (props.add) {
+        inputFormFormat = userDetailsFormFormat.student.add.input;
+        buttonFormFormat = userDetailsFormFormat.student.add.button.add_student;
+    } else if (props.enroll) {
+        inputFormFormat = userDetailsFormFormat.student.enroll.input;
+        buttonFormFormat = userDetailsFormFormat.student.enroll.button.enroll_student;
+    } else {
+        inputFormFormat = userDetailsFormFormat.student.edit.input;
+        buttonFormFormat = userDetailsFormFormat.student.edit.button.edit_academy;
+    }
 
     let formData = () => {
         let data = new FormData(formRef.current);
@@ -48,10 +58,6 @@ export default function UserDetailsForm(props) {
         event.preventDefault();
         event.stopPropagation();
         formRef.current.requestSubmit();
-    }
-
-    let formButtonFormat = (type) => {
-        return (buttonFormFormat[type]);
     }
 
     return (
@@ -105,7 +111,7 @@ export default function UserDetailsForm(props) {
                 </form>
             </div>
             <HoverButton
-                {...formButtonFormat((props.add) ? 'add_student' : 'edit_academy')}
+                {...buttonFormFormat}
                 onClick={onButtonClick} />
         </>
     );

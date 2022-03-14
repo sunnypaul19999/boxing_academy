@@ -10,6 +10,6 @@ export default function UserEnrollCourse(props) {
 
 
     return (
-        <UserDetailsForm add handleFormData={handleFormData} />
+        <UserDetailsForm enroll handleFormData={handleFormData} />
     );
 }
