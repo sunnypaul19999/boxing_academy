@@ -6,7 +6,7 @@ import CardToolbar from 'components/AcademyCourseCard/CardMakingTools/CardToolba
 import CardInfoOne from 'components/AcademyCourseCard/CardMakingTools/CardInfoOne.js';
 import CardInfoTwo from 'components/AcademyCourseCard/CardMakingTools/CardInfoTwo.js';
 import { cardUserOnClickAction } from 'components/AcademyCourseCard/Actions/User/Card/cardUserOnClickAction';
-import { cardAdminOnClickAction } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnClick';
+import { cardAcademyAdminOnClickAction } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnClick';
 import { adminEditCardEvent } from './Actions/Admin/Card/cardAdminOnEdit';
 import { adminDeleteCardEvent } from './Actions/Admin/Card/cardAdminOnDelete';
 import { cardUserOnEnrollCourseAction } from './Actions/User/Card/cardUserOnEnrollAction';
@@ -127,7 +127,7 @@ export default function AcademyCourseCard(props) {
     let cardOnClickHandler = (event) => {
         if (state.cardOf === 'academy') {
             if (state.authorityType === 'admin') {
-                cardAdminOnClickAction(event, state, nav);
+                cardAcademyAdminOnClickAction(event, state, nav);
             }
             if (state.authorityType === 'user') {
                 cardUserOnClickAction(event, state, nav);
