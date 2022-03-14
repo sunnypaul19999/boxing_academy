@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import CardToolbar from 'components/AcademyCourseCard/CardMakingTools/CardToolbar.js';
 import CardInfoOne from 'components/AcademyCourseCard/CardMakingTools/CardInfoOne.js';
 import CardInfoTwo from 'components/AcademyCourseCard/CardMakingTools/CardInfoTwo.js';
-import { cardUserOnClickAction } from 'components/AcademyCourseCard/Actions/User/Card/cardUserOnClickAction';
+import { cardAcademyUserOnClickAction } from 'components/AcademyCourseCard/Actions/User/Card/cardUserOnClickAction';
 import { cardAcademyAdminOnClickAction } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnClick';
 import { adminEditCardEvent } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnEdit';
 import { adminAcademyDeleteCardEvent, adminCourseDeleteCardEvent } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnDelete';
@@ -130,7 +130,7 @@ export default function AcademyCourseCard(props) {
                 cardAcademyAdminOnClickAction(event, state, nav);
             }
             if (state.authorityType === 'user') {
-                cardUserOnClickAction(event, state, nav);
+                cardAcademyUserOnClickAction(event, state, nav);
             }
         }
     }

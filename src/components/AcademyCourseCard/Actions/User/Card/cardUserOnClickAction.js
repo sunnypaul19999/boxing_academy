@@ -1,4 +1,4 @@
-export function cardUserOnClickAction(event, state, nav) {
+export function cardAcademyUserOnClickAction(event, state, nav) {
     event.preventDefault();
     event.stopPropagation();
 
