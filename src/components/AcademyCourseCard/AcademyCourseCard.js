@@ -95,8 +95,8 @@ export default function AcademyCourseCard(props) {
 
     let [state] = useState({
         authorityType: (props.admin) ? 'admin' : 'user',
-        cardOf: (props.academy) ? 'academy' : 'course',
-        cardType: (props.list) ? 'list' : 'grid',
+        cardOf: (props.course) ? 'course' : 'academy',
+        cardType: (props.grid) ? 'grid' : 'list',
         srsIDCount: props.srsIDCount,
         cardProp: cardProp,
     });
