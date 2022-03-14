@@ -7,9 +7,9 @@ import CardInfoOne from 'components/AcademyCourseCard/CardMakingTools/CardInfoOn
 import CardInfoTwo from 'components/AcademyCourseCard/CardMakingTools/CardInfoTwo.js';
 import { cardUserOnClickAction } from 'components/AcademyCourseCard/Actions/User/Card/cardUserOnClickAction';
 import { cardAcademyAdminOnClickAction } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnClick';
-import { adminEditCardEvent } from './Actions/Admin/Card/cardAdminOnEdit';
-import { adminDeleteCardEvent } from './Actions/Admin/Card/cardAdminOnDelete';
-import { cardUserOnEnrollCourseAction } from './Actions/User/Card/cardUserOnEnrollAction';
+import { adminEditCardEvent } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnEdit';
+import { adminAcademyDeleteCardEvent, adminCourseDeleteCardEvent } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnDelete';
+import { cardUserOnEnrollCourseAction } from 'components/AcademyCourseCard/Actions/User/Card/cardUserOnEnrollAction';
 
 
 //--------props--------------------------------------->
@@ -143,7 +143,12 @@ export default function AcademyCourseCard(props) {
 
     let onDeleteCardEvent = (event) => {
         if (state.authorityType === 'admin') {
-            adminDeleteCardEvent(event, state, nav);
+            if (state.authorityType === 'academy') {
+                adminAcademyDeleteCardEvent(event, state, nav);
+            }
+            if (state.authorityType === 'course') {
+                adminCourseDeleteCardEvent(event, state, nav);
+            }
         }
     }
 
