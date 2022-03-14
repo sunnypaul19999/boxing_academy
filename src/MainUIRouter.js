@@ -26,6 +26,7 @@ import UserDashboard from "components/Dashboard/UserDashboard/UserDashboard";
 import UserAcademy from "routes/User/UserAcademy/UserAcademy";
 import UserCourse from "routes/User/UserCourse/UserCourse";
 import UserEnrolledCourses from "routes/User/UserEnrolledCourses/UserEnrolledCourses";
+import UserEnrollCourse from "routes/User/UserEnrollCourse/UserEnrollCourse";
 
 
 function MainUIRouter(props) {
@@ -41,22 +42,23 @@ function MainUIRouter(props) {
               <Route path='academy' element={<Outlet />}>
                 <Route index element={<AdminAcademy />}></Route>
                 <Route path='add' element={<AdminAddAcademy />}></Route>
-                <Route path=':id/edit' element={<AdminUpdateAcademy />}></Route>
-                <Route path=':id/courses' element={<AdminCourse />}></Route>
-                <Route path=':id/courses/add' element={<AdminAddCourse />}></Route>
-                <Route path=':id/courses/:id/edit' element={<AdminUpdateCourse />}></Route>
+                <Route path=':academyId/edit' element={<AdminUpdateAcademy />}></Route>
+                <Route path=':academyId/courses' element={<AdminCourse />}></Route>
+                <Route path=':academyId/courses/add' element={<AdminAddCourse />}></Route>
+                <Route path=':academyId/courses/:courseId/edit' element={<AdminUpdateCourse />}></Route>
               </Route>
               <Route path='courses' element={<AdminAllCourse />}></Route>
               <Route path='students' element={<Outlet />}>
                 <Route index element={<AdminAllStudents />}></Route>
                 <Route path='add' element={<AdminAddStudent />}></Route>
-                <Route path=':id/edit' element={<AdminUpdateStudent />}></Route>
+                <Route path=':studentId/edit' element={<AdminUpdateStudent />}></Route>
               </Route>
             </Route>
             <Route path='/user' element={<UserDashboard />}>
               <Route path='academy' element={<Outlet />}>
                 <Route index element={<UserAcademy />}></Route>
-                <Route path=':id/courses' element={<UserCourse />}></Route>
+                <Route path=':academyId/courses' element={<UserCourse />}></Route>
+                <Route path=':academyId/courses/:courseId/enroll' element={<UserEnrollCourse />}></Route>
               </Route>
               <Route path='courses' element={<UserEnrolledCourses />}></Route>
             </Route>
