@@ -19,9 +19,10 @@ import { cardUserOnEnrollCourseAction } from 'components/AcademyCourseCard/Actio
 //  ---------cardProp-------
 //id (id received from server must be passed here)
 //url (if academy pass image url)
-//title, description, duration, timing, strength, location, zipcode, rating
+//title, description, duration, timing, strength, location, cost, rating
 //  --------------------------
 //------------------------------------------------------>
+//only toolbar depends on authoritytype
 
 let getFullCardId = (authorityType, cardOf, srsIDCount) => {
     if (authorityType === 'admin') {
@@ -51,12 +52,11 @@ function CardToolbarWrapper(props) {
 
 function CardImage(props) {
     let url = props.url;
-    let cardOf = props.cardOf;
 
-    if (cardOf === 'academy') {
+    if (url) {
         return (
             <div className="display-card-image">
-                <img src={url} alt="ss" />
+                <img src={url} alt="" />
             </div>
         );
     }
@@ -81,7 +81,7 @@ function CardBody(props) {
                     timing={cardProp.timing}
                     location={cardProp.location}
                     strength={cardProp.strength}
-                    zipcode={cardProp.zipcode}
+                    cost={cardProp.cost}
                     rating={cardProp.rating} />
                 <CardToolbarWrapper authorityType={authorityType} cardOf={cardOf} />
             </div>
@@ -176,7 +176,7 @@ export default function AcademyCourseCard(props) {
                     ref={cardRef}
                     className="card"
                     onClick={cardOnClickHandler}>
-                    <CardImage url={state.cardProp.url} cardOf={state.cardOf} />
+                    <CardImage url={state.cardProp.url} />
                     <CardBody
                         authorityType={state.authorityType}
                         cardOf={state.cardOf}
