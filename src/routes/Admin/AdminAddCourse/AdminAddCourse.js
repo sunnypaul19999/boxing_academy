@@ -15,8 +15,20 @@ export default function AdminAddCourse(props) {
     let onFormSubmit = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        //let formData = new FormData(event.target);
+        let formData = new FormData(event.target);
+        let data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        console.log(data);
         console.log('AdminAddCourse submitted');
+    }
+
+    let serverFormat = (data) => {
+        let serverJSONFormat = {};
+
+        return serverJSONFormat;
     }
 
     return (
