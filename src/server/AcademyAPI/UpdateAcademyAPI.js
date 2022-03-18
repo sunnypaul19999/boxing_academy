@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { serverURL } from "config/serverConfig";
 
-export default class AddAcademyAPI {
+export default class UpdateAcademyAPI {
     _response = {
         payload: null,
         message: null,
@@ -13,8 +13,8 @@ export default class AddAcademyAPI {
         this._token = token;
     }
 
-    _createAddAcademyRequest() {
-        let req = axios.post(`${serverURL}/institute/addInstitute`, this._reqBody, {
+    _createUpdateAcademyRequest() {
+        let req = axios.post(`${serverURL}/institute/editInstitute`, this._reqBody, {
             headers: {
                 Authorization: `Bearer ${this._token}`
             }
@@ -22,19 +22,22 @@ export default class AddAcademyAPI {
         return req;
     }
 
-    _onAddAcademySuccess(res) {
+    _onUpdateAcademySuccess(res) {
         this._response.payload = { academy: res.data };
-        this._response.message = '  Academy Added!  ';
+        this._response.message = '  Academy Updated!  ';
 
         return this._response;
     }
 
-    _onAddAcademyError(err) {
+    _onUpdateAcademyError(err) {
         let message;
         let status = err['response'].status;
 
-        if (err['response'].status === 409) {
-            message = 'Academy Already Present !'
+        if (err['response'].status === 404) {
+            message = 'Academy not found!';
+        }
+        else if (err['response'].status === 409) {
+            message = 'Academy Already Present !';
         } else {
             message = 'OPPS! Network error';
         }
@@ -48,14 +51,14 @@ export default class AddAcademyAPI {
 
 
     static async addAcademy(token, reqBody) {
-        let api = new AddAcademyAPI(token, reqBody);
+        let api = new UpdateAcademyAPI(token, reqBody);
         try {
-            let httpRes = await api._createAddAcademyRequest();
-            let response = api._onAddAcademySuccess(httpRes);
+            let httpRes = await api._createUpdateAcademyRequest();
+            let response = api._onUpdateAcademySuccess(httpRes);
             return response;
         } catch (err) {
-            console.log(`AcademyAPI Add: Error Occured\n`); console.log(err);
-            let errResponse = api._onAddAcademyError(err);
+            console.log(`AcademyAPI Update: Error Occured\n`); console.log(err);
+            let errResponse = api._onUpdateAcademyError(err);
             return errResponse;
         }
     }
