@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 //-----------props----------
 //admin | user & academy | course
+//fetch  -- no param callback func 
 //cardProps (card properties mentioned in AcademyCourseCard)
 //--------------------------
 
@@ -115,7 +116,17 @@ export default function CardContainer(props) {
     let testState = useSelector((state) => { return state; });
 
     useEffect(() => {
+        console.log('CardContainer: rendering ' + testSetCount); testSetCount++;
         console.log(testState);
+        let gridViewChangeButton = document.getElementById('academyCourseCardAsGrid');
+        let listViewChangeButton = document.getElementById('academyCourseCardAsList');
+        gridViewChangeButton.addEventListener('click', onGridViewChangeClick);
+        listViewChangeButton.addEventListener('click', onListViewChangeClick);
+
+        return () => {
+            gridViewChangeButton.removeEventListener('click', onGridViewChangeClick);
+            listViewChangeButton.removeEventListener('click', onListViewChangeClick);
+        };
     });
 
     let onGridViewChangeClick = () => {
@@ -130,26 +141,11 @@ export default function CardContainer(props) {
     }
 
 
-    useEffect(() => {
-        console.log('CardContainer: rendering ' + testSetCount);
-        testSetCount++;
-        let gridViewChangeButton = document.getElementById('academyCourseCardAsGrid');
-        let listViewChangeButton = document.getElementById('academyCourseCardAsList');
-        gridViewChangeButton.addEventListener('click', onGridViewChangeClick);
-        listViewChangeButton.addEventListener('click', onListViewChangeClick);
-
-        return () => {
-            gridViewChangeButton.removeEventListener('click', onGridViewChangeClick);
-            listViewChangeButton.removeEventListener('click', onListViewChangeClick);
-        };
-    });
-
-
-    let fetchCardProps = () => {
-        //console.trace();
-        //console.log('executing promise ' + testSetCount);
-        if (props.academy) mainStoreDispatch({ type: 'academyDetails', payload: cardPropsData });
-        if (props.course) mainStoreDispatch({ type: 'courseDetails', payload: cardPropsData });
+    let fetchCardProps = async () => {
+        let actionType = (props.academy) ? 'academyDetails' : 'courseDetails';
+        let cardPropsData = await props.fetch();
+        console.log(cardPropsData);
+        mainStoreDispatch({ type: actionType, payload: cardPropsData });
     };
 
 
@@ -181,7 +177,8 @@ export default function CardContainer(props) {
             }
             return cards;
         } else {
-            setTimeout(fetchCardProps, 0);
+            fetchCardProps();
+            //setTimeout(fetchCardProps, 0);
             return (<SpinnerLoader />);
         }
     };
