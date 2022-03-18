@@ -2,10 +2,14 @@ import AcademyCourseDetailsForm from "components/Forms/LayoutTwo/AcademyCourseDe
 import { academyCourseDetailsFormFormat } from "components/Forms/LayoutTwo/academyCourseDetailsFormFormat.js";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import AcademyAPI from "server/AcademyAPI/AcademyAPI";
+import CardContainerNotifier from "store/CardContainerNotifier/CardContainerNotifier";
 
 
 export default function AdminAddAcademy(props) {
+
+    let navigate = useNavigate();
 
     useEffect(() => {
         console.log('AdminAddAcademy rendered');
@@ -27,8 +31,10 @@ export default function AdminAddAcademy(props) {
         console.log('AdminAddAcademy submitted');
         event.preventDefault();
         event.stopPropagation();
-        let sformat = serverFormat(new FormData(event.target));
-        AcademyAPI.add(token, sformat);
+        addAcademy(
+            token,
+            serverFormat(new FormData(event.target))
+        );
     }
 
     let serverFormat = (formData) => {
@@ -42,6 +48,13 @@ export default function AdminAddAcademy(props) {
             "instituteDesc": formData.get(formFormat.academy_description.name),
             //"rating": formData.get(formFormat.academy_rating),
         };
+    }
+
+    let addAcademy = async (token, sformat) => {
+        let response = await AcademyAPI.add(token, sformat);
+        console.log(response.message);
+        CardContainerNotifier.update();
+        navigate('../');
     }
 
     return (

@@ -5,6 +5,7 @@ import ListAcademyCourseCard from './ListAcademyCourseCard';
 
 import 'assets/css/card-container/card-container.css';
 import { useDispatch, useSelector } from 'react-redux';
+import CardContainerNotifier from 'store/CardContainerNotifier/CardContainerNotifier';
 
 
 //-----------props----------
@@ -99,6 +100,7 @@ export default function CardContainer(props) {
 
     let [state, setState] = useState({ viewType: 'list', });
 
+
     let mainStoreDispatch = useDispatch();
 
     let cardProps = useSelector((state) => {
@@ -113,11 +115,9 @@ export default function CardContainer(props) {
         }
     });
 
-    let testState = useSelector((state) => { return state; });
-
     useEffect(() => {
-        console.log('CardContainer: rendering ' + testSetCount); testSetCount++;
-        console.log(testState);
+        console.log('CardContainer: rendering ' + testSetCount++);
+        fetchCardProps();
         let gridViewChangeButton = document.getElementById('academyCourseCardAsGrid');
         let listViewChangeButton = document.getElementById('academyCourseCardAsList');
         gridViewChangeButton.addEventListener('click', onGridViewChangeClick);
@@ -130,22 +130,23 @@ export default function CardContainer(props) {
     });
 
     let onGridViewChangeClick = () => {
-        //console.log('grid view clicked');
         setState({ viewType: 'grid' });
     }
 
 
     let onListViewChangeClick = () => {
-        //console.log('list view clicked');
         setState({ viewType: 'list' });
     }
 
 
     let fetchCardProps = async () => {
-        let actionType = (props.academy) ? 'academyDetails' : 'courseDetails';
-        let cardPropsData = await props.fetch();
-        console.log(cardPropsData);
-        mainStoreDispatch({ type: actionType, payload: cardPropsData });
+        if (CardContainerNotifier.canUpdate) {
+            let actionType = (props.academy) ? 'academyDetails' : 'courseDetails';
+            let cardPropsData = await props.fetch();
+            console.log(cardPropsData);
+            CardContainerNotifier.reset();
+            mainStoreDispatch({ type: actionType, payload: cardPropsData });
+        }
     };
 
 
@@ -177,8 +178,11 @@ export default function CardContainer(props) {
             }
             return cards;
         } else {
-            fetchCardProps();
-            //setTimeout(fetchCardProps, 0);
+            (() => {
+                //updating card props with initial data
+                CardContainerNotifier.update();
+                fetchCardProps();
+            })();
             return (<SpinnerLoader />);
         }
     };

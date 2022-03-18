@@ -17,13 +17,11 @@ export default function AdminAcademy(props) {
 
     let fetchAllAcademy = async () => {
         let ctoken = token;
+        let cardPropsData = [];
         let payload = await AcademyAPI.fetchAll(ctoken).then((response) => { return response.payload; });
 
-        //returns card prop
-        console.log(payload.academy);
         if (payload.academy[Symbol.iterator]) {
-            console.log('is iterator ;;;;;;;;;;;;;;')
-            let cardPropsData = [];
+
             payload.academy.forEach((academy) => {
                 cardPropsData.push({
                     id: academy.instituteId,
@@ -37,15 +35,17 @@ export default function AdminAcademy(props) {
 
             return cardPropsData;
         } else {
-            return {
+            cardPropsData.push({
                 id: payload.academy.instituteId,
                 url: payload.academy.imageURL,
                 title: payload.academy.instituteName,
                 description: payload.academy.instituteDesc,
                 location: payload.academy.instituteAddress,
                 rating: payload.academy.rating,
-            };
+            });
         }
+
+        return cardPropsData;
     }
 
     return (
