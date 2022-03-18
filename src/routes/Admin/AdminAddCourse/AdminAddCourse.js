@@ -15,20 +15,20 @@ export default function AdminAddCourse(props) {
     let onFormSubmit = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        let formData = new FormData(event.target);
-        let data = {};
-        formData.forEach((value, key) => {
-            data[key] = value;
-        });
-
-        console.log(data);
+        let sformat = serverFormat(new FormData(event.target));
+        console.log(sformat);
         console.log('AdminAddCourse submitted');
     }
 
-    let serverFormat = (data) => {
-        let serverJSONFormat = {};
-
-        return serverJSONFormat;
+    let serverFormat = (formData) => {
+        let formFormat = academyCourseDetailsFormFormat.course.add.input;
+        return {
+            "courseName": formData.get(formFormat.course_name.name),
+            "courseDesc": formData.get(formFormat.course_description.name),
+            "courseDuration": formData.get(formFormat.course_duration.name),
+            "courseTimings": formData.get(formFormat.course_timing),
+            //"maxCourseStudents": formData.get(formFormat.course_total_students),
+        };
     }
 
     return (

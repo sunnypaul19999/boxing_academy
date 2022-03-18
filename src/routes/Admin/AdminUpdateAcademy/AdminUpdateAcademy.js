@@ -15,8 +15,22 @@ export default function AdminUpdateAcademy(props) {
     let onFormSubmit = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        //let formData = new FormData(event.target);
-        console.log('AdminAddAcademy submitted');
+        let sformat = serverFormat(new FormData(event.target));
+        console.log(sformat);
+        console.log('AdminUpdateAcademy submitted');
+    }
+
+    let serverFormat = (formData) => {
+        let formFormat = academyCourseDetailsFormFormat.academy.edit.input;
+        return {
+            "instituteName": formData.get(formFormat.academy_name.name),
+            "imageURL": formData.get(formFormat.academy_image_url.name),
+            "instituteAddress": formData.get(formFormat.academy_location.name),
+            "instituteMobile": formData.get(formFormat.academy_contact_number.name),
+            "instituteEmail": formData.get(formFormat.academy_email.name),
+            "instituteDesc": formData.get(formFormat.academy_description.name),
+            //"rating": formData.get(formFormat.academy_rating),
+        };
     }
 
     return (
