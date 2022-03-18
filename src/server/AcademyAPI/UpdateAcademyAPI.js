@@ -50,7 +50,7 @@ export default class UpdateAcademyAPI {
     }
 
 
-    static async addAcademy(token, reqBody) {
+    static async updateAcademy(token, reqBody) {
         let api = new UpdateAcademyAPI(token, reqBody);
         try {
             let httpRes = await api._createUpdateAcademyRequest();
