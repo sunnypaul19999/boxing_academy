@@ -24,7 +24,7 @@ function SignIn(props) {
 
   let userDetails = useSelector((state) => {
     if (state) {
-      return state.userDetails;
+      return state;
     } else {
       return 'SignIn component: TokenStore is accessed using useSelector, state is null';
     }
@@ -32,7 +32,7 @@ function SignIn(props) {
 
   useEffect(() => {
     console.log('SignIn Component: state');
-    console.log(userDetails);
+    //console.log(userDetails);
   });
 
   let formDetails = () => {
@@ -50,13 +50,13 @@ function SignIn(props) {
       payload: signInMsgPacket.payload
     });
     toast(signInMsgPacket.message);
+    navigate('/admin/academy');
   }
 
 
   let onSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
-
     let credentials = formDetails();
 
     try {
@@ -76,7 +76,7 @@ function SignIn(props) {
 
   return (
     <>
-      <form id="loginForm" ref={formRef} onSubmit={onSubmit.bind(this)}>
+      <form id="loginForm" ref={formRef} onSubmit={onSubmit}>
         <h3 className="text-white">Login</h3>
         <div className="form-item">
           <div className="form-group">

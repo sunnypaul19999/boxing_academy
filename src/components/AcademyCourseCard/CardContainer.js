@@ -141,8 +141,8 @@ export default function CardContainer(props) {
 
 
     let fetchCardProps = () => {
-        console.trace();
-        console.log('executing promise ' + testSetCount);
+        //console.trace();
+        //console.log('executing promise ' + testSetCount);
         if (props.academy) mainStoreDispatch({ type: 'academyDetails', payload: cardPropsData });
         if (props.course) mainStoreDispatch({ type: 'courseDetails', payload: cardPropsData });
     };
@@ -176,7 +176,7 @@ export default function CardContainer(props) {
             }
             return cards;
         } else {
-            console.log('fetching data ' + testSetCount);
+            //console.log('fetching data ' + testSetCount);
             //fetchCardProps();
             setTimeout(fetchCardProps, 3000);
             return (<SpinnerLoader />);

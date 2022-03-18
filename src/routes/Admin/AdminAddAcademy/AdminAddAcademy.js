@@ -1,5 +1,9 @@
 import AcademyCourseDetailsForm from "components/Forms/LayoutTwo/AcademyCourseDetailsForm";
 import { academyCourseDetailsFormFormat } from "components/Forms/LayoutTwo/academyCourseDetailsFormFormat.js";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import AcademyAPI from "server/AcademyAPI/AcademyAPI";
+import MainStore from "store/Main/MainStore";
 
 
 export default function AdminAddAcademy(props) {
@@ -12,12 +16,16 @@ export default function AdminAddAcademy(props) {
         return (academyCourseDetailsFormFormat.academy.add.button[type]);
     }
 
+    let token = useSelector((state) => {
+        return state.userDetails.token;
+    });
+
     let onFormSubmit = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        let sformat = serverFormat(new FormData(event.target));
-        console.log(sformat);
         console.log('AdminAddAcademy submitted');
+        let sformat = serverFormat(new FormData(event.target));
+        AcademyAPI.add(token, sformat);
     }
 
     let serverFormat = (formData) => {
