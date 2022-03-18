@@ -3,10 +3,13 @@ import { academyCourseDetailsFormFormat } from "components/Forms/LayoutTwo/acade
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import AcademyAPI from "server/AcademyAPI/AcademyAPI";
-import MainStore from "store/Main/MainStore";
 
 
 export default function AdminAddAcademy(props) {
+
+    useEffect(() => {
+        console.log('AdminAddAcademy rendered');
+    });
 
     let formInputFormat = (type) => {
         return (academyCourseDetailsFormFormat.academy.add.input[type]);
@@ -21,9 +24,9 @@ export default function AdminAddAcademy(props) {
     });
 
     let onFormSubmit = (event) => {
+        console.log('AdminAddAcademy submitted');
         event.preventDefault();
         event.stopPropagation();
-        console.log('AdminAddAcademy submitted');
         let sformat = serverFormat(new FormData(event.target));
         AcademyAPI.add(token, sformat);
     }

@@ -1,8 +1,6 @@
 import axios from "axios";
 
 import { serverURL } from "config/serverConfig";
-import { useSelector } from "react-redux";
-import MainStore from "store/Main/MainStore";
 
 class AddAcademyAPI {
     _response = {
@@ -26,7 +24,7 @@ class AddAcademyAPI {
 
     _onAddAcademySuccess(res) {
         this._response.payload = { academy: res.data };
-        this._response.message = 'Academy Added  !';
+        this._response.message = '  Academy Added!  ';
 
         return this._response;
     }
@@ -56,9 +54,8 @@ class AddAcademyAPI {
             let response = api._onAddAcademySuccess(httpRes);
             return response;
         } catch (err) {
-            console.log(`AcademyAPI Add: Error Occured`);
-            console.log(err);
-            let errResponse = this._onAddAcademyError(err);
+            console.log(`AcademyAPI Add: Error Occured\n`);console.log(err);
+            let errResponse = api._onAddAcademyError(err);
             return errResponse;
         }
     }

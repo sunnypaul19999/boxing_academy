@@ -11,8 +11,8 @@ import "assets/css/login.css";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SignInError from "Handler/SignInHandler/SignInError.js";
 
+import SignInError from "Handler/SignInHandler/SignInError.js";
 
 
 function SignIn(props) {
@@ -22,7 +22,7 @@ function SignIn(props) {
 
   let mainStoreDispatch = useDispatch();
 
-  let userDetails = useSelector((state) => {
+  let state = useSelector((state) => {
     if (state) {
       return state;
     } else {
@@ -32,7 +32,7 @@ function SignIn(props) {
 
   useEffect(() => {
     console.log('SignIn Component: state');
-    //console.log(userDetails);
+    console.log(state);
   });
 
   let formDetails = () => {

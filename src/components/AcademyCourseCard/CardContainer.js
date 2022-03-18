@@ -112,6 +112,11 @@ export default function CardContainer(props) {
         }
     });
 
+    let testState = useSelector((state) => { return state; });
+
+    useEffect(() => {
+        console.log(testState);
+    });
 
     let onGridViewChangeClick = () => {
         //console.log('grid view clicked');
@@ -176,9 +181,7 @@ export default function CardContainer(props) {
             }
             return cards;
         } else {
-            //console.log('fetching data ' + testSetCount);
-            //fetchCardProps();
-            setTimeout(fetchCardProps, 3000);
+            setTimeout(fetchCardProps, 0);
             return (<SpinnerLoader />);
         }
     };

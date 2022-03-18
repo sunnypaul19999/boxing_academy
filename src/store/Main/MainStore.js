@@ -12,6 +12,7 @@ export default class MainStore {
     tokenStoreReducer = (state, action) => {
         if (action.type === 'userDetails') {
             return {
+                ...state,
                 userDetails: {
                     token: action.payload.token,
                     name: action.payload.name,
@@ -22,14 +23,12 @@ export default class MainStore {
             };
         } else if (action.type === 'academyDetails') {
             return {
-                userDetails: (state.userDetails) ? state.userDetails : null,
-                courseDetails: (state.courseDetails) ? state.courseDetails : null,
+                ...state,
                 academyDetails: action.payload,
             };
         } else if (action.type === 'courseDetails') {
             return {
-                userDetails: (state.userDetails) ? state.userDetails : null,
-                academyDetails: (state.academyDetails) ? state.academyDetails : null,
+                ...state,
                 courseDetails: action.payload,
             };
         }
