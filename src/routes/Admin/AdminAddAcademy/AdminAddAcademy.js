@@ -54,7 +54,7 @@ export default function AdminAddAcademy(props) {
         let response = await AcademyAPI.add(token, sformat);
         console.log(response.message);
         CardContainerNotifier.update();
-        navigate('../');
+        navigate(-1);
     }
 
     return (

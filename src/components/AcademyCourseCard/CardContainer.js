@@ -6,6 +6,7 @@ import ListAcademyCourseCard from './ListAcademyCourseCard';
 import 'assets/css/card-container/card-container.css';
 import { useDispatch, useSelector } from 'react-redux';
 import CardContainerNotifier from 'store/CardContainerNotifier/CardContainerNotifier';
+import objectHash from 'object-hash';
 
 
 //-----------props----------
@@ -78,6 +79,7 @@ const cardPropsData = [
     },
 ];
 
+
 function SpinnerLoader() {
     return (
         <div className="loading-spinner" style={{
@@ -97,6 +99,8 @@ function SpinnerLoader() {
 
 let testSetCount = 0;
 export default function CardContainer(props) {
+
+
 
     let [state, setState] = useState({ viewType: 'list', });
 
@@ -161,7 +165,7 @@ export default function CardContainer(props) {
                     cards.push(
                         <GridAcademyCourseCard
                             {...props}
-                            key={`displayCard_grid_${srsIDCount}`}
+                            key={`${objectHash(cardProp)}`}//displayCard_grid_${srsIDCount}
                             srsIDCount={srsIDCount++}
                             cardProp={cardProp} />);
                 }
@@ -171,7 +175,7 @@ export default function CardContainer(props) {
                     cards.push(
                         <ListAcademyCourseCard
                             {...props}
-                            key={`displayCard_list_${srsIDCount}`}
+                            key={`${objectHash(cardProp)}`}//displayCard_list_${srsIDCount}
                             srsIDCount={srsIDCount++}
                             cardProp={cardProp} />);
                 }
