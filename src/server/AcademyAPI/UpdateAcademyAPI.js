@@ -11,10 +11,11 @@ export default class UpdateAcademyAPI {
     constructor(token, reqBody) {
         this._reqBody = reqBody;
         this._token = token;
+        console.log(this._token);
     }
 
     _createUpdateAcademyRequest() {
-        let req = axios.post(`${serverURL}/institute/editInstitute`, this._reqBody, {
+        let req = axios.put(`${serverURL}/institute/editInstitute`, this._reqBody, {
             headers: {
                 Authorization: `Bearer ${this._token}`
             }
