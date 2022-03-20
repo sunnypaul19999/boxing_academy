@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import GridAcademyCourseCard from './GridAcademyCourseCard';
 import ListAcademyCourseCard from './ListAcademyCourseCard';
 
 import 'assets/css/card-container/card-container.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import CardContainerNotifier from 'store/CardContainerNotifier/CardContainerNotifier';
 import objectHash from 'object-hash';
+import produce from 'immer';
 
 
 //-----------props----------
@@ -101,9 +102,9 @@ let testSetCount = 0;
 export default function CardContainer(props) {
 
 
-
     let [state, setState] = useState({ viewType: 'list', });
 
+    let cardContainerRef = useRef({ observer: null });
 
     let mainStoreDispatch = useDispatch();
 
@@ -122,6 +123,20 @@ export default function CardContainer(props) {
     useEffect(() => {
         console.log('CardContainer: rendering ' + testSetCount++);
         fetchCardProps();
+
+        cardContainerRef.current.observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach((element) => {
+                if (element.isIntersecting) {
+                    console.log(element.target.parentElement.id);
+                }
+            });
+            //console.log(entries);
+        }, {
+            root: cardContainerRef.current,
+            rootMargin: '0px',
+            threshold: 1.0
+        });
+
         let gridViewChangeButton = document.getElementById('academyCourseCardAsGrid');
         let listViewChangeButton = document.getElementById('academyCourseCardAsList');
         gridViewChangeButton.addEventListener('click', onGridViewChangeClick);
@@ -132,6 +147,7 @@ export default function CardContainer(props) {
             listViewChangeButton.removeEventListener('click', onListViewChangeClick);
         };
     });
+
 
     let onGridViewChangeClick = () => {
         setState({ viewType: 'grid' });
@@ -145,14 +161,12 @@ export default function CardContainer(props) {
 
     let fetchCardProps = async () => {
         if (CardContainerNotifier.canUpdate) {
-            let actionType = (props.academy) ? 'academyDetails' : 'courseDetails';
-            let cardPropsData = await props.fetch();
-            console.log(cardPropsData);
             CardContainerNotifier.reset();
+            let cardPropsData = await props.fetch();
+            let actionType = (props.academy) ? 'academyDetails' : 'courseDetails';
             mainStoreDispatch({ type: actionType, payload: cardPropsData });
         }
     };
-
 
     let getCards = () => {
         //console.log('getCards called ' + testSetCount);
@@ -162,38 +176,51 @@ export default function CardContainer(props) {
             let srsIDCount = 1;
             if (state.viewType === 'grid') {
                 for (const cardProp of cardProps) {
+                    let prophash = objectHash(
+                        {
+                            cardProp: cardProp,
+                            timestamp: Math.floor(Date.now() / 1000)
+                        }
+                    );
                     cards.push(
                         <GridAcademyCourseCard
                             {...props}
-                            key={`${objectHash(cardProp)}`}//displayCard_grid_${srsIDCount}
+                            key={`${prophash}`}//displayCard_grid_${srsIDCount}
                             srsIDCount={srsIDCount++}
-                            cardProp={cardProp} />);
+                            cardProp={cardProp}
+                            observer={cardContainerRef.current.observer}
+                        />);
                 }
             } else {
                 //if no view type is given list type is assumed
                 for (const cardProp of cardProps) {
+                    let prophash = objectHash(
+                        {
+                            cardProp: cardProp,
+                            timestamp: Math.floor(Date.now() / 1000)
+                        }
+                    );
                     cards.push(
                         <ListAcademyCourseCard
                             {...props}
-                            key={`${objectHash(cardProp)}`}//displayCard_list_${srsIDCount}
+                            key={`${Math.random()}`}//displayCard_list_${srsIDCount}
                             srsIDCount={srsIDCount++}
-                            cardProp={cardProp} />);
+                            cardProp={cardProp}
+                            observer={cardContainerRef.current.observer}
+                        />);
                 }
             }
             return cards;
         } else {
-            (() => {
-                //updating card props with initial data
-                CardContainerNotifier.update();
-                fetchCardProps();
-            })();
+            CardContainerNotifier.update();
+            fetchCardProps();
             return (<SpinnerLoader />);
         }
     };
 
 
     return (
-        <div className="row row-col-5 justify-content-center card-container">
+        <div ref={cardContainerRef} className="row row-col-5 justify-content-center card-container">
             {getCards()}
             <div className="extra-scroll"></div>
         </div>

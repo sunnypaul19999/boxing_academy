@@ -106,9 +106,12 @@ export default function AcademyCourseCard(props) {
 
     useEffect(() => {
         let cardElement = cardRef.current;
+        if (props.observer) props.observer.observe(cardRef.current);
+
         cardElement.addEventListener('editCardEvent', onEditCardEvent);
         cardElement.addEventListener('deleteCardEvent', onDeleteCardEvent);
         cardElement.addEventListener('enrollCardEvent', onEnrollCardEvent);
+
 
         return () => {
             cardElement.removeEventListener('editCardEvent', onEditCardEvent);
