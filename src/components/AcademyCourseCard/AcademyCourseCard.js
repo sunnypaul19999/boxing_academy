@@ -11,6 +11,7 @@ import { adminEditCardEvent } from 'components/AcademyCourseCard/Actions/Admin/C
 import { adminAcademyDeleteCardEvent, adminCourseDeleteCardEvent } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnDelete';
 import { cardUserOnEnrollCourseAction } from 'components/AcademyCourseCard/Actions/User/Card/cardUserOnEnrollAction';
 import { useDispatch } from 'react-redux';
+import MainStore from 'store/Main/MainStore';
 
 
 //--------props--------------------------------------->
@@ -22,6 +23,7 @@ import { useDispatch } from 'react-redux';
 //url (if academy pass image url)
 //title, description, duration, timing, strength, location, cost, rating
 //  --------------------------
+//checkSourceTrue
 //------------------------------------------------------>
 //only toolbar depends on authoritytype
 
@@ -106,12 +108,12 @@ export default function AcademyCourseCard(props) {
         cardProp: cardProp,
     });
 
-    let cardRef = useRef(null);
+    let cardRef = useRef({ observer: null });
 
     useEffect(() => {
         let cardElement = cardRef.current;
-        if (props.observer) props.observer.observe(cardRef.current);
-
+        //if (props.observer) props.observer.observe(cardRef.current);
+        installObserver();
         cardElement.addEventListener('editCardEvent', onEditCardEvent);
         cardElement.addEventListener('deleteCardEvent', onDeleteCardEvent);
         cardElement.addEventListener('enrollCardEvent', onEnrollCardEvent);
@@ -123,6 +125,23 @@ export default function AcademyCourseCard(props) {
             cardElement.removeEventListener('enrollCardEvent', onEnrollCardEvent);
         };
     });
+
+    let installObserver = () => {
+        cardRef.current.observer = new IntersectionObserver((entries) => {
+            entries.forEach(async (card) => {
+                if (card.isIntersecting) {
+                    //console.log(state.cardProp.id);
+                    await props.checkSourceTrue(MainStore.store.getState().userDetails.token, state.cardProp.id);
+                }
+            });
+        }, {
+            root: document.getElementById('cardContainer'),
+            rootMargin: '0px',
+            threshold: 1.0
+        });
+
+        cardRef.current.observer.observe(cardRef.current);
+    }
 
     let getViewClassName = () => {
         if (state.cardType === 'list') {
@@ -153,7 +172,7 @@ export default function AcademyCourseCard(props) {
             if (state.cardOf === 'academy') {
                 let response = await adminAcademyDeleteCardEvent(event, state, nav);
                 if (response.payload) {
-                    console.log(state.cardProp.id);
+                    //console.log(state.cardProp.id);
                     mainStoreDispatch({ type: 'deleteAcademyDetail', payload: state.cardProp.id });
                 }
             }

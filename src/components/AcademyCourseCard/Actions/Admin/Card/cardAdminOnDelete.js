@@ -7,8 +7,8 @@ export async function adminAcademyDeleteCardEvent(event, state, nav) {
     let id = state.cardProp.id;
     let token = MainStore.store.getState().userDetails.token;
     if (token) {
-        //return AcademyAPI.delete(token, id);
-        return { payload: true }
+        return AcademyAPI.delete(token, id);
+        //return { payload: true }
     } else {
         nav('/signin');
     }

@@ -1,13 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import GridAcademyCourseCard from './GridAcademyCourseCard';
 import ListAcademyCourseCard from './ListAcademyCourseCard';
 
 import 'assets/css/card-container/card-container.css';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CardContainerNotifier from 'store/CardContainerNotifier/CardContainerNotifier';
 import objectHash from 'object-hash';
-import produce from 'immer';
 
 
 //-----------props----------
@@ -124,7 +123,6 @@ export default function CardContainer(props) {
     useEffect(() => {
         console.log('CardContainer: rendering ' + testSetCount++);
         fetchCardProps();
-        installObservers();
 
         let gridViewChangeButton = document.getElementById('academyCourseCardAsGrid');
         let listViewChangeButton = document.getElementById('academyCourseCardAsList');
@@ -136,21 +134,6 @@ export default function CardContainer(props) {
             listViewChangeButton.removeEventListener('click', onListViewChangeClick);
         };
     });
-
-    let installObservers = () => {
-        cardContainerRef.current.observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach((element) => {
-                if (element.isIntersecting) {
-                    //console.log(element.target.parentElement.id);
-                    //props.checkSourceTrue(element.target.parentElement.id);
-                }
-            });
-        }, {
-            root: cardContainerRef.current,
-            rootMargin: '0px',
-            threshold: 1.0
-        });
-    }
 
 
     let onGridViewChangeClick = () => {
@@ -180,11 +163,10 @@ export default function CardContainer(props) {
             let srsIDCount = 1;
             if (state.viewType === 'grid') {
                 for (const cardProp of cardProps) {
-                    let prophash = objectHash(
-                        {
-                            cardProp: cardProp,
-                            timestamp: Math.floor(Date.now() / 1000)
-                        }
+                    let prophash = objectHash({
+                        cardProp: cardProp,
+                        timestamp: Math.floor(Date.now() / 1000)
+                    }
                     );
                     cards.push(
                         <GridAcademyCourseCard
@@ -192,17 +174,17 @@ export default function CardContainer(props) {
                             key={`${prophash}`}//displayCard_grid_${srsIDCount}
                             srsIDCount={srsIDCount++}
                             cardProp={cardProp}
-                            observer={cardContainerRef.current.observer}
+                            checkSourceTrue={props.checkSourceTrue}
+
                         />);
                 }
             } else {
                 //if no view type is given list type is assumed
                 for (const cardProp of cardProps) {
-                    let prophash = objectHash(
-                        {
-                            cardProp: cardProp,
-                            timestamp: Math.floor(Date.now() / 1000)
-                        }
+                    let prophash = objectHash({
+                        cardProp: cardProp,
+                        timestamp: Math.floor(Date.now() / 1000)
+                    }
                     );
                     cards.push(
                         <ListAcademyCourseCard
@@ -210,7 +192,7 @@ export default function CardContainer(props) {
                             key={`${prophash}`}//displayCard_list_${srsIDCount}
                             srsIDCount={srsIDCount++}
                             cardProp={cardProp}
-                            observer={cardContainerRef.current.observer}
+                            checkSourceTrue={props.checkSourceTrue}
                         />);
                 }
             }
@@ -224,7 +206,7 @@ export default function CardContainer(props) {
 
 
     return (
-        <div ref={cardContainerRef} className="row row-col-5 justify-content-center card-container">
+        <div ref={cardContainerRef} id='cardContainer' className="row row-col-5 justify-content-center card-container">
             {getCards()}
             <div className="extra-scroll"></div>
         </div>

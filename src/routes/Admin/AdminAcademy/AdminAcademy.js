@@ -22,9 +22,10 @@ function cardPropFormat(academy) {
 
 function RealTimeFetchWrapper(props) {
     let token = useSelector((state) => { return state.userDetails.token });
+
     let mainStoreDispatch = useDispatch();
 
-    /*let lastInstituteId = () => {
+    let lastInstituteId = () => {
         let aList = MainStore.store.getState().academyDetails;
         console.log(aList);
         if (aList) {
@@ -59,35 +60,15 @@ function RealTimeFetchWrapper(props) {
             }
         }, 30000);
     };
-    getNext(lastInstituteId());*/
-
-
-    let createfetchAcademyWithIdReq = (id) => {
-        return axios.get(`${serverURL}/institute/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-    }
-
-
-    RealTimeFetchWrapper.prototype.checkSourceTrue = async (academyId) => {
-        try {
-            await createfetchAcademyWithIdReq(academyId);
-        } catch (err) {
-            if (err['response'].status === 404) {
-                console.log(academyId);
-                //mainStoreDispatch({ type: 'deleteAcademyDetail', payload: id });
-            }
-        }
-    }
-
+    getNext(lastInstituteId());
 
     return props.children;
 }
 
 export default function AdminAcademy(props) {
     let nav = useNavigate();
+
+    let mainStoreDispatch = useDispatch();
 
     let onAddAcademyClicked = () => {
         nav('add');
@@ -114,11 +95,30 @@ export default function AdminAcademy(props) {
         return cardPropsData;
     }
 
+    let checkSourceTrue = async (token, id) => {
+        let createfetchAcademyWithIdReq = (id) => {
+            return axios.get(`${serverURL}/institute/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+        }
+
+        try {
+            await createfetchAcademyWithIdReq(id);
+        } catch (err) {
+            if (err['response'].status === 404) {
+                console.log(id);
+                mainStoreDispatch({ type: 'deleteAcademyDetail', payload: id });
+            }
+        }
+    }
+
     return (
         <>
             <SearchBar academy />
             <RealTimeFetchWrapper>
-                <CardContainer admin academy fetch={fetchAllAcademy} checkSourceTrue={RealTimeFetchWrapper.prototype.checkSourceTrue} />
+                <CardContainer admin academy fetch={fetchAllAcademy} checkSourceTrue={checkSourceTrue} />
                 <HoverButton
                     id='addAcademyHoverButton'
                     text='Add Academy'
