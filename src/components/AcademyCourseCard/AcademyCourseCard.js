@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -10,6 +10,7 @@ import { cardAcademyAdminOnClickAction } from 'components/AcademyCourseCard/Acti
 import { adminEditCardEvent } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnEdit';
 import { adminAcademyDeleteCardEvent, adminCourseDeleteCardEvent } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnDelete';
 import { cardUserOnEnrollCourseAction } from 'components/AcademyCourseCard/Actions/User/Card/cardUserOnEnrollAction';
+import { useDispatch } from 'react-redux';
 
 
 //--------props--------------------------------------->
@@ -23,6 +24,7 @@ import { cardUserOnEnrollCourseAction } from 'components/AcademyCourseCard/Actio
 //  --------------------------
 //------------------------------------------------------>
 //only toolbar depends on authoritytype
+
 
 let getFullCardId = (authorityType, cardOf, srsIDCount) => {
     if (authorityType === 'admin') {
@@ -91,8 +93,10 @@ function CardBody(props) {
 
 export default function AcademyCourseCard(props) {
     let cardProp = props.cardProp;
+
     let nav = useNavigate();
 
+    let mainStoreDispatch = useDispatch();
 
     let [state] = useState({
         authorityType: (props.admin) ? 'admin' : 'user',
@@ -144,12 +148,16 @@ export default function AcademyCourseCard(props) {
         }
     }
 
-    let onDeleteCardEvent = (event) => {
+    let onDeleteCardEvent = async (event) => {
         if (state.authorityType === 'admin') {
-            if (state.authorityType === 'academy') {
-                adminAcademyDeleteCardEvent(event, state, nav);
+            if (state.cardOf === 'academy') {
+                let response = await adminAcademyDeleteCardEvent(event, state, nav);
+                if (response.payload) {
+                    console.log(state.cardProp.id);
+                    mainStoreDispatch({ type: 'deleteAcademyDetail', payload: state.cardProp.id });
+                }
             }
-            if (state.authorityType === 'course') {
+            if (state.cardOf === 'course') {
                 adminCourseDeleteCardEvent(event, state, nav);
             }
         }

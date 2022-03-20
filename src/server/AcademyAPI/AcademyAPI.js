@@ -1,4 +1,5 @@
 import AddAcademyAPI from "./AddAcademyAPI";
+import DeleteAcademyAPI from "./DeleteAcademyAPI";
 import FetchAcademyAPI from "./FetchAcademyAPI";
 import UpdateAcademyAPI from "./UpdateAcademyAPI";
 
@@ -16,5 +17,10 @@ export default class AcademyAPI {
     static async update(token, reqBody) {
         return UpdateAcademyAPI.updateAcademy(token, reqBody);
     }
+
+    static async delete(token, id) {
+        return DeleteAcademyAPI.delAcademy(token, id);
+    }
+
 }
 

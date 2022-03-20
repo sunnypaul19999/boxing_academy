@@ -24,7 +24,7 @@ function RealTimeFetchWrapper(props) {
     let token = useSelector((state) => { return state.userDetails.token });
     let mainStoreDispatch = useDispatch();
 
-    let lastInstituteId = () => {
+    /*let lastInstituteId = () => {
         let aList = MainStore.store.getState().academyDetails;
         console.log(aList);
         if (aList) {
@@ -59,8 +59,29 @@ function RealTimeFetchWrapper(props) {
             }
         }, 30000);
     };
+    getNext(lastInstituteId());*/
 
-    getNext(lastInstituteId());
+
+    let createfetchAcademyWithIdReq = (id) => {
+        return axios.get(`${serverURL}/institute/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    }
+
+
+    RealTimeFetchWrapper.prototype.checkSourceTrue = async (academyId) => {
+        try {
+            await createfetchAcademyWithIdReq(academyId);
+        } catch (err) {
+            if (err['response'].status === 404) {
+                console.log(academyId);
+                //mainStoreDispatch({ type: 'deleteAcademyDetail', payload: id });
+            }
+        }
+    }
+
 
     return props.children;
 }
@@ -93,12 +114,11 @@ export default function AdminAcademy(props) {
         return cardPropsData;
     }
 
-
     return (
         <>
             <SearchBar academy />
             <RealTimeFetchWrapper>
-                <CardContainer admin academy fetch={fetchAllAcademy} />
+                <CardContainer admin academy fetch={fetchAllAcademy} checkSourceTrue={RealTimeFetchWrapper.prototype.checkSourceTrue} />
                 <HoverButton
                     id='addAcademyHoverButton'
                     text='Add Academy'

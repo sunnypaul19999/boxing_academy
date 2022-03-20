@@ -46,6 +46,21 @@ export default class MainStore {
                     }
                 });
                 return nextState;
+            case 'deleteAcademyDetail':
+                nextState = produce(state, draft => {
+                    let i = -1;
+                    for (const academy of draft.academyDetails) {
+                        i++;
+                        if (academy.id === action.payload) {
+                            break;
+                        }
+                    }
+                    if (i > -1) {
+                        console.log('deleteAcademyDetail');
+                        draft.academyDetails.splice(i, 1);
+                    }
+                });
+                return nextState;
             case 'courseDetails':
                 return {
                     ...state,

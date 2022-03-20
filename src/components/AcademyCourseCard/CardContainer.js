@@ -12,8 +12,9 @@ import produce from 'immer';
 
 //-----------props----------
 //admin | user & academy | course
-//fetch  -- no param callback func 
+//fetch  -- no param callback func to fetch all cardprops at once
 //cardProps (card properties mentioned in AcademyCourseCard)
+//checkSourceTrue
 //--------------------------
 
 //card container fetches data
@@ -123,19 +124,7 @@ export default function CardContainer(props) {
     useEffect(() => {
         console.log('CardContainer: rendering ' + testSetCount++);
         fetchCardProps();
-
-        cardContainerRef.current.observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach((element) => {
-                if (element.isIntersecting) {
-                    console.log(element.target.parentElement.id);
-                }
-            });
-            //console.log(entries);
-        }, {
-            root: cardContainerRef.current,
-            rootMargin: '0px',
-            threshold: 1.0
-        });
+        installObservers();
 
         let gridViewChangeButton = document.getElementById('academyCourseCardAsGrid');
         let listViewChangeButton = document.getElementById('academyCourseCardAsList');
@@ -147,6 +136,21 @@ export default function CardContainer(props) {
             listViewChangeButton.removeEventListener('click', onListViewChangeClick);
         };
     });
+
+    let installObservers = () => {
+        cardContainerRef.current.observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach((element) => {
+                if (element.isIntersecting) {
+                    //console.log(element.target.parentElement.id);
+                    //props.checkSourceTrue(element.target.parentElement.id);
+                }
+            });
+        }, {
+            root: cardContainerRef.current,
+            rootMargin: '0px',
+            threshold: 1.0
+        });
+    }
 
 
     let onGridViewChangeClick = () => {
@@ -203,7 +207,7 @@ export default function CardContainer(props) {
                     cards.push(
                         <ListAcademyCourseCard
                             {...props}
-                            key={`${Math.random()}`}//displayCard_list_${srsIDCount}
+                            key={`${prophash}`}//displayCard_list_${srsIDCount}
                             srsIDCount={srsIDCount++}
                             cardProp={cardProp}
                             observer={cardContainerRef.current.observer}
