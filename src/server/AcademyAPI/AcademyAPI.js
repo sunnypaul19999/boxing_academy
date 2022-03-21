@@ -10,6 +10,10 @@ export default class AcademyAPI {
         return FetchAcademyAPI.fetchAllAcademy(token);
     }
 
+    static fetchById(token, id) {
+        return FetchAcademyAPI.fetchAcademyById(token, id);
+    }
+
     static async add(token, reqBody) {
         return AddAcademyAPI.addAcademy(token, reqBody);
     }

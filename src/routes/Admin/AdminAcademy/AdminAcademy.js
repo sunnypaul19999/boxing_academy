@@ -29,8 +29,9 @@ function RealTimeFetchWrapper(props) {
         let aList = MainStore.store.getState().academyDetails;
         console.log(aList);
         if (aList) {
-            let lId = aList[aList.length - 1].id;
-            getNext(lId);
+            if (aList[aList.length - 1]) {
+                return aList[aList.length - 1].id;
+            }
         }
         return null;
     }
@@ -103,6 +104,12 @@ export default function AdminAcademy(props) {
                 }
             });
         }
+
+        /*let academyData = await AcademyAPI.fetchById(token, id);
+        if (academyData.payload.statusCode === 404) {
+            console.log(id);
+            mainStoreDispatch({ type: 'deleteAcademyDetail', payload: id });
+        }*/
 
         try {
             await createfetchAcademyWithIdReq(id);
