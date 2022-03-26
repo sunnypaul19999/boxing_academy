@@ -4,10 +4,7 @@ import HoverButton from 'components/AcademyCourseCard/CardMakingTools/HoverButto
 import { useNavigate } from "react-router-dom";
 import AcademyAPI from "server/AcademyAPI/AcademyAPI";
 import { useDispatch } from "react-redux";
-import axios from "axios";
-import { serverURL } from "config/serverConfig";
 import MainStore from "store/Main/MainStore";
-import Database from "database/Database";
 
 function cardPropFormat(academy) {
     return {
