@@ -36,19 +36,11 @@ function RealTimeFetchWrapper(props) {
     }
 
     let getNext = async (lId) => {
-        //let token = await Database.getToken();
         if (lId) {
             try {
-
-                /*let serverResponse = await axios.get(`${serverURL}/institute/${lId + 1}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                let nextAcademy = serverResponse.data;*/
                 let nextAcademy = await AcademyAPI.fetchById(lId + 1).then((res) => { return res.payload.data; });
                 let cardProp = cardPropFormat(nextAcademy);
-                console.log(cardProp.id);
+                //console.log(cardProp.id);
                 mainStoreDispatch({ type: 'addIntoAcademyDetails', payload: cardProp });
             } catch (err) { }
         }
@@ -92,17 +84,8 @@ export default function AdminAcademy(props) {
     }
 
     let checkSourceTrue = async (id) => {
-        let token = await Database.getToken();
-        let createfetchAcademyWithIdReq = (id) => {
-            return axios.get(`${serverURL}/institute/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-        }
-
         try {
-            await createfetchAcademyWithIdReq(id);
+            await AcademyAPI.fetchById(id)
         } catch (err) {
             if (err['response'].status === 404) {
                 console.log(id);
