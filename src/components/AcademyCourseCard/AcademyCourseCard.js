@@ -11,7 +11,6 @@ import { adminEditCardEvent } from 'components/AcademyCourseCard/Actions/Admin/C
 import { adminAcademyDeleteCardEvent, adminCourseDeleteCardEvent } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnDelete';
 import { cardUserOnEnrollCourseAction } from 'components/AcademyCourseCard/Actions/User/Card/cardUserOnEnrollAction';
 import { useDispatch } from 'react-redux';
-import MainStore from 'store/Main/MainStore';
 
 
 //--------props--------------------------------------->
@@ -23,7 +22,7 @@ import MainStore from 'store/Main/MainStore';
 //url (if academy pass image url)
 //title, description, duration, timing, strength, location, cost, rating
 //  --------------------------
-//checkSourceTrue
+//checkSourceTrue(id) --[id is card id]
 //------------------------------------------------------>
 //only toolbar depends on authoritytype
 
@@ -131,7 +130,7 @@ export default function AcademyCourseCard(props) {
             entries.forEach(async (card) => {
                 if (card.isIntersecting) {
                     //console.log(state.cardProp.id);
-                    await props.checkSourceTrue(MainStore.store.getState().userDetails.token, state.cardProp.id);
+                    await props.checkSourceTrue(state.cardProp.id);
                 }
             });
         }, {

@@ -23,18 +23,11 @@ export default function AdminAddAcademy(props) {
         return (academyCourseDetailsFormFormat.academy.add.button[type]);
     }
 
-    let token = useSelector((state) => {
-        return state.userDetails.token;
-    });
-
     let onFormSubmit = (event) => {
         console.log('AdminAddAcademy submitted');
         event.preventDefault();
         event.stopPropagation();
-        addAcademy(
-            token,
-            serverFormat(new FormData(event.target))
-        );
+        addAcademy(serverFormat(new FormData(event.target)));
     }
 
     let serverFormat = (formData) => {
@@ -50,8 +43,8 @@ export default function AdminAddAcademy(props) {
         };
     }
 
-    let addAcademy = async (token, sformat) => {
-        let response = await AcademyAPI.add(token, sformat);
+    let addAcademy = async (sformat) => {
+        let response = await AcademyAPI.add(sformat);
         console.log(response.message);
         CardContainerNotifier.update();
         navigate(-1);

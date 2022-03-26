@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { serverURL } from "config/serverConfig";
+import Database from "database/Database";
 
 export default class UpdateAcademyAPI {
     _response = {
@@ -51,7 +52,8 @@ export default class UpdateAcademyAPI {
     }
 
 
-    static async updateAcademy(token, reqBody) {
+    static async updateAcademy(reqBody) {
+        let token = await Database.getToken();
         let api = new UpdateAcademyAPI(token, reqBody);
         try {
             let httpRes = await api._createUpdateAcademyRequest();

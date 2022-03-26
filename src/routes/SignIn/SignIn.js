@@ -13,14 +13,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import SignInError from "Handler/SignInHandler/SignInError.js";
-
+import Database from "database/Database";
 
 function SignIn(props) {
   let formRef = useRef(null);
 
   let navigate = useNavigate();
-
-  let mainStoreDispatch = useDispatch();
 
   let state = useSelector((state) => {
     if (state) {
@@ -31,8 +29,7 @@ function SignIn(props) {
   });
 
   useEffect(() => {
-    console.log('SignIn Component: state');
-    console.log(state);
+    Database.getToken().then((token) => { console.log(token) });
   });
 
   let formDetails = () => {
@@ -44,13 +41,15 @@ function SignIn(props) {
     return credentials;
   }
 
-  let onSignInSuccess = (signInMsgPacket) => {
-    mainStoreDispatch({
-      type: 'userDetails',
-      payload: signInMsgPacket.payload
-    });
-    toast(signInMsgPacket.message);
-    navigate('/admin/academy');
+  let onSignInSuccess = async (signInMsgPacket) => {
+    try {
+      await Database.setToken(signInMsgPacket.payload.token);
+      await Database.setCurrUserEmail(signInMsgPacket.payload.token);
+      toast(signInMsgPacket.message);
+      navigate('/admin/academy');
+    } catch (err) {
+      toast('Opps! could not save credentials');
+    }
   }
 
 

@@ -6,24 +6,24 @@ import UpdateAcademyAPI from "./UpdateAcademyAPI";
 
 export default class AcademyAPI {
 
-    static fetchAll(token) {
-        return FetchAcademyAPI.fetchAllAcademy(token);
+    static fetchAll() {
+        return FetchAcademyAPI.fetchAllAcademy();
     }
 
-    static fetchById(token, id) {
-        return FetchAcademyAPI.fetchAcademyById(token, id);
+    static fetchById(id) {
+        return FetchAcademyAPI.fetchAcademyById(id);
     }
 
-    static async add(token, reqBody) {
-        return AddAcademyAPI.addAcademy(token, reqBody);
+    static async add(reqBody) {
+        return AddAcademyAPI.addAcademy(reqBody);
     }
 
-    static async update(token, reqBody) {
-        return UpdateAcademyAPI.updateAcademy(token, reqBody);
+    static async update(reqBody) {
+        return UpdateAcademyAPI.updateAcademy(reqBody);
     }
 
-    static async delete(token, id) {
-        return DeleteAcademyAPI.delAcademy(token, id);
+    static async delete(id) {
+        return DeleteAcademyAPI.delAcademy(id);
     }
 
 }

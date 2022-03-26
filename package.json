@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "immer": "^9.0.12",
+    "localforage": "^1.10.0",
     "object-hash": "^3.0.0"
   }
 }

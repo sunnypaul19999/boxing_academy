@@ -12,10 +12,6 @@ export default function AdminUpdateAcademy(props) {
 
     let params = useParams();
 
-    let token = useSelector((state) => {
-        return state.userDetails.token;
-    });
-
     let formInputFormat = (type) => {
         return (academyCourseDetailsFormFormat.academy.edit.input[type]);
     }
@@ -27,9 +23,9 @@ export default function AdminUpdateAcademy(props) {
     let onFormSubmit = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        let sformat = serverFormat(new FormData(event.target));
-        console.log(sformat);
-        updateAcademy(token, sformat);
+        //let sformat = serverFormat(new FormData(event.target));
+        //console.log(sformat);
+        updateAcademy(serverFormat(new FormData(event.target)));
         console.log('AdminUpdateAcademy submitted');
     }
 
@@ -47,8 +43,8 @@ export default function AdminUpdateAcademy(props) {
         };
     }
 
-    let updateAcademy = async (token, sformat) => {
-        let response = await AcademyAPI.update(token, sformat);
+    let updateAcademy = async (sformat) => {
+        let response = await AcademyAPI.update(sformat);
         console.log(response.message);
         CardContainerNotifier.update();
         navigate(-1);

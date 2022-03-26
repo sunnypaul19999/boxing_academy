@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { serverURL } from "config/serverConfig";
+import Database from "database/Database";
 
 export default class FetchAcademyAPI {
     _response = {
@@ -56,13 +57,13 @@ export default class FetchAcademyAPI {
         //payload is kept null
         this._response.message = message;
 
-        console.log(`FetchAcademyAPI: Failed ${status}`);
+        console.log(`FetchAcademyAPIAll: ${status}`);
         return this._response;
     }
 
     _onFetchAcademyByIdError(err) {
         let message;
-        console.log(err);
+        //console.log(err);
         let status = err['response'].status;
 
         if (status === 404) {
@@ -74,33 +75,35 @@ export default class FetchAcademyAPI {
         this._response.payload = { statusCode: status };
         this._response.message = message;
 
-        console.log(`FetchAcademyAPI by Id: Failed ${err}`);
+        console.log(`FetchAcademyAPI by Id: ${status}`);
         return this._response;
     }
 
 
-    static async fetchAllAcademy(token) {
+    static async fetchAllAcademy() {
+        let token = await Database.getToken();
         let api = new FetchAcademyAPI(token);
         try {
             let httpRes = await api._createFetchAcademyRequest();
             let response = api._onFetchAcademySuccess(httpRes);
             return response;
         } catch (err) {
-            console.log(`FetchAcademyAPI: Error Occured\n`); console.log(err);
+            //console.log(`FetchAcademyAPI: Error Occured\n`); //console.log(err);
             let errResponse = api._onFetchAcademyError(err);
             return errResponse;
         }
     }
 
 
-    static async fetchAcademyById(token, id) {
+    static async fetchAcademyById(id) {
+        let token = await Database.getToken();
         let api = new FetchAcademyAPI(token, id);
         try {
             let httpRes = await api._createfetchAcademyWithIdReq();
             let response = api._onFetchAcademyByIdSuccess(httpRes);
             return response;
         } catch (err) {
-            console.log(`FetchAcademyAPI by Id: Error Occured\n`); //console.log(err);
+            //console.log(`FetchAcademyAPI by Id: Error Occured\n`); //console.log(err);
             let errResponse = api._onFetchAcademyByIdError(err);
             return errResponse;
         }

@@ -1,3 +1,4 @@
+
 import produce from 'immer';
 import { createStore } from 'redux';
 
@@ -13,18 +14,17 @@ export default class MainStore {
     tokenStoreReducer = (state, action) => {
         let nextState;
         switch (action.type) {
-            case 'userDetails':
+            /*case 'userDetails':
 
                 return {
                     ...state,
                     userDetails: {
-                        token: action.payload.token,
                         name: action.payload.name,
                         email: action.payload.email,
                         authority: action.payload.authority,
                         mobileNo: action.payload.authority,
                     },
-                };
+                };*/
             case 'academyDetails':
                 console.log('academyDetails');
                 nextState = produce(state, draft => {

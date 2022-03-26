@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { serverURL } from "config/serverConfig";
+import Database from "database/Database";
 
 export default class AddAcademyAPI {
     _response = {
@@ -47,7 +48,8 @@ export default class AddAcademyAPI {
     }
 
 
-    static async addAcademy(token, reqBody) {
+    static async addAcademy(reqBody) {
+        let token = await Database.getToken();
         let api = new AddAcademyAPI(token, reqBody);
         try {
             let httpRes = await api._createAddAcademyRequest();

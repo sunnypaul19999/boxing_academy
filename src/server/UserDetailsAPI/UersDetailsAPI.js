@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { serverURL } from "config/serverConfig";
+import Database from "database/Database";
 import MainStore from "store/Main/MainStore";
 
 export default class UserDetailsAPI {
@@ -11,7 +12,8 @@ export default class UserDetailsAPI {
     message: null,
   };
 
-  constructor(email) {
+  constructor(token, email) {
+    this._token = token;
     this._email = email;
   }
 
@@ -19,13 +21,8 @@ export default class UserDetailsAPI {
     return MainStore.store.getState();
   }
 
-  get _token() {
-    let token = this.mainStoreState.userDetails.token;
-    return token;
-  }
-
-  static _api(email) {
-    let api = new UserDetailsAPI(email);
+  static _api(token, email) {
+    let api = new UserDetailsAPI(token, email);
     return api;
   }
 
@@ -68,7 +65,8 @@ export default class UserDetailsAPI {
   }
 
   static async fetch(email) {
-    let api = UserDetailsAPI._api(email);
+    let token = await Database.getToken();
+    let api = UserDetailsAPI._api(token, email);
     try {
       let httpRes = await api._createRequest();
       let response = api._onFetchSuccess(httpRes);

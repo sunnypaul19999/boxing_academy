@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { serverURL } from "config/serverConfig";
+import Database from "database/Database";
 
 export default class DeleteAcademyAPI {
     _response = {
@@ -47,7 +48,8 @@ export default class DeleteAcademyAPI {
     }
 
 
-    static async delAcademy(token, id) {
+    static async delAcademy(id) {
+        let token = await Database.getToken();
         let api = new DeleteAcademyAPI(token, id);
         try {
             let httpRes = await api._createDelAddAcademyRequest();

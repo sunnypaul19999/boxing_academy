@@ -3,10 +3,11 @@ import CardContainer from "components/AcademyCourseCard/CardContainer.js";
 import HoverButton from 'components/AcademyCourseCard/CardMakingTools/HoverButton.js';
 import { useNavigate } from "react-router-dom";
 import AcademyAPI from "server/AcademyAPI/AcademyAPI";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import { serverURL } from "config/serverConfig";
 import MainStore from "store/Main/MainStore";
+import Database from "database/Database";
 
 function cardPropFormat(academy) {
     return {
@@ -19,15 +20,13 @@ function cardPropFormat(academy) {
     };
 }
 
-
 function RealTimeFetchWrapper(props) {
-    let token = useSelector((state) => { return state.userDetails.token });
 
     let mainStoreDispatch = useDispatch();
 
     let lastInstituteId = () => {
         let aList = MainStore.store.getState().academyDetails;
-        console.log(aList);
+        //console.log(aList);
         if (aList) {
             if (aList[aList.length - 1]) {
                 return aList[aList.length - 1].id;
@@ -37,29 +36,28 @@ function RealTimeFetchWrapper(props) {
     }
 
     let getNext = async (lId) => {
+        //let token = await Database.getToken();
         if (lId) {
             try {
 
-                let serverResponse = await axios.get(`${serverURL}/institute/${lId + 1}`, {
+                /*let serverResponse = await axios.get(`${serverURL}/institute/${lId + 1}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                let nextAcademy = serverResponse.data;
+                let nextAcademy = serverResponse.data;*/
+                let nextAcademy = await AcademyAPI.fetchById(lId + 1).then((res) => { return res.payload.data; });
                 let cardProp = cardPropFormat(nextAcademy);
                 console.log(cardProp.id);
                 mainStoreDispatch({ type: 'addIntoAcademyDetails', payload: cardProp });
-                //console.log(cardProp);
-            } catch (err) {
-                //on error do nothing
-            }
+            } catch (err) { }
         }
         setTimeout(() => {
             let lId = lastInstituteId();
             if (lId) {
                 getNext(lId);
             }
-        }, 30000);
+        }, 10000);
     };
     getNext(lastInstituteId());
 
@@ -75,12 +73,9 @@ export default function AdminAcademy(props) {
         nav('add');
     }
 
-    let token = useSelector((state) => { return state.userDetails.token });
-
     let fetchAllAcademy = async () => {
-        let ctoken = token;
         let cardPropsData = [];
-        let payload = await AcademyAPI.fetchAll(ctoken).then((response) => { return response.payload; });
+        let payload = await AcademyAPI.fetchAll().then((response) => { return response.payload; });
 
         if (payload.academy[Symbol.iterator]) {
 
@@ -96,7 +91,8 @@ export default function AdminAcademy(props) {
         return cardPropsData;
     }
 
-    let checkSourceTrue = async (token, id) => {
+    let checkSourceTrue = async (id) => {
+        let token = await Database.getToken();
         let createfetchAcademyWithIdReq = (id) => {
             return axios.get(`${serverURL}/institute/${id}`, {
                 headers: {
@@ -104,12 +100,6 @@ export default function AdminAcademy(props) {
                 }
             });
         }
-
-        /*let academyData = await AcademyAPI.fetchById(token, id);
-        if (academyData.payload.statusCode === 404) {
-            console.log(id);
-            mainStoreDispatch({ type: 'deleteAcademyDetail', payload: id });
-        }*/
 
         try {
             await createfetchAcademyWithIdReq(id);
