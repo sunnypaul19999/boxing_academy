@@ -1,7 +1,8 @@
-import AcademyCourseDetailsForm from "components/Forms/LayoutTwo/AcademyCourseDetailsForm";
+import Formxvi from "components/Form/Formxvi";
+import FxInput from "components/Form/FxInput";
+import FxTextarea from "components/Form/FxTextarea";
 import { academyCourseDetailsFormFormat } from "components/Forms/LayoutTwo/academyCourseDetailsFormFormat.js";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AcademyAPI from "server/AcademyAPI/AcademyAPI";
 import CardContainerNotifier from "store/CardContainerNotifier/CardContainerNotifier";
@@ -51,7 +52,66 @@ export default function AdminAddAcademy(props) {
     }
 
     return (
-        <AcademyCourseDetailsForm
+        <Formxvi>
+            <FxInput
+                id={academyCourseDetailsFormFormat.academy.add.input.academy_name.id}
+                label={academyCourseDetailsFormFormat.academy.add.input.academy_name.placeholder}
+                defValue='previous academy name'
+                disabled />
+            <FxInput
+                id={academyCourseDetailsFormFormat.academy.add.input.academy_contact_number.id}
+                label={academyCourseDetailsFormFormat.academy.add.input.academy_contact_number.placeholder}
+                regex='^[0-9]{10}$'
+                errorMsg='Please enter valid phone number' />
+            <FxInput
+                id={academyCourseDetailsFormFormat.academy.add.input.academy_image_url.id}
+                label={academyCourseDetailsFormFormat.academy.add.input.academy_image_url.placeholder}
+                errorMsg='Image url invalid' />
+            <FxInput
+                id={academyCourseDetailsFormFormat.academy.add.input.academy_email.id}
+                label={academyCourseDetailsFormFormat.academy.add.input.academy_email.placeholder}
+                regex='^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
+                errorMsg='Please enter valid email' />
+            <FxTextarea
+                id={academyCourseDetailsFormFormat.academy.add.input.academy_description.id}
+                label={academyCourseDetailsFormFormat.academy.add.input.academy_description.placeholder}
+                errorMsg='Please enter a description' />
+        </Formxvi>
+    );
+
+    /*
+    <FxInput
+                id={academyCourseDetailsFormFormat.academy.add.input.academy_name.id}
+                label={academyCourseDetailsFormFormat.academy.add.input.academy_name.placeholder}
+                required
+                defValue='previous academy name'
+                regex='^[a-z\sA-Z]{10,30}$'
+                errorMsg='Must be 10-30 characters long' disabled/>
+            <FxInput
+                id={academyCourseDetailsFormFormat.academy.add.input.academy_contact_number.id}
+                label={academyCourseDetailsFormFormat.academy.add.input.academy_contact_number.placeholder}
+                required
+                regex='^[0-9]{10}$'
+                errorMsg='Please enter valid phone number' />
+            <FxInput
+                id={academyCourseDetailsFormFormat.academy.add.input.academy_image_url.id}
+                label={academyCourseDetailsFormFormat.academy.add.input.academy_image_url.placeholder}
+                required
+                regex='(https?:\/\/.*\.(?:png|jpg))'
+                errorMsg='Image url invalid' />
+            <FxInput
+                id={academyCourseDetailsFormFormat.academy.add.input.academy_email.id}
+                label={academyCourseDetailsFormFormat.academy.add.input.academy_email.placeholder}
+                required
+                regex='^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
+                errorMsg='Please enter valid email' />
+            <FxTextarea
+                id={academyCourseDetailsFormFormat.academy.add.input.academy_description.id}
+                label={academyCourseDetailsFormFormat.academy.add.input.academy_description.placeholder}
+                required
+                errorMsg='Please enter a description' />
+
+    <AcademyCourseDetailsForm
             submitButton={
                 {
                     ...formButtonFormat('add_academy'),
@@ -63,6 +123,5 @@ export default function AdminAddAcademy(props) {
             <input {...formInputFormat('academy_contact_number')} />
             <input {...formInputFormat('academy_email')} />
             <textarea {...formInputFormat('academy_description')} />
-        </AcademyCourseDetailsForm>
-    );
+        </AcademyCourseDetailsForm>*/
 }

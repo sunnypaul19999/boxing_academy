@@ -60,17 +60,17 @@ function ToolbarMenu(props) {
         if (props.admin) {
             return (
                 <>
-                    <span class="menu-item" id={idStore.admin.academy} onClick={adminAcademyOnClick}><b>Academy</b></span>
-                    <span class="menu-item" id={idStore.admin.courses} onClick={adminCourseOnClick}><b>Courses</b></span>
-                    <span class="menu-item" id={idStore.admin.students} onClick={adminStudentsOnClick}><b>Students</b></span>
+                    <span className="menu-item" id={idStore.admin.academy} onClick={adminAcademyOnClick}><b>Academy</b></span>
+                    <span className="menu-item" id={idStore.admin.courses} onClick={adminCourseOnClick}><b>Courses</b></span>
+                    <span className="menu-item" id={idStore.admin.students} onClick={adminStudentsOnClick}><b>Students</b></span>
                 </>
             );
         } else {
             if (props.user) {
                 return (
                     <>
-                        <span class="menu-item" id={idStore.student.academy} onClick={userAcademyOnClick}><b>Academy</b></span>
-                        <span class="menu-item" id={idStore.student.enrolledCourse} onClick={userEnrolledCourseOnClick}><b>EnrolledCourse</b></span>
+                        <span className="menu-item" id={idStore.student.academy} onClick={userAcademyOnClick}><b>Academy</b></span>
+                        <span className="menu-item" id={idStore.student.enrolledCourse} onClick={userEnrolledCourseOnClick}><b>EnrolledCourse</b></span>
                     </>
                 );
             }
@@ -78,7 +78,7 @@ function ToolbarMenu(props) {
     };
 
     return (
-        <span class="menu">
+        <span className="menu">
             {menuItems()}
         </span>
     );

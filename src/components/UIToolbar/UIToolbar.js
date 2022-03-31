@@ -7,14 +7,14 @@ function UIToolbar(props) {
 
     let appName = () => {
         return (
-            <span class="toolbar-item app-name"><b>Boxing Academy</b></span>
+            <span className="toolbar-item app-name"><b>Boxing Academy</b></span>
         );
     }
 
     let logout = () => {
         return (
-            <span class="toolbar-item logout" id="logout">
-                <span class="material-icons"> logout </span>
+            <span className="toolbar-item logout" id="logout">
+                <span className="material-icons"> logout </span>
             </span>
         );
     }
@@ -27,12 +27,12 @@ function UIToolbar(props) {
 
     let toolbar = () => {
         return (
-            <div class="component-ui-toolbar">
-                <div class="card">
-                    <div class="card-body">
-                        <span class={`${toolbarType()} toolbar`}>
-                            <section class="sec-1">{appName()}</section>
-                            <section class="sec-2">{logout()}</section>
+            <div className="component-ui-toolbar">
+                <div className="card">
+                    <div className="card-body">
+                        <span className={`${toolbarType()} toolbar`}>
+                            <section className="sec-1">{appName()}</section>
+                            <section className="sec-2">{logout()}</section>
                             <ToolbarMenu {...props} />
                         </span>
                     </div>
