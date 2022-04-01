@@ -4,6 +4,11 @@ import { formDisableSubmitButton, formEnableSubmitButton, formReset } from './Fo
 
 import 'assets/css/formxvi/formxvi-layout.css';
 
+//--------props-------
+//title [form title]
+//FxElements
+//--------------------
+
 class FxInputFieldState {
     static state = {};
 }
@@ -13,9 +18,11 @@ function useFxInputValidator(formElementRef, fxchildren) {
 
     useEffect(() => {
         //console.log('FxInputFieldState rendered');
-        let formElement = formElementRef.current;
+        let formElement = getFormElement();
         formElement.addEventListener('formxviInputInvalidEvent', onFormInvalidEvent);
         formElement.addEventListener('formxviInputValidEvent', onFormValidEvent);
+
+        setTimeout(inputValidation, 0);
 
         /*setState(
             produce(state, draft => {
@@ -40,6 +47,8 @@ function useFxInputValidator(formElementRef, fxchildren) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    let getFormElement = () => { return formElementRef.current; }
+
     let onFormInvalidEvent = (event) => {
         //console.log('invalid event caught');
         event.stopPropagation();
@@ -57,14 +66,13 @@ function useFxInputValidator(formElementRef, fxchildren) {
             FxInputFieldState.state = produce(FxInputFieldState.state, draft => {
                 draft[`${invalidInputId}`] = false;
             });
-            formDisableSubmitButton(formElementRef.current);
+            formDisableSubmitButton(getFormElement());
         }
     }
 
     let onFormValidEvent = (event) => {
         //console.log('valid event caught');
         event.stopPropagation();
-        let formElement = formElementRef.current;
 
         if (event.detail) {
             let validInputId = event.detail.payload.id;
@@ -83,16 +91,21 @@ function useFxInputValidator(formElementRef, fxchildren) {
                 draft[`${validInputId}`] = true;
             });
 
+            inputValidation();
+
             //console.log(FxInputFieldState.state);
 
-            if (isAllInputFieldValid()) {
-                console.log('all fields are valid');
-                formEnableSubmitButton(formElement);
-            } else {
-                formDisableSubmitButton(formElement);
-            }
         }
 
+    }
+
+    let inputValidation = () => {
+        if (isAllInputFieldValid()) {
+            console.log('all fields are valid');
+            formEnableSubmitButton(getFormElement());
+        } else {
+            formDisableSubmitButton(getFormElement());
+        }
     }
 
     let isAllInputFieldValid = () => {
@@ -119,7 +132,7 @@ export default function Formxvi(props) {
 
     useEffect(() => {
         //console.log('Formxvi rendered');
-        let formElement = formElementRef.current;
+        let formElement = getFormElement();
 
         formElement.addEventListener('formxviEnableSubmitButton', enableFormSubmitButton);
         formElement.addEventListener('formxviDisableSubmitButton', disableFormSubmitButton);
@@ -129,6 +142,8 @@ export default function Formxvi(props) {
             formElement.removeEventListener('formxviDisableSubmitButton', disableFormSubmitButton);
         });
     });
+
+    let getFormElement = () => { return formElementRef.current; }
 
 
     let enableFormSubmitButton = (event) => {
@@ -150,14 +165,14 @@ export default function Formxvi(props) {
     let onFormSubmit = (event) => {
         event.stopPropagation();
         event.preventDefault();
-        let formData = new FormData(formElementRef.current);
+        let formData = new FormData(getFormElement());
         formData.forEach((value) => { console.log(value); });
     }
 
     let onSubmitButtonClick = (event) => {
         event.stopPropagation();
         console.log('submit form');
-        formElementRef.current.requestSubmit();
+        getFormElement().requestSubmit();
     }
 
     let onResetForm = (event) => {
@@ -171,7 +186,7 @@ export default function Formxvi(props) {
             <div className="formxvi-layout">
                 <div className="card">
                     <div className="card-body">
-                        <div className="card-title">Add Academy</div>
+                        <div className="card-title">{props.title}</div>
                         <form
                             ref={formElementRef}
                             className="formxvi-form" onSubmit={onFormSubmit}>

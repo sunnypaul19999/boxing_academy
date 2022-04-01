@@ -1,10 +1,12 @@
-import AcademyCourseDetailsForm from "components/Forms/LayoutTwo/AcademyCourseDetailsForm";
-import { academyCourseDetailsFormFormat } from "components/Forms/LayoutTwo/academyCourseDetailsFormFormat.js";
-import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import AcademyAPI from "server/AcademyAPI/AcademyAPI";
-import CardContainerNotifier from "store/CardContainerNotifier/CardContainerNotifier";
 
+import CardContainerNotifier from "store/CardContainerNotifier/CardContainerNotifier";
+import { academyCourseDetailsFormFormat } from "components/Forms/LayoutTwo/academyCourseDetailsFormFormat.js";
+import Formxvi from "components/Form/Formxvi";
+import FxInput from "components/Form/FxInput";
+import FxTextarea from "components/Form/FxTextarea";
+
+import AcademyAPI from "server/AcademyAPI/AcademyAPI";
 
 export default function AdminUpdateAcademy(props) {
 
@@ -51,18 +53,36 @@ export default function AdminUpdateAcademy(props) {
     }
 
     return (
-        <AcademyCourseDetailsForm
-            submitButton={
-                {
-                    ...formButtonFormat('update_academy'),
-                    onSubmit: onFormSubmit,
-                }}>
-            <input {...formInputFormat('academy_name')} />
-            <input {...formInputFormat('academy_image_url')} />
-            <input {...formInputFormat('academy_location')} />
-            <input {...formInputFormat('academy_contact_number')} />
-            <input {...formInputFormat('academy_email')} />
-            <textarea {...formInputFormat('academy_description')}></textarea>
-        </AcademyCourseDetailsForm>
+        <Formxvi title='Update Academy'>
+            <FxInput
+                id={academyCourseDetailsFormFormat.academy.add.input.academy_name.id}
+                label={academyCourseDetailsFormFormat.academy.add.input.academy_name.placeholder}
+                regex='^[a-z\sA-Z]{10,30}$'
+                errorMsg='Must be 10-30 characters long'
+                required />
+            <FxInput
+                id={academyCourseDetailsFormFormat.academy.add.input.academy_contact_number.id}
+                label={academyCourseDetailsFormFormat.academy.add.input.academy_contact_number.placeholder}
+                regex='^[0-9]{10}$'
+                errorMsg='Please enter valid phone number'
+                required />
+            <FxInput
+                id={academyCourseDetailsFormFormat.academy.add.input.academy_image_url.id}
+                label={academyCourseDetailsFormFormat.academy.add.input.academy_image_url.placeholder}
+                regex='(https?:\/\/.*\.(?:png|jpg))'
+                errorMsg='Image url invalid'
+                required />
+            <FxInput
+                id={academyCourseDetailsFormFormat.academy.add.input.academy_email.id}
+                label={academyCourseDetailsFormFormat.academy.add.input.academy_email.placeholder}
+                regex='[a-z0-9]+@[a-z]+\.[a-z]{2,3}'
+                errorMsg='Please enter valid email'
+                required />
+            <FxTextarea
+                id={academyCourseDetailsFormFormat.academy.add.input.academy_description.id}
+                label={academyCourseDetailsFormFormat.academy.add.input.academy_description.placeholder}
+                errorMsg='Please enter a description'
+                required />
+        </Formxvi>
     );
 }

@@ -48,7 +48,7 @@ function RealTimeFetchWrapper(props) {
             }
         }, 10000);
     };
-    getNext(lastInstituteId());
+    //getNext(lastInstituteId());
 
     return props.children;
 }

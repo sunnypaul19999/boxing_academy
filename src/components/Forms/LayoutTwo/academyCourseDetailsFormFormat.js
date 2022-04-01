@@ -13,7 +13,7 @@ export let academyCourseDetailsFormFormat = {
                     name: 'academy_image_url',
                     id: 'imageUrl',
                     type: 'text',
-                    placeholder: 'Image URL',
+                    placeholder: 'Image url',
                     required: true,
                 },
                 academy_location: {
