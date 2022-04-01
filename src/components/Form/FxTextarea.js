@@ -29,10 +29,10 @@ export default function FxTextarea(props) {
             }, 100);
         }
 
-        getParent().addEventListener('formxviResetEvent', onEventResetInputField);
+        umbrellaParent().addEventListener('formxviResetEvent', onEventResetInputField);
 
         return (function clean() {
-            getParent(inputElement).removeEventListener('formxviResetEvent', onEventResetInputField);
+            umbrellaParent(inputElement).removeEventListener('formxviResetEvent', onEventResetInputField);
         });
     });
 
@@ -43,7 +43,13 @@ export default function FxTextarea(props) {
         return Boolean(getValue());
     }
 
+    let umbrellaParent = (inputElement) => {
+        //input-fields
+        return getParent(inputElement).parentElement;
+    }
+
     let getParent = (inputElement) => {
+        //input-field
         if (inputElement) { return inputElement.parentElement.parentElement; }
         return iRef.current.parentElement.parentElement;
     }
@@ -52,7 +58,7 @@ export default function FxTextarea(props) {
 
 
     let doValidation = () => {
-        let parentClassList = iRef.current.parentElement.parentElement.classList;
+        let parentClassList = getParent().classList;
 
 
         if (isValid()) {

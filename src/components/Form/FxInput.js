@@ -34,10 +34,10 @@ export default function FxInput(props) {
             }, 100);
         }
 
-        getParent().addEventListener('formxviResetEvent', onEventResetInputField);
+        umbrellaParent().addEventListener('formxviResetEvent', onEventResetInputField);
 
         return (function clean() {
-            getParent(inputElement).removeEventListener('formxviResetEvent', onEventResetInputField);
+            umbrellaParent(inputElement).removeEventListener('formxviResetEvent', onEventResetInputField);
         });
     });
 
@@ -48,16 +48,22 @@ export default function FxInput(props) {
         return Boolean(getValue());
     }
 
+    let umbrellaParent = (inputElement) => {
+        //input-fields
+        return getParent(inputElement).parentElement;
+    }
+
     let getParent = (inputElement) => {
-        if (inputElement) { return inputElement.parentElement.parentElement; }
-        return iRef.current.parentElement.parentElement;
+        //input-field
+        if (inputElement) { return inputElement.parentElement; }
+        return iRef.current.parentElement;
     }
 
     let isInputNotRequired = () => { return !state.required; }
 
 
     let doValidation = () => {
-        let elementClassList = iRef.current.parentElement.classList;
+        let elementClassList = getParent().classList;
 
         if (isValid()) {
             markInputFieldValid(iRef, elementClassList);
