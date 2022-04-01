@@ -72,8 +72,14 @@ export default function FxInput(props) {
         }
     }
 
+
+    let onInput = (event) => {
+        event.stopPropagation();
+        doValidation();
+    }
+
+
     let onEventResetInputField = (event) => {
-        console.log('input reset event');
         event.stopPropagation();
         if (state.disabled) {
             return;
@@ -81,11 +87,6 @@ export default function FxInput(props) {
             setValue('');
             doValidation();
         }
-    }
-
-    let onInput = (event) => {
-        event.stopPropagation();
-        doValidation();
     }
 
     let getValue = () => { return iRef.current.value; }
@@ -112,6 +113,7 @@ export default function FxInput(props) {
 
             optionalProps.onInput = onInput;
         }
+        //console.log(optionalProps);
 
         let inputEl = (
             <input

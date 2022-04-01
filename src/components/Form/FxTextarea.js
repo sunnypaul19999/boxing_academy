@@ -58,7 +58,6 @@ export default function FxTextarea(props) {
         if (isValid()) {
             markInputFieldValid(iRef, parentClassList);
         } else {
-            console.log('invaid ddfajd');
             if (isInputNotRequired()) {
                 if (!state.regex || getValue() === '') {
                     markInputFieldNeutral(iRef, parentClassList);
@@ -70,7 +69,7 @@ export default function FxTextarea(props) {
     }
 
     let onEventResetInputField = (event) => {
-        console.log('textarea reset event');
+        event.stopPropagation();
         if (state.disabled) {
             return;
         } else {

@@ -62,11 +62,13 @@ export default function AdminAddAcademy(props) {
                 id={academyCourseDetailsFormFormat.academy.add.input.academy_contact_number.id}
                 label={academyCourseDetailsFormFormat.academy.add.input.academy_contact_number.placeholder}
                 regex='^[0-9]{10}$'
-                errorMsg='Please enter valid phone number' />
+                errorMsg='Please enter valid phone number'
+                required />
             <FxInput
                 id={academyCourseDetailsFormFormat.academy.add.input.academy_image_url.id}
                 label={academyCourseDetailsFormFormat.academy.add.input.academy_image_url.placeholder}
-                errorMsg='Image url invalid' />
+                errorMsg='Image url invalid'
+                required />
             <FxInput
                 id={academyCourseDetailsFormFormat.academy.add.input.academy_email.id}
                 label={academyCourseDetailsFormFormat.academy.add.input.academy_email.placeholder}

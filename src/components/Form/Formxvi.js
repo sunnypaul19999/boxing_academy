@@ -68,7 +68,7 @@ function useFxInputValidator(formElementRef, fxchildren) {
 
         if (event.detail) {
             let validInputId = event.detail.payload.id;
-            console.log(validInputId);
+            //console.log(validInputId);
 
             /*
             setState(
@@ -162,8 +162,8 @@ export default function Formxvi(props) {
 
     let onResetForm = (event) => {
         event.stopPropagation();
-        let inputFields = document.querySelectorAll('.formxvi-container .formxvi-layout .formxvi-form .input-fields .input-field');
-        inputFields.forEach((el) => { formReset(el); })
+        let inputField = document.querySelector('.formxvi-container .formxvi-layout .formxvi-form .input-fields');
+        formReset(inputField);
     }
 
     return (
