@@ -3,6 +3,9 @@ import { useEffect, useRef } from 'react';
 import { formDisableSubmitButton, formEnableSubmitButton, formReset } from './FormEvent';
 
 import 'assets/css/formxvi/formxvi-layout.css';
+import FxInput from './FxInput';
+import FxTextarea from './FxTextarea';
+import FxSelect from './FxSelect';
 
 //--------props-------
 //title [form title]
@@ -13,37 +16,42 @@ class FxInputFieldState {
     static state = {};
 }
 
-function useFxInputValidator(formElementRef, fxchildren) {
+function useFxInputValidator(formElementRef, fxchildren, isChild) {
     //let [state, setState] = useState({});
+
 
     useEffect(() => {
         //console.log('FxInputFieldState rendered');
-        let formElement = getFormElement();
-        formElement.addEventListener('formxviInputInvalidEvent', onFormInvalidEvent);
-        formElement.addEventListener('formxviInputValidEvent', onFormValidEvent);
+        if (!isChild) {
+            let formElement = getFormElement();
+            formElement.addEventListener('formxviInputInvalidEvent', onFormInvalidEvent);
+            formElement.addEventListener('formxviInputValidEvent', onFormValidEvent);
 
-        setTimeout(inputValidation, 0);
+            setTimeout(inputValidation, 0);
 
-        /*setState(
-            produce(state, draft => {
+            /*setState(
+                produce(state, draft => {
+                    for (const fxchild of fxchildren) {
+                        draft[`${fxchild.props.id}`] = false;
+                    }
+                })
+            );*/
+
+            FxInputFieldState.state = produce(FxInputFieldState.state, draft => {
                 for (const fxchild of fxchildren) {
-                    draft[`${fxchild.props.id}`] = false;
+                    if (fxchild.type === FxInput || fxchild.type === FxSelect || fxchild.type === FxTextarea) {
+                        draft[`${fxchild.props.id}`] = false;
+                    }
                 }
-            })
-        );*/
+            });
 
-        FxInputFieldState.state = produce(FxInputFieldState.state, draft => {
-            for (const fxchild of fxchildren) {
-                draft[`${fxchild.props.id}`] = false;
-            }
-        });
+            //console.log(FxInputFieldState.state);
 
-        //console.log(FxInputFieldState.state);
-
-        return (function release() {
-            formElement.removeEventListener('formxviInputInvalidEvent', onFormInvalidEvent);
-            formElement.removeEventListener('formxviInputValidEvent', onFormValidEvent);
-        });
+            return (function release() {
+                formElement.removeEventListener('formxviInputInvalidEvent', onFormInvalidEvent);
+                formElement.removeEventListener('formxviInputValidEvent', onFormValidEvent);
+            });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -123,24 +131,28 @@ function useFxInputValidator(formElementRef, fxchildren) {
 }
 
 export default function Formxvi(props) {
-    let formxviContainerRef = useRef();
+    let formxviContainerRef = useRef(null);
     let formElementRef = useRef(null);
     let formSubmitButtonRef = useRef(null);
     let formResetButtonRef = useRef(null);
 
-    useFxInputValidator(formElementRef, props.children);
+    let isFormChild = () => { return Boolean(props.child); }
+
+    useFxInputValidator(formElementRef, (props.children[Symbol.iterator]) ? props.children : [props.children], isFormChild());
 
     useEffect(() => {
         //console.log('Formxvi rendered');
         let formElement = getFormElement();
 
-        formElement.addEventListener('formxviEnableSubmitButton', enableFormSubmitButton);
-        formElement.addEventListener('formxviDisableSubmitButton', disableFormSubmitButton);
+        if (!isFormChild()) {
+            formElement.addEventListener('formxviEnableSubmitButton', enableFormSubmitButton);
+            formElement.addEventListener('formxviDisableSubmitButton', disableFormSubmitButton);
 
-        return (function release() {
-            formElement.removeEventListener('formxviEnableSubmitButton', enableFormSubmitButton);
-            formElement.removeEventListener('formxviDisableSubmitButton', disableFormSubmitButton);
-        });
+            return (function release() {
+                formElement.removeEventListener('formxviEnableSubmitButton', enableFormSubmitButton);
+                formElement.removeEventListener('formxviDisableSubmitButton', disableFormSubmitButton);
+            });
+        }
     });
 
     let getFormElement = () => { return formElementRef.current; }
@@ -177,38 +189,75 @@ export default function Formxvi(props) {
 
     let onResetForm = (event) => {
         event.stopPropagation();
-        let inputField = document.querySelector('.formxvi-container .formxvi-layout .formxvi-form .input-fields');
-        formReset(inputField);
+        let inputField = document.querySelectorAll('.formxvi-container .formxvi-layout .input-fields');
+        inputField.forEach((inputField) => { formReset(inputField); });
+        //formReset(inputField);
     }
 
-    return (
-        <div className="formxvi-container" ref={formxviContainerRef}>
-            <div className="formxvi-layout">
+
+
+    let getFormButtons = () => {
+        if (isFormChild()) return (<></>);
+        return (
+            <div className="formxvi-buttons">
+                <button
+                    ref={formResetButtonRef}
+                    type="button"
+                    className="btn btn-danger btn-sm" onClick={onResetForm}>RESET</button>
+                <button
+                    ref={formSubmitButtonRef}
+                    type="button"
+                    className="btn btn-primary btn-sm" onClick={onSubmitButtonClick}>SUBMIT</button>
+            </div>
+        );
+    }
+
+    let getFormLayout = () => {
+        return (
+            <div className={isFormChild() ? "formxvi-layout child" : "formxvi-layout"}>
                 <div className="card">
                     <div className="card-body">
                         <div className="card-title">{props.title}</div>
-                        <form
-                            ref={formElementRef}
-                            className="formxvi-form" onSubmit={onFormSubmit}>
 
-                            <div className="input-fields">
-                                {props.children}
-                            </div>
 
-                            <div className="formxvi-buttons">
-                                <button
-                                    ref={formResetButtonRef}
-                                    type="button"
-                                    className="btn btn-danger btn-sm" onClick={onResetForm}>RESET</button>
-                                <button
-                                    ref={formSubmitButtonRef}
-                                    type="button"
-                                    className="btn btn-primary btn-sm" onClick={onSubmitButtonClick}>SUBMIT</button>
-                            </div>
-                        </form>
+                        <div className="input-fields">
+                            {props.children}
+                        </div>
+
+                        {getFormButtons()}
+
                     </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    }
+
+    let getFormContainer = () => {
+        return (
+            <div
+                className={isFormChild() ? "formxvi-container child" : "formxvi-container"}
+                ref={formxviContainerRef}>
+
+                {getFormLayout()}
+
+            </div>
+        );
+    }
+
+    let getForm = () => {
+        if (isFormChild()) {
+            return getFormContainer();
+        }
+        return (
+            <form
+                ref={formElementRef}
+                className="formxvi-form" onSubmit={onFormSubmit}>
+
+                {getFormContainer()}
+
+            </form>
+        )
+    }
+
+    return getForm();
 }
