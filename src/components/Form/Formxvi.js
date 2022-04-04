@@ -125,7 +125,7 @@ export default function Formxvi(props) {
 
     let isFormChild = () => { return Boolean(props.child); }
 
-    let formState =  useFxInputValidator(formElementRef,
+    let formState = useFxInputValidator(formElementRef,
         (props.children[Symbol.iterator]) ? props.children : [props.children], isFormChild());
 
     useEffect(() => {
@@ -165,7 +165,8 @@ export default function Formxvi(props) {
     let onFormSubmit = (event) => {
         event.stopPropagation();
         event.preventDefault();
-        console.log(formState());
+        //console.log(formState());
+        props.onFormSubmit(formState());
     }
 
     let onSubmitButtonClick = (event) => {
