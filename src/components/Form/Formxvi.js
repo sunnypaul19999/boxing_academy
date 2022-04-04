@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import produce from 'immer';
 
 import FxInput from './FxInput';
@@ -22,6 +22,10 @@ class FxInputFieldState {
 function useFxInputValidator(formElementRef, fxchildren, isChildForm) {
     //let [state, setState] = useState({});
 
+    let resetFxInputFieldState = useCallback(() => {
+        FxInputFieldState.state = {};
+    }, [])
+
 
     useEffect(() => {
         let formElement;
@@ -30,6 +34,8 @@ function useFxInputValidator(formElementRef, fxchildren, isChildForm) {
             formElement.addEventListener('formxviInputInvalidEvent', onFormInvalidEvent);
             formElement.addEventListener('formxviInputValidEvent', onFormValidEvent);
         }
+
+        resetFxInputFieldState();
 
         setTimeout(inputValidation, 0);
 
@@ -67,7 +73,8 @@ function useFxInputValidator(formElementRef, fxchildren, isChildForm) {
 
             });
 
-            console.log(FxInputFieldState.state);
+
+            //console.log(FxInputFieldState.state);
 
             formDisableSubmitButton(getFormElement());
         }
@@ -84,7 +91,7 @@ function useFxInputValidator(formElementRef, fxchildren, isChildForm) {
                 draft[validEventPayload.id.toString()].value = validEventPayload.value;
             });
 
-            console.log(FxInputFieldState.state);
+            //console.log(FxInputFieldState.state);
 
             inputValidation();
 

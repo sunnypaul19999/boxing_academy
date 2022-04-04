@@ -12,7 +12,7 @@ export default function AdminAddAcademy(props) {
 
     let navigate = useNavigate();
 
-    let academyAddInput = academyCourseDetailsFormFormat.academy.add.input;
+    let academyFormInput = academyCourseDetailsFormFormat.academy.add.input;
 
     useEffect(() => {
         console.log('AdminAddAcademy rendered');
@@ -27,12 +27,12 @@ export default function AdminAddAcademy(props) {
     let serverFormat = (formState) => {
         console.log(formState);
         return {
-            "instituteName": formState[academyAddInput.academy_name.id].value,
-            "imageURL": formState[academyAddInput.academy_image_url.id].value,
-            "instituteAddress": formState[academyAddInput.academy_location.id].value,
-            "instituteMobile": formState[academyAddInput.academy_contact_number.id].value,
-            "instituteEmail": formState[academyAddInput.academy_email.id].value,
-            "instituteDesc": formState[academyAddInput.academy_contact_number.id].value,
+            "instituteName": formState[academyFormInput.academy_name.id].value,
+            "imageURL": formState[academyFormInput.academy_image_url.id].value,
+            "instituteAddress": formState[academyFormInput.academy_location.id].value,
+            "instituteMobile": formState[academyFormInput.academy_contact_number.id].value,
+            "instituteEmail": formState[academyFormInput.academy_email.id].value,
+            "instituteDesc": formState[academyFormInput.academy_description.id].value,
         };
     }
 
@@ -50,20 +50,20 @@ export default function AdminAddAcademy(props) {
             id='addAcademy'
             title='Add Academy'
             onFormSubmit={onFormSubmit}>
-            <FxInput {...academyAddInput.academy_name} />
-            <FxInput {...academyAddInput.academy_contact_number} />
-            <FxInput {...academyAddInput.academy_image_url} />
-            <FxInput {...academyAddInput.academy_location} />
-            <FxInput {...academyAddInput.academy_email} />
-            <FxTextarea {...academyAddInput.academy_description} />
+            <FxInput {...academyFormInput.academy_name} />
+            <FxInput {...academyFormInput.academy_contact_number} />
+            <FxInput {...academyFormInput.academy_image_url} />
+            <FxInput {...academyFormInput.academy_location} />
+            <FxInput {...academyFormInput.academy_email} />
+            <FxTextarea {...academyFormInput.academy_description} />
         </Formxvi>
     );
 
 }
 
-/*id = { academyAddInput.academy_contact_number.id }
-name = { academyAddInput.academy_contact_number.name }
-label = { academyAddInput.academy_contact_number.placeholder }
+/*id = { academyFormInput.academy_contact_number.id }
+name = { academyFormInput.academy_contact_number.name }
+label = { academyFormInput.academy_contact_number.placeholder }
 regex = '^[0-9]{10}$'
 errorMsg = 'Please enter valid phone number'
 required*/

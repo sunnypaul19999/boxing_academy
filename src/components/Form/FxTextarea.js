@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { markInputFieldError, markInputFieldNeutral, markInputFieldValid } from './FxInputFieldMarker';
 
 //-----------props-----------
 //id [id for input]
 //label [input label]
+//defValue
 //placeholder [input placeholder]
 //required [is optional]
 //errorMsg [on input invalid error msg]
@@ -14,14 +15,29 @@ export default function FxTextarea(props) {
     let [state] = useState({
         id: props.id,
         label: props.label,
+        defValue: props.defValue,
         placeholder: props.placeholder,
         required: (props.required) ? true : false,
         disabled: (props.disabled) ? true : false,
         errorMsg: props.errorMsg,
     });
 
+    let setDefaultInputValue = useCallback(
+        () => {
+            if (state.defValue) {
+                setValue(state.defValue);
+                setTimeout(doValidation, 0);
+            }
+        },
+        [state.defValue]
+    );
+
     useEffect(() => {
         let inputElement = iRef.current;
+
+        setDefaultInputValue();
+
+
         if (state.disabled || isInputNotRequired()) {
             setTimeout(() => {
                 markInputFieldNeutral(
@@ -64,6 +80,7 @@ export default function FxTextarea(props) {
 
 
         if (isValid()) {
+            console.log(getValue());
             markInputFieldValid(
                 iRef.current,
                 parentClassList,

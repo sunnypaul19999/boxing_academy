@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { markInputFieldError, markInputFieldNeutral, markInputFieldValid } from './FxInputFieldMarker';
 
 //-----------props-----------
@@ -26,8 +26,22 @@ export default function FxInput(props) {
         errorMsg: props.errorMsg,
     });
 
+    let setDefaultInputValue = useCallback(
+        () => {
+            if (state.defValue) {
+                setValue(state.defValue);
+                setTimeout(doValidation, 0);
+            }
+        },
+        [state.defValue]
+    );
+
+
     useEffect(() => {
         let inputElement = iRef.current;
+
+        setDefaultInputValue();
+
         if (state.disabled || isInputNotRequired()) {
             setTimeout(() => {
                 markInputFieldNeutral(
@@ -83,7 +97,7 @@ export default function FxInput(props) {
                     return;
                 }
             }
-            
+
             markInputFieldError(
                 iRef.current,
                 elementClassList,
@@ -115,9 +129,10 @@ export default function FxInput(props) {
     let getInput = () => {
         let optionalProps = {};
 
-        if (state.defValue) {
+        /*if (state.defValue) {
+            //setValue(state.defValue)
             optionalProps.value = state.defValue;
-        }
+        }*/
 
         if (state.placeholder) {
             optionalProps.placeholder = state.placeholder;
