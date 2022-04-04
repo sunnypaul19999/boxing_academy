@@ -4,13 +4,14 @@ import { markInputFieldError, markInputFieldNeutral, markInputFieldValid } from 
 
 //-----------props-----------
 //id [id for input]
+//name [optional: name for input]
 //label [input label]
 //defValue [optional input value]
 //placeholder [optional: input placeholder]
 //required [is optional]
-//disabled [to disable input]
-//regex [to check validity of input]
-//errorMsg [on input invalid error msg]
+//disabled [optional: to disable input]
+//regex [optional: to check validity of input]
+//errorMsg [optional: on input invalid error msg]
 //---------------------------
 export default function FxInput(props) {
     let iRef = useRef(null);
@@ -29,9 +30,11 @@ export default function FxInput(props) {
     useEffect(() => {
         let inputElement = iRef.current;
         if (state.disabled || isInputNotRequired()) {
+            console.log('validation inputs');
+            console.log(inputElement);
             setTimeout(() => {
                 formInputValidEvent(inputElement, { id: inputElement.id });
-            }, 100);
+            }, 0);
         }
 
         umbrellaParent().addEventListener('formxviResetEvent', onEventResetInputField);

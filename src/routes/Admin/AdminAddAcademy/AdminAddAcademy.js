@@ -52,7 +52,7 @@ export default function AdminAddAcademy(props) {
     }
 
     return (
-        <Formxvi title='Add Academy'>
+        <Formxvi id='addAcademy' title='Add Academy'>
             <FxInput
                 id={academyCourseDetailsFormFormat.academy.add.input.academy_name.id}
                 label={academyCourseDetailsFormFormat.academy.add.input.academy_name.placeholder}
@@ -79,6 +79,7 @@ export default function AdminAddAcademy(props) {
                 required />
             <FxTextarea
                 id={academyCourseDetailsFormFormat.academy.add.input.academy_description.id}
+                form='addAcademy'
                 label={academyCourseDetailsFormFormat.academy.add.input.academy_description.placeholder}
                 errorMsg='Please enter a description'
                 required />

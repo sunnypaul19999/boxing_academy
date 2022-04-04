@@ -5,7 +5,7 @@ import { formDisableSubmitButton, formEnableSubmitButton, formReset } from './Fo
 import 'assets/css/formxvi/formxvi-layout.css';
 import FxInput from './FxInput';
 import FxTextarea from './FxTextarea';
-import FxSelect from './FxSelect';
+import FxSelect, { FxSelectOption } from './FxSelect';
 
 //--------props-------
 //title [form title]
@@ -16,42 +16,46 @@ class FxInputFieldState {
     static state = {};
 }
 
-function useFxInputValidator(formElementRef, fxchildren, isChild) {
+function useFxInputValidator(formElementRef, fxchildren, isChildForm) {
     //let [state, setState] = useState({});
 
 
     useEffect(() => {
         //console.log('FxInputFieldState rendered');
-        if (!isChild) {
-            let formElement = getFormElement();
+        let formElement;
+        if (!isChildForm) {
+            formElement = getFormElement();
             formElement.addEventListener('formxviInputInvalidEvent', onFormInvalidEvent);
             formElement.addEventListener('formxviInputValidEvent', onFormValidEvent);
+        }
 
-            setTimeout(inputValidation, 0);
+        setTimeout(inputValidation, 0);
 
-            /*setState(
-                produce(state, draft => {
-                    for (const fxchild of fxchildren) {
-                        draft[`${fxchild.props.id}`] = false;
-                    }
-                })
-            );*/
-
-            FxInputFieldState.state = produce(FxInputFieldState.state, draft => {
+        /*setState(
+            produce(state, draft => {
                 for (const fxchild of fxchildren) {
-                    if (fxchild.type === FxInput || fxchild.type === FxSelect || fxchild.type === FxTextarea) {
-                        draft[`${fxchild.props.id}`] = false;
-                    }
+                    draft[`${fxchild.props.id}`] = false;
                 }
-            });
+            })
+        );*/
 
-            //console.log(FxInputFieldState.state);
+        FxInputFieldState.state = produce(FxInputFieldState.state, draft => {
+            for (const fxchild of fxchildren) {
+                if (fxchild.type === FxInput || fxchild.type === FxSelect || fxchild.type === FxTextarea) {
+                    draft[`${fxchild.props.id}`] = false;
+                }
+            }
+        });
 
-            return (function release() {
+        console.log(FxInputFieldState.state);
+
+        return (function release() {
+            if (formElement) {
                 formElement.removeEventListener('formxviInputInvalidEvent', onFormInvalidEvent);
                 formElement.removeEventListener('formxviInputValidEvent', onFormValidEvent);
-            });
-        }
+            }
+        });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -189,8 +193,8 @@ export default function Formxvi(props) {
 
     let onResetForm = (event) => {
         event.stopPropagation();
-        let inputField = document.querySelectorAll('.formxvi-container .formxvi-layout .input-fields');
-        inputField.forEach((inputField) => { formReset(inputField); });
+        let inputFieldGrp = document.querySelectorAll('.formxvi-container .formxvi-layout .input-fields');
+        inputFieldGrp.forEach((inputField) => { formReset(inputField); });
         //formReset(inputField);
     }
 
@@ -212,9 +216,11 @@ export default function Formxvi(props) {
         );
     }
 
+    let getFormxviLayoutClassName = () => { return isFormChild() ? "formxvi-layout child" : "formxvi-layout"; }
+
     let getFormLayout = () => {
         return (
-            <div className={isFormChild() ? "formxvi-layout child" : "formxvi-layout"}>
+            <div className={getFormxviLayoutClassName()}>
                 <div className="card">
                     <div className="card-body">
                         <div className="card-title">{props.title}</div>
@@ -232,10 +238,12 @@ export default function Formxvi(props) {
         );
     }
 
+    let getFormxviContainerClassName = () => { return isFormChild() ? "formxvi-container child" : "formxvi-container"; }
+
     let getFormContainer = () => {
         return (
             <div
-                className={isFormChild() ? "formxvi-container child" : "formxvi-container"}
+                className={getFormxviContainerClassName()}
                 ref={formxviContainerRef}>
 
                 {getFormLayout()}
