@@ -166,8 +166,7 @@ export default function CardContainer(props) {
                     let prophash = objectHash({
                         cardProp: cardProp,
                         timestamp: Math.floor(Date.now() / 1000)
-                    }
-                    );
+                    });
                     cards.push(
                         <GridAcademyCourseCard
                             {...props}
@@ -184,8 +183,7 @@ export default function CardContainer(props) {
                     let prophash = objectHash({
                         cardProp: cardProp,
                         timestamp: Math.floor(Date.now() / 1000)
-                    }
-                    );
+                    });
                     cards.push(
                         <ListAcademyCourseCard
                             {...props}

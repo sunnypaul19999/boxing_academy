@@ -26,7 +26,7 @@ export default function CardInfoTwo(props) {
     };
 
     let peopleCount = () => {
-        if (props.peopleCount) {
+        if (props.strength) {
             return (
                 <span class="item three">
                     <span class="material-icons">people</span>

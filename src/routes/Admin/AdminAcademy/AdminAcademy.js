@@ -13,6 +13,7 @@ function cardPropFormat(academy) {
         title: academy.instituteName,
         description: academy.instituteDesc,
         location: academy.instituteAddress,
+        strength: academy.instituteEmail,
         rating: academy.rating,
     };
 }
