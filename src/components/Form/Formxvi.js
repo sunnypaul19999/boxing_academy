@@ -1,11 +1,14 @@
-import produce from 'immer';
 import { useEffect, useRef } from 'react';
+import produce from 'immer';
+
+import FxInput from './FxInput';
+import FxTextarea from './FxTextarea';
+import FxSelect from './FxSelect';
 import { formDisableSubmitButton, formEnableSubmitButton, formReset } from './FormEvent';
 
 import 'assets/css/formxvi/formxvi-layout.css';
-import FxInput from './FxInput';
-import FxTextarea from './FxTextarea';
-import FxSelect, { FxSelectOption } from './FxSelect';
+
+
 
 //--------props-------
 //title [form title]
@@ -21,7 +24,6 @@ function useFxInputValidator(formElementRef, fxchildren, isChildForm) {
 
 
     useEffect(() => {
-        //console.log('FxInputFieldState rendered');
         let formElement;
         if (!isChildForm) {
             formElement = getFormElement();
@@ -31,23 +33,15 @@ function useFxInputValidator(formElementRef, fxchildren, isChildForm) {
 
         setTimeout(inputValidation, 0);
 
-        /*setState(
-            produce(state, draft => {
-                for (const fxchild of fxchildren) {
-                    draft[`${fxchild.props.id}`] = false;
-                }
-            })
-        );*/
-
         FxInputFieldState.state = produce(FxInputFieldState.state, draft => {
             for (const fxchild of fxchildren) {
                 if (fxchild.type === FxInput || fxchild.type === FxSelect || fxchild.type === FxTextarea) {
-                    draft[`${fxchild.props.id}`] = false;
+                    draft[fxchild.props.id.toString()] = { valid: false, name: '', value: null };
                 }
             }
         });
 
-        console.log(FxInputFieldState.state);
+        //console.log(FxInputFieldState.state);
 
         return (function release() {
             if (formElement) {
@@ -62,50 +56,37 @@ function useFxInputValidator(formElementRef, fxchildren, isChildForm) {
     let getFormElement = () => { return formElementRef.current; }
 
     let onFormInvalidEvent = (event) => {
-        //console.log('invalid event caught');
         event.stopPropagation();
         if (event.detail) {
-            let invalidInputId = event.detail.payload.id;
-
-            /*
-            console.log(FxInputFieldState.state);
-            setState(
-                produce(state, draft => {
-                    draft[`${invalidInputId}`] = false;
-                })
-            );*/
+            let invalidEventPayload = event.detail.payload;
+            console.log(invalidEventPayload);
 
             FxInputFieldState.state = produce(FxInputFieldState.state, draft => {
-                draft[`${invalidInputId}`] = false;
+                draft[invalidEventPayload.id.toString()].valid = false;
+                draft[invalidEventPayload.id.toString()].value = invalidEventPayload.value;
+
             });
+
+            console.log(FxInputFieldState.state);
+
             formDisableSubmitButton(getFormElement());
         }
     }
 
     let onFormValidEvent = (event) => {
-        //console.log('valid event caught');
         event.stopPropagation();
 
         if (event.detail) {
-            let validInputId = event.detail.payload.id;
-            //console.log(validInputId);
-
-            /*
-            setState(
-                produce(state, draft => {
-                    draft[`${validInputId}`] = true;
-                })
-            );
-            console.log(state);
-            */
+            let validEventPayload = event.detail.payload;
 
             FxInputFieldState.state = produce(FxInputFieldState.state, draft => {
-                draft[`${validInputId}`] = true;
+                draft[validEventPayload.id.toString()].valid = true;
+                draft[validEventPayload.id.toString()].value = validEventPayload.value;
             });
 
-            inputValidation();
+            console.log(FxInputFieldState.state);
 
-            //console.log(FxInputFieldState.state);
+            inputValidation();
 
         }
 
@@ -123,14 +104,16 @@ function useFxInputValidator(formElementRef, fxchildren, isChildForm) {
     let isAllInputFieldValid = () => {
         let flag = true;
 
-        for (const isValid of Object.values(FxInputFieldState.state)) {
-            if (!isValid) { flag = false; break; }
+        for (const inputStateOb of Object.values(FxInputFieldState.state)) {
+            if (!inputStateOb.valid) { flag = false; break; }
         }
 
         //console.log(FxInputFieldState.state);
 
         return flag;
     }
+
+    return () => { return FxInputFieldState.state; };
 
 }
 
@@ -142,7 +125,8 @@ export default function Formxvi(props) {
 
     let isFormChild = () => { return Boolean(props.child); }
 
-    useFxInputValidator(formElementRef, (props.children[Symbol.iterator]) ? props.children : [props.children], isFormChild());
+    let formState =  useFxInputValidator(formElementRef,
+        (props.children[Symbol.iterator]) ? props.children : [props.children], isFormChild());
 
     useEffect(() => {
         //console.log('Formxvi rendered');
@@ -181,8 +165,7 @@ export default function Formxvi(props) {
     let onFormSubmit = (event) => {
         event.stopPropagation();
         event.preventDefault();
-        let formData = new FormData(getFormElement());
-        formData.forEach((value) => { console.log(value); });
+        console.log(formState());
     }
 
     let onSubmitButtonClick = (event) => {

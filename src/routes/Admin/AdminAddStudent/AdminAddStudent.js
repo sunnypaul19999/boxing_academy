@@ -116,7 +116,7 @@ export default function AdminAddStudent(props) {
                     label={inputIdOb.gender.placeholder}
                     errorMsg='Please select gender'
                     required>
-                    <FxSelectOption selected disabled value='Choose Gender' />
+                    <FxSelectOption disabled value='Choose Gender' />
                     <FxSelectOption value='Male' />
                     <FxSelectOption value='Female' />
                     <FxSelectOption value='Others' />
@@ -134,7 +134,7 @@ export default function AdminAddStudent(props) {
 
             {getBasicInfo().props.children}
 
-            {getAddressInfromationForm()}
+            {/*getAddressInfromationForm()*/}
 
         </Formxvi>
     );

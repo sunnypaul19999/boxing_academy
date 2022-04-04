@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { formInputValidEvent } from './FormEvent';
 import { markInputFieldError, markInputFieldNeutral, markInputFieldValid } from './FxInputFieldMarker';
 
 //-----------props-----------
@@ -30,10 +29,11 @@ export default function FxInput(props) {
     useEffect(() => {
         let inputElement = iRef.current;
         if (state.disabled || isInputNotRequired()) {
-            console.log('validation inputs');
-            console.log(inputElement);
             setTimeout(() => {
-                formInputValidEvent(inputElement, { id: inputElement.id });
+                markInputFieldNeutral(
+                    inputElement,
+                    getParent().classList,
+                    { id: inputElement.id, value: getValue(), name: inputElement.name });
             }, 0);
         }
 
@@ -69,15 +69,25 @@ export default function FxInput(props) {
         let elementClassList = getParent().classList;
 
         if (isValid()) {
-            markInputFieldValid(iRef, elementClassList);
+            markInputFieldValid(
+                iRef.current,
+                elementClassList,
+                { id: iRef.current.id, value: getValue() });
         } else {
             if (isInputNotRequired()) {
                 if (!state.regex || getValue() === '') {
-                    markInputFieldNeutral(iRef, elementClassList);
+                    markInputFieldNeutral(
+                        iRef.current,
+                        elementClassList,
+                        { id: iRef.current.id, value: getValue() });
                     return;
                 }
             }
-            markInputFieldError(iRef, elementClassList);
+            
+            markInputFieldError(
+                iRef.current,
+                elementClassList,
+                { id: iRef.current.id, value: getValue() });
         }
     }
 

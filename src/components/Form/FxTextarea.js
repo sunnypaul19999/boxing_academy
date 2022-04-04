@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { formInputValidEvent } from './FormEvent';
 import { markInputFieldError, markInputFieldNeutral, markInputFieldValid } from './FxInputFieldMarker';
 
 //-----------props-----------
@@ -25,8 +24,11 @@ export default function FxTextarea(props) {
         let inputElement = iRef.current;
         if (state.disabled || isInputNotRequired()) {
             setTimeout(() => {
-                formInputValidEvent(inputElement, { id: inputElement.id });
-            }, 100);
+                markInputFieldNeutral(
+                    inputElement,
+                    getParent().classList,
+                    { id: inputElement.id, value: getValue(), name: inputElement.name });
+            }, 0);
         }
 
         umbrellaParent().addEventListener('formxviResetEvent', onEventResetInputField);
@@ -62,15 +64,24 @@ export default function FxTextarea(props) {
 
 
         if (isValid()) {
-            markInputFieldValid(iRef, parentClassList);
+            markInputFieldValid(
+                iRef.current,
+                parentClassList,
+                { id: iRef.current.id, value: getValue() });
         } else {
             if (isInputNotRequired()) {
                 if (!state.regex || getValue() === '') {
-                    markInputFieldNeutral(iRef, parentClassList);
+                    markInputFieldNeutral(
+                        iRef.current,
+                        parentClassList,
+                        { id: iRef.current.id, value: getValue() });
                     return;
                 }
             }
-            markInputFieldError(iRef, parentClassList);
+            markInputFieldError(
+                iRef.current,
+                parentClassList,
+                { id: iRef.current.id, value: getValue() });
         }
     }
 

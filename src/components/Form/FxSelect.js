@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { formInputValidEvent } from './FormEvent';
 import { markInputFieldError, markInputFieldNeutral, markInputFieldValid } from './FxInputFieldMarker';
 
 //-----------props-----------
@@ -54,8 +53,10 @@ export default function FxSelect(props) {
         let inputElement = iRef.current;
         if (state.disabled || isInputNotRequired()) {
             setTimeout(() => {
-                //markInputFieldNeutral(iRef, inputElement.classList);
-                formInputValidEvent(inputElement, { id: inputElement.id });
+                markInputFieldNeutral(
+                    iRef.current,
+                    getParent().classList,
+                    { id: iRef.current.id, value: getValue() });
             }, 0);
         }
 
@@ -92,12 +93,21 @@ export default function FxSelect(props) {
         let elementClassList = getParent().classList;
 
         if (isValid()) {
-            markInputFieldValid(iRef, elementClassList);
+            markInputFieldValid(
+                iRef.current,
+                elementClassList,
+                { id: iRef.current.id, value: getValue() });
         } else {
             if (isInputNotRequired()) {
-                markInputFieldNeutral(iRef, elementClassList);
+                markInputFieldNeutral(
+                    iRef.current,
+                    elementClassList,
+                    { id: iRef.current.id, value: getValue() });
             }
-            markInputFieldError(iRef, elementClassList);
+            markInputFieldError(
+                iRef.current,
+                elementClassList,
+                { id: iRef.current.id, value: getValue() });
         }
     }
 
@@ -117,9 +127,10 @@ export default function FxSelect(props) {
         }
     }
 
-    //let getValue = () => { return iRef.current.value; }
+    let getValue = () => { return iRef.current.value; }
 
     let setValue = (index) => { iRef.current.selectedIndex = index; }
+
 
     let getSelectElement = () => {
         let selectElementOptionalProps = {};
@@ -132,19 +143,12 @@ export default function FxSelect(props) {
             selectElementOptionalProps.onInput = onInput;
         }
 
-        /*let selectOptionElements = [];
-        for (const optionProps of state.options) {
-            selectOptionElements.push(
-                <option {...optionProps}>{optionProps.value}</option>
-            );
-        }*/
 
         return (
             <select
                 ref={iRef}
                 id={state.id}
                 className="form-select" {...selectElementOptionalProps}>
-                {/*selectOptionElements*/}
                 {props.children}
             </select>
         );

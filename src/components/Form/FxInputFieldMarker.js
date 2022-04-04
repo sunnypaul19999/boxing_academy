@@ -1,31 +1,33 @@
 import { formInputInvalidEvent, formInputValidEvent } from "./FormEvent";
 
-export let markInputFieldError = (iRef, elementClassList) => {
+export let markInputFieldError = (element, elementClassList, payload) => {
     if (elementClassList.contains('valid')) {
         elementClassList.remove('valid');
     }
     if (!elementClassList.contains('error')) {
         elementClassList.add('error');
-        formInputInvalidEvent(iRef.current, { id: iRef.current.id });
     }
+
+    formInputInvalidEvent(element, payload);
 }
 
-export let markInputFieldValid = (iRef, elementClassList) => {
+export let markInputFieldValid = (element, elementClassList, payload) => {
     if (elementClassList.contains('error')) {
         elementClassList.remove('error');
     }
     if (!elementClassList.contains('valid')) {
         elementClassList.add('valid');
-        formInputValidEvent(iRef.current, { id: iRef.current.id });
     }
+
+    formInputValidEvent(element, payload);
 }
 
-export let markInputFieldNeutral = (iRef, elementClassList) => {
+export let markInputFieldNeutral = (element, elementClassList, payload) => {
     if (elementClassList.contains('valid')) {
         elementClassList.remove('valid');
     }
     if (elementClassList.contains('error')) {
         elementClassList.remove('error');
     }
-    formInputValidEvent(iRef.current, { id: iRef.current.id });
+    formInputValidEvent(element, payload);
 }
