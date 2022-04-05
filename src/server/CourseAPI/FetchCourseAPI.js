@@ -11,7 +11,7 @@ export default class FetchCourseAPI {
 
     constructor(token, id) {
         this._token = token;
-        //id is academy id
+        //id is course id
         this._id = id;
     }
 
@@ -34,7 +34,7 @@ export default class FetchCourseAPI {
     }
 
     _onFetchAllCourseSuccess(res) {
-        this._response.payload = { academy: res.data };
+        this._response.payload = { course: res.data };
         this._response.message = 'All Course Fetched';
 
         return this._response;
@@ -43,7 +43,7 @@ export default class FetchCourseAPI {
     _onFetchCourseByAcademyIdSuccess(res) {
         //console.log(this._id);
         this._response.payload = {
-            academy: res.data,
+            course: res.data,
             statusCode: res.status
         };
         this._response.message = 'Course Fetched';

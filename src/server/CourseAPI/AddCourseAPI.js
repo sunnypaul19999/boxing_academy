@@ -24,7 +24,7 @@ export default class AddCourseAPI {
     }
 
     _onAddCourseSuccess(res) {
-        this._response.payload = { academy: res.data };
+        this._response.payload = { course: res.data };
         this._response.message = '  Course Added!  ';
 
         return this._response;

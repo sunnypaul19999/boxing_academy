@@ -25,7 +25,7 @@ export default class UpdateCourseAPI {
     }
 
     _onUpdateCourseSuccess(res) {
-        this._response.payload = { academy: res.data };
+        this._response.payload = { course: res.data };
         this._response.message = '  Course Updated!  ';
 
         return this._response;
