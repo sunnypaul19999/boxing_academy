@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 
@@ -25,7 +25,11 @@ export default function AdminCourse(props) {
 
     let nav = useNavigate();
 
+    let param = useParams();
+
     let mainStoreDispatch = useDispatch();
+
+    let getAcademyId = () => { return param.academyId; }
 
     let onAddCourseClicked = () => {
         nav('add');
@@ -33,7 +37,7 @@ export default function AdminCourse(props) {
 
     let fetchAllCourse = async () => {
         let cardPropsData = [];
-        let payload = await CourseAPI.fetchAll().then((response) => { return response.payload; });
+        let payload = await CourseAPI.fetchById(getAcademyId()).then((response) => { return response.payload; });
 
         if (payload.course[Symbol.iterator]) {
 
