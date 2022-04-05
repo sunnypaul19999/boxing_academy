@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import CardContainerNotifier from "store/CardContainerNotifier/CardContainerNotifier";
 
@@ -18,6 +18,10 @@ export default function AdminAddCourse(props) {
 
     let courseFormInput = academyCourseDetailsFormFormat.course.add.input;
 
+    let params = useParams();
+
+    let getAcademyId = () => { return params.academyId; }
+
     useEffect(() => {
         console.log('AdminAddCourse rendered');
     });
@@ -30,6 +34,9 @@ export default function AdminAddCourse(props) {
 
     let serverFormat = (formState) => {
         return {
+            "institute": {
+                "instituteId": getAcademyId(),
+            },
             "courseName": formState[courseFormInput.course_name.id].value,
             "courseDuration": formState[courseFormInput.course_duration.id].value,
             "courseCost": formState[courseFormInput.course_cost.id].value,
