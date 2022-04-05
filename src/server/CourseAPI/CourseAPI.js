@@ -1,7 +1,8 @@
 import AddCourseAPI from "./AddCourseAPI";
 import DeleteCourseAPI from "./DeleteCourseAPI";
 import FetchCourseAPI from "./FetchCourseAPI";
-import UpdateCourseAPI from "./UpdateAcademyAPI";
+import UpdateCourseAPI from "./UpdateCourseAPI";
+
 
 export default class CourseAPI {
 
