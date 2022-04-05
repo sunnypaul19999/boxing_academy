@@ -31,19 +31,19 @@ export default function AdminCourse(props) {
         nav('add');
     }
 
-    let fetchAllAcademy = async () => {
+    let fetchAllCourse = async () => {
         let cardPropsData = [];
         let payload = await CourseAPI.fetchAll().then((response) => { return response.payload; });
 
-        if (payload.academy[Symbol.iterator]) {
+        if (payload.course[Symbol.iterator]) {
 
-            payload.academy.forEach((academy) => {
-                cardPropsData.push(cardPropFormat(academy));
+            payload.course.forEach((course) => {
+                cardPropsData.push(cardPropFormat(course));
             });
 
             return cardPropsData;
         } else {
-            cardPropsData.push(cardPropFormat(payload.academy));
+            cardPropsData.push(cardPropFormat(payload.course));
         }
 
         return cardPropsData;
@@ -55,7 +55,7 @@ export default function AdminCourse(props) {
         } catch (err) {
             if (err['response'].status === 404) {
                 console.log(id);
-                mainStoreDispatch({ type: 'deleteAcademyDetail', payload: id });
+                mainStoreDispatch({ type: 'deleteCourseDetail', payload: id });
             }
         }
     }
@@ -63,7 +63,7 @@ export default function AdminCourse(props) {
     return (
         <>
             <SearchBar course />
-            <CardContainer admin course />
+            <CardContainer admin course fetch={fetchAllCourse} checkSourceTrue={checkSourceTrue} />
             <HoverButton
                 id='addCourseHoverButton'
                 text='Add Course'

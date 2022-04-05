@@ -62,10 +62,26 @@ export default class MainStore {
                 });
                 return nextState;
             case 'courseDetails':
-                return {
-                    ...state,
-                    courseDetails: action.payload,
-                };
+                console.log('courseDetails');
+                nextState = produce(state, draft => {
+                    draft.courseDetails = action.payload;
+                });
+                return nextState;
+            case 'deleteCourseDetail':
+                nextState = produce(state, draft => {
+                    let i = -1;
+                    for (const course of draft.courseDetails) {
+                        i++;
+                        if (course.id === action.payload) {
+                            break;
+                        }
+                    }
+                    if (i > -1) {
+                        console.log('deleteCourseDetail');
+                        draft.courseDetails.splice(i, 1);
+                    }
+                });
+                return nextState;
             default:
                 if (state === undefined) {
                     return {
