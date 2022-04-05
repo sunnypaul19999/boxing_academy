@@ -6,7 +6,7 @@ const _regex = {
     address: '^[a-zA-Z0-9^,// ]{3,}$',
     email: '[a-z0-9]+@[a-z]+\.[a-z]{2,3}',
     duration: '^[0-9]{1,}$',
-    timimg: '^[1-12][AaPp][Mm] - [1-12][AaPp][Mm]$'
+    timimg: '^[1-9]{1}[1-9]{0,1}[AaPp][Mm] - [1-9]{1}[1-9]{0,1}[AaPp][Mm]$'
 }
 export let academyCourseDetailsFormFormat = {
     academy: {
@@ -155,7 +155,7 @@ export let academyCourseDetailsFormFormat = {
                 course_duration: {
                     id: 'courseDuration',
                     name: 'course_duration',
-                    label: 'Course Duraton',
+                    label: 'Course Duration',
                     regex: _regex.number,
                     placeholder: '',
                     errorMsg: 'Please enter valid duration',
@@ -167,7 +167,7 @@ export let academyCourseDetailsFormFormat = {
                     label: 'Course Timing',
                     regex: _regex.timimg,
                     placeholder: '',
-                    errorMsg: 'Timing: 1pm - 2pm',
+                    errorMsg: 'eg: 1pm - 2pm',
                     required: true,
                 },
                 course_total_students: {
@@ -220,7 +220,7 @@ export let academyCourseDetailsFormFormat = {
                 course_duration: {
                     id: 'editCourseDuration',
                     name: 'course_duration',
-                    label: 'Course Duraton',
+                    label: 'Course Duration',
                     regex: _regex.duration,
                     placeholder: '',
                     errorMsg: 'Please enter valid duration',
@@ -232,7 +232,7 @@ export let academyCourseDetailsFormFormat = {
                     label: 'Course Timing',
                     regex: _regex.timimg,
                     placeholder: '',
-                    errorMsg: 'Timing: eg, 1pm - 2pm',
+                    errorMsg: 'eg: 1pm - 2pm',
                     required: true,
                 },
                 course_total_students: {
