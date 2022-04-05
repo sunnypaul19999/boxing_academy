@@ -6,7 +6,7 @@ const _regex = {
     address: '^[a-zA-Z0-9^,// ]{3,}$',
     email: '[a-z0-9]+@[a-z]+\.[a-z]{2,3}',
     duration: '^[0-9]{1,}$',
-    timimg: '^[1-12][AaPp][Mm]-[1-12][AaPp][Mm]$'
+    timimg: '^[1-12][AaPp][Mm] - [1-12][AaPp][Mm]$'
 }
 export let academyCourseDetailsFormFormat = {
     academy: {
@@ -179,6 +179,15 @@ export let academyCourseDetailsFormFormat = {
                     errorMsg: 'Please enter valid number',
                     required: true,
                 },
+                course_cost: {
+                    id: 'courseCost',
+                    name: 'course_cost',
+                    label: 'Course Fees',
+                    regex: _regex.number,
+                    placeholder: '',
+                    errorMsg: 'Please enter valid number',
+                    required: true,
+                },
                 course_description: {
                     id: 'courseDescription',
                     name: 'course_description',
@@ -230,6 +239,15 @@ export let academyCourseDetailsFormFormat = {
                     id: 'editCourseEnrolled',
                     name: 'course_total_students',
                     label: 'Max Students',
+                    regex: _regex.number,
+                    placeholder: '',
+                    errorMsg: 'Please enter valid number',
+                    required: true,
+                },
+                course_cost: {
+                    id: 'editCourseCost',
+                    name: 'course_cost',
+                    label: 'Course Fees',
                     regex: _regex.number,
                     placeholder: '',
                     errorMsg: 'Please enter valid number',

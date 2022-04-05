@@ -38,7 +38,7 @@ export default function AdminCourse(props) {
     let fetchAllCourse = async () => {
         let cardPropsData = [];
         let payload = await CourseAPI.fetchById(getAcademyId()).then((response) => { return response.payload; });
-
+        console.log(getAcademyId());
         if (payload.course[Symbol.iterator]) {
 
             payload.course.forEach((course) => {

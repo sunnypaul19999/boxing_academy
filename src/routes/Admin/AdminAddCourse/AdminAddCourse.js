@@ -29,17 +29,17 @@ export default function AdminAddCourse(props) {
     }
 
     let serverFormat = (formState) => {
-        console.log(formState);
         return {
-            "courseName": formState[courseFormInput.academy_name.id].value,
-            "courseDuration": formState[courseFormInput.academy_location.id].value,
-            "courseCost": formState[courseFormInput.academy_contact_number.id].value,
-            "courseTimings": formState[courseFormInput.academy_email.id].value,
-            "courseDesc": formState[courseFormInput.academy_description.id].value,
+            "courseName": formState[courseFormInput.course_name.id].value,
+            "courseDuration": formState[courseFormInput.course_duration.id].value,
+            "courseCost": formState[courseFormInput.course_cost.id].value,
+            "courseTimings": formState[courseFormInput.course_timing.id].value,
+            "courseDesc": formState[courseFormInput.course_description.id].value,
         };
     }
 
     let addCourse = async (sformat) => {
+        console.log(sformat);
         let response = await CourseAPI.add(sformat);
         console.log(response.message);
         CardContainerNotifier.update();
@@ -53,20 +53,19 @@ export default function AdminAddCourse(props) {
             id='addCourse'
             title='Add Course'
             onFormSubmit={onFormSubmit}>
-            <FxInput {...courseFormInput.academy_name} />
-            <FxInput {...courseFormInput.academy_contact_number} />
-            <FxInput {...courseFormInput.academy_image_url} />
-            <FxInput {...courseFormInput.academy_location} />
-            <FxInput {...courseFormInput.academy_email} />
-            <FxTextarea {...courseFormInput.academy_description} />
+            <FxInput {...courseFormInput.course_name} />
+            <FxInput {...courseFormInput.course_duration} />
+            <FxInput {...courseFormInput.course_cost} />
+            <FxInput {...courseFormInput.course_timing} />
+            <FxTextarea {...courseFormInput.course_description} />
         </Formxvi>
     );
 
 }
 
-/*id = { courseFormInput.academy_contact_number.id }
-name = { courseFormInput.academy_contact_number.name }
-label = { courseFormInput.academy_contact_number.placeholder }
+/*id = { courseFormInput.course_contact_number.id }
+name = { courseFormInput.course_contact_number.name }
+label = { courseFormInput.course_contact_number.placeholder }
 regex = '^[0-9]{10}$'
 errorMsg = 'Please enter valid phone number'
 required*/
