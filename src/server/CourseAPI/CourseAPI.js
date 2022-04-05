@@ -10,8 +10,12 @@ export default class CourseAPI {
         return FetchCourseAPI.fetchAllCourse();
     }
 
-    static fetchById(id) {
+    static fetchByAcadmeyId(id) {
         return FetchCourseAPI.fetchCourseByAcademyId(id);
+    }
+
+    static fetchByCourseId(id) {
+        return FetchCourseAPI.fetchCourseByCourseId(id);
     }
 
     static async add(reqBody) {

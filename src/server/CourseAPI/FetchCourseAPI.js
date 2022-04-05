@@ -34,6 +34,15 @@ export default class FetchCourseAPI {
         });
     }
 
+    _createFetchCourseByCourseIdReq = () => {
+        console.log(this._token);
+        return axios.get(`${serverURL}/course/${this._id}`, {
+            headers: {
+                Authorization: `Bearer ${this._token}`
+            }
+        });
+    }
+
     _onFetchAllCourseSuccess(res) {
         this._response.payload = { course: res.data };
         this._response.message = 'All Course Fetched';
@@ -41,7 +50,8 @@ export default class FetchCourseAPI {
         return this._response;
     }
 
-    _onFetchCourseByAcademyIdSuccess(res) {
+
+    _onFetchCourseByIdSuccess(res) {
         //console.log(this._id);
         this._response.payload = {
             course: res.data,
@@ -49,10 +59,11 @@ export default class FetchCourseAPI {
         };
 
         console.log(this._response.payload.course);
-        this._response.message = 'Course Fetched';
+        this._response.message = 'Courses Fetched';
 
         return this._response;
     }
+
 
     _onFetchAllCourseError(err) {
         let message;
@@ -66,7 +77,7 @@ export default class FetchCourseAPI {
         return this._response;
     }
 
-    _onFetchCourseByAcademyIdError(err) {
+    _onFetchCourseByIdError(err) {
         let message;
         //console.log(err);
         let status = err['response'].status;
@@ -80,7 +91,7 @@ export default class FetchCourseAPI {
         this._response.payload = { statusCode: status };
         this._response.message = message;
 
-        console.log(`FetchCourseByAcademyIdError: ${status}`);
+        console.log(`FetchCourseByIdError: ${status}`);
         return this._response;
     }
 
@@ -105,11 +116,25 @@ export default class FetchCourseAPI {
         let api = new FetchCourseAPI(token, id);
         try {
             let httpRes = await api._createFetchCourseByAcademyIdReq();
-            let response = api._onFetchCourseByAcademyIdSuccess(httpRes);
+            let response = api._onFetchCourseByIdSuccess(httpRes);
             return response;
         } catch (err) {
             //console.log(`FetchCourseAPI by Id: Error Occured\n`); //console.log(err);
-            let errResponse = api._onFetchCourseByAcademyIdError(err);
+            let errResponse = api._onFetchCourseByIdError(err);
+            return errResponse;
+        }
+    }
+
+    static async fetchCourseByCourseId(id) {
+        let token = await Database.getToken();
+        let api = new FetchCourseAPI(token, id);
+        try {
+            let httpRes = await api._createFetchCourseByCourseIdReq();
+            let response = api._onFetchCourseByIdSuccess(httpRes);
+            return response;
+        } catch (err) {
+            //console.log(`FetchCourseAPI by Id: Error Occured\n`); //console.log(err);
+            let errResponse = api._onFetchCourseByIdError(err);
             return errResponse;
         }
     }

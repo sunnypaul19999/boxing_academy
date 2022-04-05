@@ -37,7 +37,7 @@ export default function AdminCourse(props) {
 
     let fetchAllCourse = async () => {
         let cardPropsData = [];
-        let payload = await CourseAPI.fetchById(getAcademyId()).then((response) => { return response.payload; });
+        let payload = await CourseAPI.fetchByAcadmeyId(getAcademyId()).then((response) => { return response.payload; });
         console.log(getAcademyId());
         if (payload.course[Symbol.iterator]) {
 
@@ -57,7 +57,7 @@ export default function AdminCourse(props) {
         try {
             await CourseAPI.fetchById(id)
         } catch (err) {
-            if (err['response'].status === 404) {
+            if (err.statusCode === 404) {
                 console.log(id);
                 mainStoreDispatch({ type: 'deleteCourseDetail', payload: id });
             }

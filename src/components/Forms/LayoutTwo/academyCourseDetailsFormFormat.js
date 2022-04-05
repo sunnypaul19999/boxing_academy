@@ -215,7 +215,7 @@ export let academyCourseDetailsFormFormat = {
                     regex: _regex.name,
                     placeholder: '',
                     errorMsg: 'Please enter valid name',
-                    disabled: true,
+                    required: true,
                 },
                 course_duration: {
                     id: 'editCourseDuration',

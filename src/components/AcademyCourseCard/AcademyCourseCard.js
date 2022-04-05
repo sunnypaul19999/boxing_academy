@@ -7,7 +7,7 @@ import CardInfoOne from 'components/AcademyCourseCard/CardMakingTools/CardInfoOn
 import CardInfoTwo from 'components/AcademyCourseCard/CardMakingTools/CardInfoTwo.js';
 import { cardAcademyUserOnClickAction } from 'components/AcademyCourseCard/Actions/User/Card/cardUserOnClickAction';
 import { cardAcademyAdminOnClickAction } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnClick';
-import { adminEditCardEvent } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnEdit';
+import { adminCourseEditCardEvent, adminEditCardEvent } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnEdit';
 import { adminAcademyDeleteCardEvent, adminCourseDeleteCardEvent } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnDelete';
 import { cardUserOnEnrollCourseAction } from 'components/AcademyCourseCard/Actions/User/Card/cardUserOnEnrollAction';
 import { useDispatch } from 'react-redux';
@@ -162,8 +162,14 @@ export default function AcademyCourseCard(props) {
 
     let onEditCardEvent = (event) => {
         if (state.authorityType === 'admin') {
-            adminEditCardEvent(event, state, nav);
+            if (state.cardOf === 'academy') {
+                adminEditCardEvent(event, state, nav);
+            }
+            if (state.cardOf === 'course') {
+                adminCourseEditCardEvent(event, state, nav);
+            }
         }
+
     }
 
     let onDeleteCardEvent = async (event) => {
