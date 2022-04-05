@@ -176,7 +176,11 @@ export default function AcademyCourseCard(props) {
                 }
             }
             if (state.cardOf === 'course') {
-                adminCourseDeleteCardEvent(event, state, nav);
+                let response = await adminCourseDeleteCardEvent(event, state, nav);
+                if (response.payload) {
+                    //console.log(state.cardProp.id);
+                    mainStoreDispatch({ type: 'deleteCourseDetail', payload: state.cardProp.id });
+                }
             }
         }
     }

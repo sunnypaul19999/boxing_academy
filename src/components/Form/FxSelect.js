@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { markInputFieldError, markInputFieldNeutral, markInputFieldValid } from './FxInputFieldMarker';
 
 //-----------props-----------
@@ -49,8 +49,19 @@ export default function FxSelect(props) {
         errorMsg: props.errorMsg,
     });
 
+    let setDefaultInputValue = useCallback(
+        () => {
+            setValue(0);
+            setTimeout(doValidation, 0);
+        },
+        [state.defValue]
+    );
+
     useEffect(() => {
         let inputElement = iRef.current;
+
+        setDefaultInputValue();
+
         if (state.disabled || isInputNotRequired()) {
             setTimeout(() => {
                 markInputFieldNeutral(
@@ -134,6 +145,11 @@ export default function FxSelect(props) {
 
     let getSelectElement = () => {
         let selectElementOptionalProps = {};
+
+        if (props.style) {
+            selectElementOptionalProps.style = props.style;
+        }
+
         if (state.disabled) {
             selectElementOptionalProps.disabled = true;
         } else {
@@ -155,7 +171,7 @@ export default function FxSelect(props) {
     }
 
     return (
-        <span className="input-field">
+        <span className="input-field no-style">
             <label htmlFor={state.id} className="form-label">{state.label}</label>
             {getSelectElement()}
             <div className="inline-error-msg">{state.errorMsg}</div>

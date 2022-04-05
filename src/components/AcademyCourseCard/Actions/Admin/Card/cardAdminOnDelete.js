@@ -1,5 +1,5 @@
-import Database from "database/Database";
 import AcademyAPI from "server/AcademyAPI/AcademyAPI";
+import CourseAPI from "server/CourseAPI/CourseAPI";
 
 export async function adminAcademyDeleteCardEvent(event, state, nav) {
     event.preventDefault();
@@ -12,8 +12,13 @@ export async function adminAcademyDeleteCardEvent(event, state, nav) {
     }
 }
 
-export function adminCourseDeleteCardEvent(event, state, nav) {
+export async function adminCourseDeleteCardEvent(event, state, nav) {
     event.preventDefault();
     event.stopPropagation();
-    //TODO: send delete req to server
+    try {
+        let id = state.cardProp.id;
+        return await CourseAPI.delete(id);
+    } catch (err) {
+        nav('/signin');
+    }
 }

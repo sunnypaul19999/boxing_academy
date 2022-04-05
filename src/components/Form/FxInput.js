@@ -134,6 +134,10 @@ export default function FxInput(props) {
             optionalProps.value = state.defValue;
         }*/
 
+        if (props.style) {
+            optionalProps.style = props.style;
+        }
+
         if (state.placeholder) {
             optionalProps.placeholder = state.placeholder;
         }
@@ -154,7 +158,9 @@ export default function FxInput(props) {
                 ref={iRef}
                 id={state.id}
                 name={props.label}
-                type='text' className="form-control" {...optionalProps} />
+                type='text'
+                className="form-control"
+                {...optionalProps} onFocus={() => { console.log(props.children) }} />
         );
 
         if (state.disabled) { return inputEl; }
