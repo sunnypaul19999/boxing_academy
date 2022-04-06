@@ -1,13 +1,9 @@
-import SearchBar from "components/SearchBar/SearchBar.js";
-import CardContainer from "components/AcademyCourseCard/CardContainer.js";
+import AcademyView from "components/AcademyView/AcademyView";
 
 
 export default function UserAcademy(props) {
 
     return (
-        <>
-            <SearchBar academy />
-            <CardContainer user academy />
-        </>
+        <AcademyView user />
     );
 }

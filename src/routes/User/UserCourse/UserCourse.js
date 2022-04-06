@@ -1,14 +1,10 @@
-import SearchBar from "components/SearchBar/SearchBar.js";
-import CardContainer from "components/AcademyCourseCard/CardContainer.js";
+import CourseView from "components/CourseView/CourseView";
 
 
 
 export default function UserCourse(props) {
 
     return (
-        <>
-            <SearchBar course />
-            <CardContainer user course />
-        </>
+        <CourseView user />
     );
 }
