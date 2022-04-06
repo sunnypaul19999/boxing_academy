@@ -7,16 +7,15 @@ export default function AdminAddStudent(props) {
 
     let inputIdOb = userDetailsFormFormat.student.add.input;
 
-    let handleFormData = (formData) => {
+    let onFormSubmit = (formState) => {
         console.log('AdminUpdateStudent: form data');
-        console.log(formData);
-        let sFormat = serverFormat(formData);
+        console.log(formState);
+        let sFormat = serverFormat(formState);
     }
 
-    let serverFormat = (formData) => {
-        let formFormat = userDetailsFormFormat.student.add;
-        return {
-        };
+    let serverFormat = (formState) => {
+        
+        
     }
 
     let getStateOptions = () => {
@@ -111,7 +110,10 @@ export default function AdminAddStudent(props) {
 
 
     return (
-        <Formxvi title='Enrollment Form'>
+        <Formxvi
+            id='addAcademy'
+            title='Enrollment Form'
+            onFormSubmit={onFormSubmit}>
 
             {getBasicInfo().props.children}
 

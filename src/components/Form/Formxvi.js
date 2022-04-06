@@ -37,8 +37,10 @@ function useFxInputValidator(formElementRef, fxchildren, isChildForm) {
             formElement.addEventListener('formxviInputInvalidEvent', onFormInvalidEvent);
             formElement.addEventListener('formxviInputValidEvent', onFormValidEvent);
             setTimeout(inputValidation, 0);
+        } else {
+            resetFxInputFieldState();
         }
-        
+
 
         FxInputFieldState.state = produce(FxInputFieldState.state, draft => {
             let checkFxInputs = (fxchild) => {
@@ -190,8 +192,8 @@ export default function Formxvi(props) {
     let onFormSubmit = (event) => {
         event.stopPropagation();
         event.preventDefault();
-        console.log(formState());
-        //props.onFormSubmit(formState());
+        //console.log(formState());
+        props.onFormSubmit(formState());
     }
 
     let onSubmitButtonClick = (event) => {
