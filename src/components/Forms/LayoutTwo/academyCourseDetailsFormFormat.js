@@ -1,13 +1,7 @@
-const _regex = {
-    name: '^[a-zA-Z ]{3,}$',
-    contactNumber: '^[0-9]{10}$',
-    number: '^[0-9]{1,}$',
-    imageURL: '(https?:\/\/.*\.(?:png|jpg))',
-    address: '^[a-zA-Z0-9^,// ]{3,}$',
-    email: '[a-z0-9]+@[a-z]+\.[a-z]{2,3}',
-    duration: '^[0-9]{1,}$',
-    timimg: '^[1-9]{1}[1-9]{0,1}[AaPp][Mm] - [1-9]{1}[1-9]{0,1}[AaPp][Mm]$'
-}
+import validator from "email-validator";
+import { _regex } from 'components/Forms/regex.js';
+
+
 export let academyCourseDetailsFormFormat = {
     academy: {
         add: {
@@ -52,7 +46,9 @@ export let academyCourseDetailsFormFormat = {
                     id: 'emailId',
                     name: 'academy_email',
                     label: 'Email',
-                    regex: _regex.email,
+                    validator: (value) => {
+                        return validator.validate(value);
+                    },
                     placeholder: '',
                     errorMsg: 'Please enter valid email',
                     required: true,
@@ -117,7 +113,9 @@ export let academyCourseDetailsFormFormat = {
                     id: 'editEmailId',
                     name: 'academy_email',
                     label: 'Email',
-                    regex: _regex.email,
+                    validator: (value) => {
+                        return validator.validate(value);
+                    },
                     placeholder: '',
                     errorMsg: 'Please enter valid email',
                     disabled: true,
