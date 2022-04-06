@@ -47,7 +47,10 @@ function MainUIRouter(props) {
                 <Route path=':academyId/courses/add' element={<AdminAddCourse />}></Route>
                 <Route path=':academyId/courses/:courseId/edit' element={<AdminUpdateCourse />}></Route>
               </Route>
-              <Route path='courses' element={<AdminAllCourse />}></Route>
+              <Route path='courses' element={<Outlet />}>
+                <Route index element={<AdminAllCourse />}></Route>
+                <Route path=':courseId/edit' element={<AdminUpdateCourse />}></Route>
+              </Route>
               <Route path='students' element={<Outlet />}>
                 <Route index element={<AdminAllStudents />}></Route>
                 <Route path='add' element={<AdminAddStudent />}></Route>

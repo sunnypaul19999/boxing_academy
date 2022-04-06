@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import Formxvi from "components/Form/Formxvi";
 import FxInput from "components/Form/FxInput";
@@ -17,13 +17,12 @@ export default function AdminUpdateCourse(props) {
 
     let courseFormInput = academyCourseDetailsFormFormat.course.edit.input;
 
-    let params = useParams();
-
-    let getAcademyId = () => { return params.academyId; }
-
-    let getCourseId = () => { return params.courseId; }
-
     let preDetails = useLocation().state;
+
+    let getAcademyId = () => { return preDetails.institute.instituteId; }
+
+    let getCourseId = () => { return preDetails.courseId; }
+
 
     console.log(preDetails);
 
