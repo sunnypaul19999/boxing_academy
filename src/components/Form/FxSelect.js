@@ -52,7 +52,7 @@ export default function FxSelect(props) {
     let setDefaultInputValue = useCallback(
         () => {
             setValue(0);
-            setTimeout(doValidation, 0);
+            //setTimeout(doValidation, 0);
         },
         [state.defValue]
     );

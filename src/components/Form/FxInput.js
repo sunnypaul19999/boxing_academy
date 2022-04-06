@@ -160,7 +160,7 @@ export default function FxInput(props) {
                 name={props.label}
                 type='text'
                 className="form-control"
-                {...optionalProps} onFocus={() => { console.log(props.children) }} />
+                {...optionalProps} />
         );
 
         if (state.disabled) { return inputEl; }

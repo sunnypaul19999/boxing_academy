@@ -29,6 +29,7 @@ export function formEnableSubmitButton(element) {
 }
 
 export function formDisableSubmitButton(element) {
+    console.log(element === null);
     element.dispatchEvent(
         new CustomEvent('formxviDisableSubmitButton', {
             cancelable: false,

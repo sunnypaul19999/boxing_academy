@@ -1,3 +1,54 @@
+const _regex = {
+    name: '^[a-zA-Z ]{3,}$',
+    contactNumber: '^[0-9]{10}$',
+    number: '^[0-9]{1,}$',
+    imageURL: '(https?:\/\/.*\.(?:png|jpg))',
+    address: '^[a-zA-Z0-9^,// ]{3,}$',
+    email: '[a-z0-9]+@[a-z]+\.[a-z]{2,3}',
+    duration: '^[0-9]{1,}$',
+    timimg: '^[1-9]{1}[1-9]{0,1}[AaPp][Mm] - [1-9]{1}[1-9]{0,1}[AaPp][Mm]$',
+    houseNo: '^[1-9]\d*(?: ?(?:[a-z]|[/-] ?\d+[a-z]?))?$',
+    pincode: '^[1-9][0-9]{5}$',
+    age: '^([4-5]|[1-5][0-9])$'
+}
+
+let state = ["Andhra Pradesh",
+    "Arunachal Pradesh",
+    "Assam",
+    "Bihar",
+    "Chhattisgarh",
+    "Goa",
+    "Gujarat",
+    "Haryana",
+    "Himachal Pradesh",
+    "Jammu and Kashmir",
+    "Jharkhand",
+    "Karnataka",
+    "Kerala",
+    "Madhya Pradesh",
+    "Maharashtra",
+    "Manipur",
+    "Meghalaya",
+    "Mizoram",
+    "Nagaland",
+    "Odisha",
+    "Punjab",
+    "Rajasthan",
+    "Sikkim",
+    "Tamil Nadu",
+    "Telangana",
+    "Tripura",
+    "Uttarakhand",
+    "Uttar Pradesh",
+    "West Bengal",
+    "Andaman and Nicobar Islands",
+    "Chandigarh",
+    "Dadra and Nagar Haveli",
+    "Daman and Diu",
+    "Delhi",
+    "Lakshadweep",
+    "Puducherry"];
+
 let userDetailsFormFormat = {
     student: {
         add: {
@@ -5,43 +56,65 @@ let userDetailsFormFormat = {
                 first_name: {
                     id: 'firstName',
                     name: 'first_name',
-                    type: 'text',
-                    placeholder: 'First Name',
-                    required: true
-                },
-                father_name: {
-                    id: 'fatherName',
-                    name: 'father_name',
-                    type: 'text',
-                    placeholder: 'Father Name',
-                    required: true
-                },
-                mother_name: {
-                    id: 'motherName',
-                    name: 'mother_name',
-                    type: 'text',
-                    placeholder: 'Mother Name',
-                    required: true
-                },
-                email_id: {
-                    id: 'emailId',
-                    name: 'email_id',
-                    type: 'email',
-                    placeholder: 'Email',
-                    required: true
-                },
-                age: {
-                    id: 'age',
-                    name: 'age',
-                    type: 'number',
-                    placeholder: 'Age',
+                    label: 'First Name',
+                    regex: _regex.name,
+                    errorMsg: 'Must be 10-30 characters long',
                     required: true
                 },
                 last_name: {
                     id: 'lastName',
                     name: 'last_name',
-                    type: 'text',
-                    placeholder: 'Last Name',
+                    label: 'Last Name',
+                    regex: _regex.name,
+                    errorMsg: 'Must be 10-30 characters long',
+                    required: true
+                },
+                mother_name: {
+                    id: 'motherName',
+                    name: 'mother_name',
+                    label: 'Mother Name',
+                    regex: _regex.name,
+                    errorMsg: 'Must be 10-30 characters long',
+                    required: true
+                },
+                father_name: {
+                    id: 'fatherName',
+                    name: 'father_name',
+                    label: 'Father Name',
+                    regex: _regex.name,
+                    errorMsg: 'Must be 10-30 characters long',
+                    required: true
+                },
+                phone_number: {
+                    id: 'phoneNumber1',
+                    name: 'phone_number',
+                    label: 'Primary Phone Number',
+                    regex: _regex.contactNumber,
+                    errorMsg: 'Please enter valid phone number',
+                    required: true
+                },
+                alternate_number: {
+                    id: 'phoneNumber2',
+                    name: 'alternate_number',
+                    label: 'Alternate Phone Number',
+                    regex: _regex.contactNumber,
+                    errorMsg: 'Please enter valid phone number',
+                    required: false,
+                },
+                email_id: {
+                    id: 'emailId',
+                    name: 'email_id',
+                    label: 'Email',
+                    regex: _regex.email,
+                    errorMsg: 'Please enter valid phone number',
+                    required: true
+                },
+                age: {
+                    id: 'age',
+                    name: 'age',
+                    label: 'Age',
+                    regex: _regex.age,
+                    errorMsg: 'Age limit above 5 and below 60',
                     required: true
                 },
                 gender: {
@@ -51,63 +124,51 @@ let userDetailsFormFormat = {
                     placeholder: 'Gender',
                     required: true
                 },
-                phone_number: {
-                    id: 'phoneNumber1',
-                    name: 'phone_number',
-                    type: 'tel',
-                    pattern: `^[0-9]{10}$`,
-                    placeholder: 'Primary Phone Number',
-                    required: true
-                },
-                alternate_number: {
-                    id: 'phoneNumber2',
-                    name: 'alternate_number',
-                    type: 'tel',
-                    pattern: `^[0-9]{10}$`,
-                    placeholder: 'Alternate Phone Number'
-                },
                 house_no: {
                     id: 'houseNo',
                     name: 'house_no',
-                    type: 'text',
-                    placeholder: 'House No:',
+                    label: 'House No:',
+                    regex: _regex.houseNo,
+                    errorMsg: 'House no: look like 12, 12a, 56/58, 56/58a',
                     required: true
                 },
                 street_name: {
                     id: 'streetName',
                     name: 'street_name',
-                    type: 'text',
-                    placeholder: 'Street Name',
+                    label: 'Street Name',
+                    regex: _regex.name,
+                    errorMsg: 'Please enter valid street number',
                     required: true
                 },
                 area_name: {
                     id: 'areaName',
                     name: 'area_name',
-                    type: 'text',
-                    placeholder: 'Area Name',
+                    label: 'Area Name',
+                    regex: _regex.name,
+                    errorMsg: 'Please enter valid area name',
                     required: true
                 },
                 pincode: {
                     id: 'pincode',
                     name: 'pincode',
-                    type: 'text',
-                    pattern: "^[1-9][0-9]{5}$",
-                    placeholder: 'Pincode',
+                    label: 'Pincode',
+                    regex: _regex.pincode,
+                    errorMsg: 'Please enter valid pincode',
                     required: true
                 },
                 state: {
                     id: 'state',
                     name: 'state',
-                    type: 'text',
-                    placeholder: 'State',
+                    label: 'State',
+                    errorMsg: 'Please select a valid state',
                     required: true
                 },
                 nationality: {
                     id: 'nationality',
                     name: 'nationality',
-                    type: 'text',
-                    placeholder: 'Nationality',
-                    required: true
+                    label: 'Nationality',
+                    defValue: 'India',
+                    disabled: true
                 },
             },
             button: {
