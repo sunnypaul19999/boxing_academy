@@ -7,6 +7,7 @@ import 'assets/css/card-container/card-container.css';
 import { useDispatch, useSelector } from 'react-redux';
 import CardContainerNotifier from 'store/CardContainerNotifier/CardContainerNotifier';
 import objectHash from 'object-hash';
+import { useParams } from 'react-router-dom';
 
 
 //-----------props----------
@@ -104,6 +105,8 @@ export default function CardContainer(props) {
 
     let [state, setState] = useState({ viewType: 'list', });
 
+    let param = useParams();
+
     let cardContainerRef = useRef({ observer: null });
 
     let mainStoreDispatch = useDispatch();
@@ -113,7 +116,9 @@ export default function CardContainer(props) {
             if (props.academy) {
                 return state.academyDetails;
             } else {
-                return state.courseDetails;
+                if (state.courseDetails) {
+                    return state.courseDetails[param.academyId];
+                }
             }
         } else {
             return null;
@@ -151,7 +156,13 @@ export default function CardContainer(props) {
             CardContainerNotifier.reset();
             let cardPropsData = await props.fetch();
             let actionType = (props.academy) ? 'academyDetails' : 'courseDetails';
-            mainStoreDispatch({ type: actionType, payload: cardPropsData });
+            if (props.academy) {
+                mainStoreDispatch({ type: actionType, payload: cardPropsData });
+            }
+            if (props.course) {
+                mainStoreDispatch({ type: actionType, payload: { [param.academyId]: cardPropsData } });
+            }
+
         }
     };
 
@@ -161,6 +172,14 @@ export default function CardContainer(props) {
             //console.log(`testSetCount: ${testSetCount} \n${Object.values(cardProps ?? {})}`);
             let cards = [];
             let srsIDCount = 1;
+            if (cardProps.length === 0) {
+                return (
+                    <div class="nothing-here">
+                        NOTHING HERE!
+                    </div>
+                );
+            }
+
             if (state.viewType === 'grid') {
                 for (const cardProp of cardProps) {
                     let prophash = objectHash({

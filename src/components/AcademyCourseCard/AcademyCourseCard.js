@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import CardToolbar from 'components/AcademyCourseCard/CardMakingTools/CardToolbar.js';
 import CardInfoOne from 'components/AcademyCourseCard/CardMakingTools/CardInfoOne.js';
@@ -95,6 +95,8 @@ function CardBody(props) {
 export default function AcademyCourseCard(props) {
     let cardProp = props.cardProp;
 
+    let param = useParams();
+
     let nav = useNavigate();
 
     let mainStoreDispatch = useDispatch();
@@ -185,7 +187,7 @@ export default function AcademyCourseCard(props) {
                 let response = await adminCourseDeleteCardEvent(event, state, nav);
                 if (response.payload) {
                     //console.log(state.cardProp.id);
-                    mainStoreDispatch({ type: 'deleteCourseDetail', payload: state.cardProp.id });
+                    mainStoreDispatch({ type: 'deleteCourseDetail', payload: { academyId: param.academyId, cardPropId: state.cardProp.id } });
                 }
             }
         }

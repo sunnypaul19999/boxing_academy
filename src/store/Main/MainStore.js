@@ -64,21 +64,24 @@ export default class MainStore {
             case 'courseDetails':
                 console.log('courseDetails');
                 nextState = produce(state, draft => {
-                    draft.courseDetails = action.payload;
+                    let load = action.payload;
+                    console.log(load);
+                    draft.courseDetails = load;
                 });
                 return nextState;
             case 'deleteCourseDetail':
                 nextState = produce(state, draft => {
                     let i = -1;
-                    for (const course of draft.courseDetails) {
+                    let load = action.payload;
+                    for (const course of draft.courseDetails[load.academyId]) {
                         i++;
-                        if (course.id === action.payload) {
+                        if (course.id === load.cardPropId) {
                             break;
                         }
                     }
                     if (i > -1) {
                         console.log('deleteCourseDetail');
-                        draft.courseDetails.splice(i, 1);
+                        draft.courseDetails[load.academyId].splice(i, 1);
                     }
                 });
                 return nextState;
