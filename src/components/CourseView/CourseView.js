@@ -37,7 +37,12 @@ export default function CourseView(props) {
 
     let fetchAllCourse = async () => {
         let cardPropsData = [];
-        let payload = await CourseAPI.fetchByAcadmeyId(getAcademyId()).then((response) => { return response.payload; });
+        let payload;
+        if (props.allcourses) {
+            payload = await CourseAPI.fetchAll().then((response) => { return response.payload; });
+        } else {
+            payload = await CourseAPI.fetchByAcadmeyId(getAcademyId()).then((response) => { return response.payload; });
+        }
         console.log(getAcademyId());
         if (payload.course[Symbol.iterator]) {
 

@@ -1,12 +1,8 @@
-import SearchBar from "components/SearchBar/SearchBar.js";
-import CardContainer from "components/AcademyCourseCard/CardContainer.js";
+import CourseView from "components/CourseView/CourseView";
 
 
 export default function AdminAllCourse(props) {
     return (
-        <>
-            <SearchBar course />
-            <CardContainer admin course />
-        </>
+        <CourseView admin allcourses />
     );
 }

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 //props: admin | user
-//academy, course
 function ToolbarMenu(props) {
 
     let idStore = {
