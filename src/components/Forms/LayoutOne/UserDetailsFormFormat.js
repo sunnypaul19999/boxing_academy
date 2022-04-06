@@ -1,10 +1,11 @@
+import validator, { validate } from "email-validator";
+
 const _regex = {
     name: '^[a-zA-Z ]{3,}$',
     contactNumber: '^[0-9]{10}$',
     number: '^[0-9]{1,}$',
     imageURL: '(https?:\/\/.*\.(?:png|jpg))',
     address: '^[a-zA-Z0-9^,// ]{3,}$',
-    email: '[a-z0-9]+@[a-z]+\.[a-z]{2,3}',
     duration: '^[0-9]{1,}$',
     timimg: '^[1-9]{1}[1-9]{0,1}[AaPp][Mm] - [1-9]{1}[1-9]{0,1}[AaPp][Mm]$',
     houseNo: '^[1-9]\d*(?: ?(?:[a-z]|[/-] ?\d+[a-z]?))?$',
@@ -12,42 +13,7 @@ const _regex = {
     age: '^([4-5]|[1-5][0-9])$'
 }
 
-let state = ["Andhra Pradesh",
-    "Arunachal Pradesh",
-    "Assam",
-    "Bihar",
-    "Chhattisgarh",
-    "Goa",
-    "Gujarat",
-    "Haryana",
-    "Himachal Pradesh",
-    "Jammu and Kashmir",
-    "Jharkhand",
-    "Karnataka",
-    "Kerala",
-    "Madhya Pradesh",
-    "Maharashtra",
-    "Manipur",
-    "Meghalaya",
-    "Mizoram",
-    "Nagaland",
-    "Odisha",
-    "Punjab",
-    "Rajasthan",
-    "Sikkim",
-    "Tamil Nadu",
-    "Telangana",
-    "Tripura",
-    "Uttarakhand",
-    "Uttar Pradesh",
-    "West Bengal",
-    "Andaman and Nicobar Islands",
-    "Chandigarh",
-    "Dadra and Nagar Haveli",
-    "Daman and Diu",
-    "Delhi",
-    "Lakshadweep",
-    "Puducherry"];
+
 
 let userDetailsFormFormat = {
     student: {
@@ -105,8 +71,10 @@ let userDetailsFormFormat = {
                     id: 'emailId',
                     name: 'email_id',
                     label: 'Email',
-                    regex: _regex.email,
-                    errorMsg: 'Please enter valid phone number',
+                    validator: (value) => {
+                        return validator.validate(value);
+                    },
+                    errorMsg: 'Please enter valid email',
                     required: true
                 },
                 age: {

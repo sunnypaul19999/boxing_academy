@@ -19,6 +19,52 @@ export default function AdminAddStudent(props) {
         };
     }
 
+    let getStateOptions = () => {
+        let states = [
+            "Andhra Pradesh",
+            "Arunachal Pradesh",
+            "Assam",
+            "Bihar",
+            "Chhattisgarh",
+            "Goa",
+            "Gujarat",
+            "Haryana",
+            "Himachal Pradesh",
+            "Jammu and Kashmir",
+            "Jharkhand",
+            "Karnataka",
+            "Kerala",
+            "Madhya Pradesh",
+            "Maharashtra",
+            "Manipur",
+            "Meghalaya",
+            "Mizoram",
+            "Nagaland",
+            "Odisha",
+            "Punjab",
+            "Rajasthan",
+            "Sikkim",
+            "Tamil Nadu",
+            "Telangana",
+            "Tripura",
+            "Uttarakhand",
+            "Uttar Pradesh",
+            "West Bengal",
+            "Andaman and Nicobar Islands",
+            "Chandigarh",
+            "Dadra and Nagar Haveli",
+            "Daman and Diu",
+            "Delhi",
+            "Lakshadweep",
+            "Puducherry"];
+        let options = [];
+        for (const state of states) {
+            options.push(<FxSelectOption key={`state_name_${state}`} value={state} />);
+        }
+
+        return options;
+    }
+
     let getAddressInfromationForm = () => {
         return (
             <Formxvi title='Address Infromation' child>
@@ -27,10 +73,8 @@ export default function AdminAddStudent(props) {
                 <FxInput {...inputIdOb.area_name} />
                 <FxInput {...inputIdOb.pincode} />
                 <FxSelect {...inputIdOb.state} >
-                    <FxSelectOption disabled value='Choose Gender' />
-                    <FxSelectOption value='Male' />
-                    <FxSelectOption value='Female' />
-                    <FxSelectOption value='Others' />
+                    <FxSelectOption disabled value='Choose State' />
+                    {getStateOptions()}
                 </FxSelect>
                 <FxInput {...inputIdOb.nationality} />
             </Formxvi>

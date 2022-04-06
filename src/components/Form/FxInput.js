@@ -1,3 +1,4 @@
+import validator from 'email-validator';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { markInputFieldError, markInputFieldNeutral, markInputFieldValid } from './FxInputFieldMarker';
 
@@ -11,6 +12,7 @@ import { markInputFieldError, markInputFieldNeutral, markInputFieldValid } from 
 //disabled [optional: to disable input]
 //regex [optional: to check validity of input]
 //errorMsg [optional: on input invalid error msg]
+//validator
 //---------------------------
 export default function FxInput(props) {
     let iRef = useRef(null);
@@ -39,7 +41,6 @@ export default function FxInput(props) {
 
     useEffect(() => {
         let inputElement = iRef.current;
-
         setDefaultInputValue();
 
         if (state.disabled || isInputNotRequired()) {
@@ -60,7 +61,9 @@ export default function FxInput(props) {
 
     let isValid = () => {
         if (state.regex) {
-            return Boolean(getValue().match(state.regex))
+            return Boolean(getValue().match(state.regex));
+        }else if(props.validator){
+            return props.validator(getValue());
         }
         return Boolean(getValue());
     }
