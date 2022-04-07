@@ -71,6 +71,11 @@ export default function CourseView(props) {
 
     let getView = () => {
         if (props.admin) {
+            if (props.allcourses) {
+                return (
+                    <CardContainer admin course fetch={fetchAllCourse} checkSourceTrue={checkSourceTrue} />
+                );
+            }
             return (
                 <>
                     <CardContainer admin course fetch={fetchAllCourse} checkSourceTrue={checkSourceTrue} />
