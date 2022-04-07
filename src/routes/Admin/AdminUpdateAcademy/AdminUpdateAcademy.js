@@ -8,6 +8,7 @@ import FxInput from "components/Form/FxInput";
 import FxTextarea from "components/Form/FxTextarea";
 
 import AcademyAPI from "server/AcademyAPI/AcademyAPI";
+import { toast } from "react-toastify";
 
 
 export default function AdminUpdateAcademy(props) {
@@ -42,6 +43,7 @@ export default function AdminUpdateAcademy(props) {
         console.log(response.message);
         CardContainerNotifier.update();
         navigate(-1);
+        toast(response.message);
     }
 
     return (

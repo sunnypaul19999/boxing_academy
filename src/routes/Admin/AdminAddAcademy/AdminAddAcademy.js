@@ -4,6 +4,7 @@ import FxTextarea from "components/Form/FxTextarea";
 import { academyCourseDetailsFormFormat } from "components/Forms/LayoutTwo/academyCourseDetailsFormFormat.js";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import AcademyAPI from "server/AcademyAPI/AcademyAPI";
 import CardContainerNotifier from "store/CardContainerNotifier/CardContainerNotifier";
 
@@ -40,7 +41,9 @@ export default function AdminAddAcademy(props) {
         let response = await AcademyAPI.add(sformat);
         console.log(response.message);
         CardContainerNotifier.update();
+        //setTimeout(() => { navigate(-1); }, 1100);
         navigate(-1);
+        toast(response.message);
     }
 
 

@@ -8,6 +8,7 @@ import FxInput from "components/Form/FxInput";
 import FxTextarea from "components/Form/FxTextarea";
 import { academyCourseDetailsFormFormat } from "components/Forms/LayoutTwo/academyCourseDetailsFormFormat.js";
 import CourseAPI from "server/CourseAPI/CourseAPI";
+import { toast } from "react-toastify";
 
 
 
@@ -51,6 +52,7 @@ export default function AdminAddCourse(props) {
         console.log(response.message);
         CardContainerNotifier.update();
         navigate(-1);
+        toast(response.message);
     }
 
 

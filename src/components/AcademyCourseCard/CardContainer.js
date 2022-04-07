@@ -1,13 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
+import objectHash from 'object-hash';
 
 import GridAcademyCourseCard from './GridAcademyCourseCard';
 import ListAcademyCourseCard from './ListAcademyCourseCard';
 
-import 'assets/css/card-container/card-container.css';
-import { useDispatch, useSelector } from 'react-redux';
 import CardContainerNotifier from 'store/CardContainerNotifier/CardContainerNotifier';
-import objectHash from 'object-hash';
-import { useParams } from 'react-router-dom';
+
+import 'react-toastify/dist/ReactToastify.css';
+import 'assets/css/card-container/card-container.css';
+
 
 
 //-----------props----------

@@ -8,6 +8,7 @@ import CardContainerNotifier from "store/CardContainerNotifier/CardContainerNoti
 import { academyCourseDetailsFormFormat } from "components/Forms/LayoutTwo/academyCourseDetailsFormFormat.js";
 
 import CourseAPI from "server/CourseAPI/CourseAPI";
+import { toast } from "react-toastify";
 
 
 
@@ -52,6 +53,7 @@ export default function AdminUpdateCourse(props) {
         console.log(response.message);
         CardContainerNotifier.update();
         navigate(-1);
+        toast(response.message);
     }
 
 

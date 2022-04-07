@@ -29,6 +29,27 @@ import UserEnrolledCourses from "routes/User/UserEnrolledCourses/UserEnrolledCou
 import UserEnrollCourse from "routes/User/UserEnrollCourse/UserEnrollCourse";
 
 
+import { ToastContainer } from "react-toastify";
+
+function RootToast() {
+
+  return (
+    <>
+      <Outlet />
+      <ToastContainer
+        position="bottom-center"
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop={true}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false} />
+    </>
+  );
+}
+
 function MainUIRouter(props) {
 
   return (
@@ -39,7 +60,7 @@ function MainUIRouter(props) {
             <Route path="/" element={<SignUp />}></Route>
             <Route path="/signIn" element={<SignIn />}></Route>
             <Route path='/admin' element={<AdminDashboard />}>
-              <Route path='academy' element={<Outlet />}>
+              <Route path='academy' element={<RootToast />}>
                 <Route index element={<AdminAcademy />}></Route>
                 <Route path='add' element={<AdminAddAcademy />}></Route>
                 <Route path=':academyId/edit' element={<AdminUpdateAcademy />}></Route>
@@ -47,18 +68,18 @@ function MainUIRouter(props) {
                 <Route path=':academyId/courses/add' element={<AdminAddCourse />}></Route>
                 <Route path=':academyId/courses/:courseId/edit' element={<AdminUpdateCourse />}></Route>
               </Route>
-              <Route path='courses' element={<Outlet />}>
+              <Route path='courses' element={<RootToast />}>
                 <Route index element={<AdminAllCourse />}></Route>
                 <Route path=':courseId/edit' element={<AdminUpdateCourse />}></Route>
               </Route>
-              <Route path='students' element={<Outlet />}>
+              <Route path='students' element={<RootToast />}>
                 <Route index element={<AdminAllStudents />}></Route>
                 <Route path='add' element={<AdminAddStudent />}></Route>
                 <Route path=':studentId/edit' element={<AdminUpdateStudent />}></Route>
               </Route>
             </Route>
             <Route path='/user' element={<UserDashboard />}>
-              <Route path='academy' element={<Outlet />}>
+              <Route path='academy' element={<RootToast />}>
                 <Route index element={<UserAcademy />}></Route>
                 <Route path=':academyId/courses' element={<UserCourse />}></Route>
                 <Route path=':academyId/courses/:courseId/enroll' element={<UserEnrollCourse />}></Route>

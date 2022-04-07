@@ -11,6 +11,7 @@ import { adminCourseEditCardEvent, adminEditCardEvent } from 'components/Academy
 import { adminAcademyDeleteCardEvent, adminCourseDeleteCardEvent } from 'components/AcademyCourseCard/Actions/Admin/Card/cardAdminOnDelete';
 import { cardUserOnEnrollCourseAction } from 'components/AcademyCourseCard/Actions/User/Card/cardUserOnEnrollAction';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 
 //--------props--------------------------------------->
@@ -181,6 +182,7 @@ export default function AcademyCourseCard(props) {
                 if (response.payload) {
                     //console.log(state.cardProp.id);
                     mainStoreDispatch({ type: 'deleteAcademyDetail', payload: state.cardProp.id });
+                    toast(response.message);
                 }
             }
             if (state.cardOf === 'course') {
@@ -188,6 +190,7 @@ export default function AcademyCourseCard(props) {
                 if (response.payload) {
                     //console.log(state.cardProp.id);
                     mainStoreDispatch({ type: 'deleteCourseDetail', payload: { academyId: param.academyId, cardPropId: state.cardProp.id } });
+                    toast(response.message);
                 }
             }
         }
