@@ -12,7 +12,7 @@ function cardPropFormat(course) {
         id: course.courseId,
         title: course.courseName,
         description: course.courseDesc,
-        duration: course.courseDuration,
+        duration: `${course.courseDuration} days`,
         cost: course.courseCost,
         timing: course.courseTimings,
         rating: course.rating,

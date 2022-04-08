@@ -153,7 +153,7 @@ export let academyCourseDetailsFormFormat = {
                 course_duration: {
                     id: 'courseDuration',
                     name: 'course_duration',
-                    label: 'Course Duration',
+                    label: 'Course Duration(Days)',
                     regex: _regex.number,
                     placeholder: '',
                     errorMsg: 'Please enter valid duration',
@@ -213,12 +213,12 @@ export let academyCourseDetailsFormFormat = {
                     regex: _regex.name,
                     placeholder: '',
                     errorMsg: 'Please enter valid name',
-                    required: true,
+                    disabled: true,
                 },
                 course_duration: {
                     id: 'editCourseDuration',
                     name: 'course_duration',
-                    label: 'Course Duration',
+                    label: 'Course Duration(Days)',
                     regex: _regex.duration,
                     placeholder: '',
                     errorMsg: 'Please enter valid duration',

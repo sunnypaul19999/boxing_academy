@@ -6,13 +6,14 @@ import SearchBar from "components/SearchBar/SearchBar.js";
 import CardContainer from "components/AcademyCourseCard/CardContainer.js";
 import HoverButton from 'components/AcademyCourseCard/CardMakingTools/HoverButton.js';
 import CourseAPI from "server/CourseAPI/CourseAPI";
+import CourseView from "components/CourseView/CourseView";
 
 function cardPropFormat(course) {
     return {
         id: course.courseId,
         title: course.courseName,
         description: course.courseDesc,
-        duration: course.courseDuration,
+        duration: `${course.courseDuration} days`,
         cost: course.courseCost,
         timing: course.courseTimings,
         rating: course.rating,
@@ -64,7 +65,7 @@ export default function AdminCourse(props) {
         }
     }
 
-    return (
+    /*return (
         <>
             <SearchBar course />
             <CardContainer admin course fetch={fetchAllCourse} checkSourceTrue={checkSourceTrue} />
@@ -73,5 +74,6 @@ export default function AdminCourse(props) {
                 text='Add Course'
                 onClick={onAddCourseClicked} />
         </>
-    );
+    );*/
+    return (<CourseView admin />)
 }
