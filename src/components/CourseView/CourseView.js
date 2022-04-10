@@ -9,7 +9,7 @@ import CourseAPI from "server/CourseAPI/CourseAPI";
 import EnrolledCourseAPI from "server/EnrolledCourseAPI/EnrolledCourseAPI";
 import Database from "database/Database";
 
-function cardPropFormat(course) {
+function cardPropFormat(course, toolbarConfig) {
     return {
         id: course.courseId,
         title: course.courseName,
@@ -18,10 +18,16 @@ function cardPropFormat(course) {
         cost: course.courseCost,
         timing: course.courseTimings,
         rating: course.rating,
+        toolbarConfig: toolbarConfig,
     };
 }
 
-
+/*
+admin
+user
+allCourses
+allEnrolledCourse
+*/
 
 export default function CourseView(props) {
 
@@ -40,21 +46,37 @@ export default function CourseView(props) {
     let fetchAllCourse = async () => {
         let cardPropsData = [];
         let payload;
-        if (props.allcourses) {
+        if (props.allCourses) {
             payload = await CourseAPI.fetchAll().then((response) => { return response.payload; });
         } else {
             payload = await CourseAPI.fetchByAcadmeyId(getAcademyId()).then((response) => { return response.payload; });
         }
+
+        let isEnrolled = async (courseId) => {
+            let userId = await Database.getUserId();
+            return EnrolledCourseAPI.getEnrollmentStatus(userId, courseId).then((res) => { return res.payload; });
+        }
         console.log(getAcademyId());
+        let toolbarConfig;
         if (payload.course[Symbol.iterator]) {
 
-            payload.course.forEach((course) => {
-                cardPropsData.push(cardPropFormat(course));
-            });
+            for (const course of payload.course) {
+                console.log(props.allEnrolledCourse);
+                //if (props.allEnrolledCourse) {
+                if (await isEnrolled(course.courseId)) { toolbarConfig = { disable: { button: { enroll: true } } } }
+                //}
+                cardPropsData.push(cardPropFormat(course, toolbarConfig));
+            }
 
             return cardPropsData;
         } else {
-            cardPropsData.push(cardPropFormat(payload.course));
+            let course = payload.course;
+
+            if (props.allEnrolledCourse) {
+                if (await isEnrolled(course.courseId)) { toolbarConfig = { disable: { button: { enroll: true } } } }
+            }
+
+            cardPropsData.push(cardPropFormat(course), toolbarConfig);
         }
 
         return cardPropsData;
@@ -68,7 +90,9 @@ export default function CourseView(props) {
 
             payload.course.forEach((details) => {
                 console.log(details);
-                cardPropsData.push(cardPropFormat(details.course));
+                let courseDetails = details.course;
+
+                cardPropsData.push(cardPropFormat(courseDetails));
             });
 
             return cardPropsData;
@@ -92,7 +116,7 @@ export default function CourseView(props) {
 
     let getView = () => {
         if (props.admin) {
-            if (props.allcourses) {
+            if (props.allCourses) {
                 return (
                     <CardContainer admin course fetch={fetchAllCourse} checkSourceTrue={checkSourceTrue} />
                 );

@@ -46,14 +46,14 @@ export default function CardToolbar(props) {
         );
     };
 
-    let userCourseEnrollButton = () => {
+    let userCourseEnrollButton = (config) => {
         return (
             <span class="toolbar-item one">
                 <button
                     id={idStore.user.course.enroll}
                     type="button"
                     class="btn btn-primary"
-                    onClick={userEnrollCourse}>Enroll Course
+                    onClick={userEnrollCourse} disabled={config.disabled}>Enroll Course
                 </button>
             </span>
         );
@@ -81,7 +81,19 @@ export default function CardToolbar(props) {
                         return userCourseMyLearningButton();
                     }
                 } else {
-                    return userCourseEnrollButton();
+                    let disabled = false;
+                    console.log(props.toolbarConfig)
+                    if (props.toolbarConfig) {
+                        if (props.toolbarConfig.disable) {
+                            if (props.toolbarConfig.disable.button) {
+                                if (props.toolbarConfig.disable.button.enroll) {
+                                    disabled = true;
+                                }
+                            }
+                        }
+                    }
+
+                    return userCourseEnrollButton({ disabled: disabled });
                 }
             }
         } else {

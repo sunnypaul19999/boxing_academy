@@ -57,10 +57,7 @@ export default class FetchEnrolledCourseAPI {
 
     _onFetchEnrollementStatusSuccess(res) {
         //console.log(this._userId);
-        this._response.payload = {
-            course: res.data,
-            statusCode: res.status
-        };
+        this._response.payload = res.data;
 
         //payload is kept null
         this._response.message = 'Enrollment Status fetched';

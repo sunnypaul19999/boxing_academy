@@ -52,7 +52,9 @@ function CardToolbarWrapper(props) {
     let authorityType = props.authorityType;
     let cardOf = props.cardOf;
     let cardOfType = props.cardOfType;
-    return <CardToolbar authorityType={authorityType} cardOf={cardOf} cardOfType={cardOfType} />
+    let toolbarConfig = props.toolbarConfig;
+
+    return <CardToolbar authorityType={authorityType} cardOf={cardOf} cardOfType={cardOfType} toolbarConfig={toolbarConfig} />
 }
 
 function CardImage(props) {
@@ -73,7 +75,9 @@ function CardBody(props) {
     let cardOf = props.cardOf;//academy or course
     let srsIDCount = props.srsIDCount;//integer count
     let cardProp = props.cardProp;//card details
-    let cardOfType = props.cardOfType;
+    let cardOfType = props.cardOfType;//eg: allEnrolledCourse
+    let toolbarConfig = cardProp.toolbarConfig;
+
 
     let getCardInfoTwo = () => {
         if (cardOfType) {
@@ -100,7 +104,7 @@ function CardBody(props) {
                     title={cardProp.title}
                     description={cardProp.description} />
                 {getCardInfoTwo()}
-                <CardToolbarWrapper authorityType={authorityType} cardOf={cardOf} cardOfType={cardOfType} />
+                <CardToolbarWrapper authorityType={authorityType} cardOf={cardOf} cardOfType={cardOfType} toolbarConfig={toolbarConfig} />
             </div>
         </div>
     );
