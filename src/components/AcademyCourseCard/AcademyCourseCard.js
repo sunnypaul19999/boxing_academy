@@ -75,6 +75,23 @@ function CardBody(props) {
     let cardProp = props.cardProp;//card details
     let cardOfType = props.cardOfType;
 
+    let getCardInfoTwo = () => {
+        if (cardOfType) {
+            return (<></>);
+        }
+
+        return (
+            <CardInfoTwo
+                fullCardId={getFullCardId(authorityType, cardOf, srsIDCount)}
+                duration={cardProp.duration}
+                timing={cardProp.timing}
+                location={cardProp.location}
+                strength={cardProp.strength}
+                cost={cardProp.cost}
+                rating={cardProp.rating} />
+        );
+    }
+
 
     return (
         <div className="card-body">
@@ -82,14 +99,7 @@ function CardBody(props) {
                 <CardInfoOne
                     title={cardProp.title}
                     description={cardProp.description} />
-                <CardInfoTwo
-                    fullCardId={getFullCardId(authorityType, cardOf, srsIDCount)}
-                    duration={cardProp.duration}
-                    timing={cardProp.timing}
-                    location={cardProp.location}
-                    strength={cardProp.strength}
-                    cost={cardProp.cost}
-                    rating={cardProp.rating} />
+                {getCardInfoTwo()}
                 <CardToolbarWrapper authorityType={authorityType} cardOf={cardOf} cardOfType={cardOfType} />
             </div>
         </div>
@@ -110,7 +120,7 @@ export default function AcademyCourseCard(props) {
     let [state] = useState({
         authorityType: (props.admin) ? 'admin' : 'user',
         cardOf: (props.course) ? 'course' : 'academy',
-        cardOfType: (props.course) ? props.course : props.academy,
+        cardOfType: (props.course) ? props.course.type : props.academy.type,
         cardType: (props.grid) ? 'grid' : 'list',
         srsIDCount: props.srsIDCount,
         cardProp: cardProp,

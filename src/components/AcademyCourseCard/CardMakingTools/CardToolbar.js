@@ -76,8 +76,10 @@ export default function CardToolbar(props) {
             return adminButtons();
         } else if (props.authorityType === 'user') {
             if (props.cardOf === 'course') {
-                if (props.cardOfType.allEnrolledCourse) {
-                    return userCourseMyLearningButton();
+                if (props.cardOfType) {
+                    if (props.cardOfType.allEnrolledCourse) {
+                        return userCourseMyLearningButton();
+                    }
                 } else {
                     return userCourseEnrollButton();
                 }
