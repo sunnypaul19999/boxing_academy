@@ -35,7 +35,8 @@ export default class AddStudentAPI {
         let status = err['response'].status;
 
         if (err['response'].status === 409) {
-            message = 'Student Already Present !'
+            message = 'Student Already Present !';
+            this._response.payload = err['response'].data;
         } else {
             message = 'OPPS! Network error';
         }
@@ -43,9 +44,7 @@ export default class AddStudentAPI {
 
         this._response.isError = true;
         this._response.message = message;
-        this._response.payload = err['response'].data;
-
-
+        
         console.log(err['response']);
 
         console.log(`Adding Student: Failed ${status}`);

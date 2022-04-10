@@ -32,10 +32,14 @@ export default function AdminAddStudent(props) {
         let userId = await Database.getUserId();
         let addStudentPayload = await addStudent(serverFormatAddStudent(formState, userId));
         console.log(addStudentPayload);
-        if (addStudentPayload.studentId) {
-            await applyCourse(serverFormatApplyCourse(addStudentPayload.studentId, userId));
+        if (addStudentPayload) {
+            if (addStudentPayload.studentId) {
+                await applyCourse(serverFormatApplyCourse(addStudentPayload.studentId, userId));
+            } else {
+                await applyCourse(serverFormatApplyCourse(addStudentPayload.id, userId));
+            }
         } else {
-            await applyCourse(serverFormatApplyCourse(addStudentPayload.id, userId));
+            toast('Please try again later!');
         }
     }
 
