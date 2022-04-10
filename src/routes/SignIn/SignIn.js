@@ -48,8 +48,14 @@ function SignIn(props) {
       await Database.setCurrUserEmail(signInMsgPacket.payload.email);
       let userDetailsRes = await UserDetailsAPI.fetch(signInMsgPacket.payload.email);
       await Database.setUserId(userDetailsRes.payload.id);
+
+      if (userDetailsRes.payload.authority === 'NORMAL') {
+        setTimeout(() => { navigate('/user/academy'); }, 2000);
+      } else {
+        setTimeout(() => { navigate('/admin/academy'); }, 2000);
+      }
       toast(signInMsgPacket.message);
-      navigate('/admin/academy');
+
     } catch (err) {
       toast('Opps! could not save credentials');
     }

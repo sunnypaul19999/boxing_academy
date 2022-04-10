@@ -25,4 +25,12 @@ export default class Database {
     static getUserId() {
         return localforage.getItem('userId');
     }
+
+    static setAuthority(auth) {
+        return localforage.setItem('auth', auth);
+    }
+
+    static getAuthority() {
+        return localforage.getItem('auth');
+    }
 }
