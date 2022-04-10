@@ -92,7 +92,7 @@ function useFxInputValidator(formElementRef, fxchildren, isChildForm) {
             });
 
 
-            console.log(FxInputFieldState.state);
+            //console.log(FxInputFieldState.state);
 
             formDisableSubmitButton(getFormElement());
         }
@@ -111,7 +111,7 @@ function useFxInputValidator(formElementRef, fxchildren, isChildForm) {
                 draft[validEventPayload.id.toString()].value = validEventPayload.value;
             });
 
-            console.log(FxInputFieldState.state);
+            //console.log(FxInputFieldState.state);
 
             inputValidation();
 

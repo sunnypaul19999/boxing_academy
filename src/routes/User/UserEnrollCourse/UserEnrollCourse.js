@@ -11,6 +11,10 @@ import { userDetailsFormFormat } from "components/Forms/LayoutOne/UserDetailsFor
 
 import ApplyCourseAPI from "server/CourseAPI/ApplyCourseAPI";
 import CourseAPI from "server/CourseAPI/CourseAPI";
+import Database from "database/Database";
+import StudentAPI from "server/StudentAPI/StudentAPI";
+
+
 
 
 export default function AdminAddStudent(props) {
@@ -21,39 +25,38 @@ export default function AdminAddStudent(props) {
 
     let inputIdOb = userDetailsFormFormat.student.add.input;
 
-    let userId = 1;
-
-    let onFormSubmit = (formState) => {
+    let onFormSubmit = async (formState) => {
         console.log('AdminUpdateStudent: form data');
         console.log(formState);
 
-        let stuPayload = addStudent(serverFormatAddStudent(formState));
-        applyCourse(serverFormatApplyCourse(stuPayload.studentId, userId));
+        let userId = await Database.getUserId();
+        let addStudentPayload = await addStudent(serverFormatAddStudent(formState, userId));
+        console.log(addStudentPayload);
+        if (addStudentPayload.studentId) {
+            await applyCourse(serverFormatApplyCourse(addStudentPayload.studentId, userId));
+        } else {
+            await applyCourse(serverFormatApplyCourse(addStudentPayload.id, userId));
+        }
     }
 
 
-    let serverFormatAddStudent = (formState) => {
-        console.log(formState);
+    let serverFormatAddStudent = (formState, userId) => {
+        //console.log(formState[inputIdOb.first_name.id].value);
 
         return {
-            course: {
-                courseId: `${param.courseId}`,
+            user: {
+                id: userId,
             },
-            student: {
-                user: {
-                    id: userId,
-                },
-                firstName: formState[inputIdOb.first_name],
-                lastName: formState[inputIdOb.last_name],
-                motherName: formState[inputIdOb.mother_name],
-                fatherName: formState[inputIdOb.father_name],
-                mobileNumber: `${formState[inputIdOb.mobileNumber]}*${formState[inputIdOb.alternate_number]}`,
-                studentEmail: formState[inputIdOb.email_id],
-                age: formState[inputIdOb.age],
-                gender: formState[inputIdOb.gender],
-                address: `${formState[inputIdOb.house_no]}*${formState[inputIdOb.street_name]}*${formState[inputIdOb.area_name]}*${formState[inputIdOb.pincode]}`,
-                state: formState[inputIdOb.state],
-            }
+            firstName: formState[inputIdOb.first_name.id].value,
+            lastName: formState[inputIdOb.last_name.id].value,
+            motherName: formState[inputIdOb.mother_name.id].value,
+            fatherName: formState[inputIdOb.father_name.id].value,
+            mobileNumber: `${formState[inputIdOb.phone_number.id].value}*${formState[inputIdOb.alternate_number.id].value}`,
+            studentEmail: formState[inputIdOb.email_id.id].value,
+            age: formState[inputIdOb.age.id].value,
+            gender: formState[inputIdOb.gender.id].value,
+            address: `${formState[inputIdOb.house_no.id].value}*${formState[inputIdOb.street_name.id].value}*${formState[inputIdOb.area_name.id].value}*${formState[inputIdOb.pincode.id].value}`,
+            state: formState[inputIdOb.state.id].value,
         }
 
     }
@@ -73,9 +76,15 @@ export default function AdminAddStudent(props) {
     }
 
     let addStudent = async (sformat) => {
-        console.log(sformat);
-        let response = await CourseAPI.applyCourse(sformat);
+        //console.log(sformat);
+        let response = await StudentAPI.add(sformat);
+        if (!response.isError) {
+            response.payload = response.payload.course;
+        }
+
         console.log(response.message);
+        console.log(response.payload);
+
         return response.payload;
     }
 
@@ -139,11 +148,11 @@ export default function AdminAddStudent(props) {
     let getAddressInfromationForm = () => {
         return (
             <Formxvi title='Address Infromation' child>
-                <FxInput {...inputIdOb.house_no} />
-                <FxInput {...inputIdOb.street_name} />
-                <FxInput {...inputIdOb.area_name} />
-                <FxInput {...inputIdOb.pincode} />
-                <FxSelect {...inputIdOb.state} >
+                <FxInput {...inputIdOb.house_no} defValue='11' />
+                <FxInput {...inputIdOb.street_name} defValue='street name' />
+                <FxInput {...inputIdOb.area_name} defValue='area name' />
+                <FxInput {...inputIdOb.pincode} defValue='721305' />
+                <FxSelect {...inputIdOb.state}>
                     <FxSelectOption disabled value='Choose State' />
                     {getStateOptions()}
                 </FxSelect>
@@ -153,16 +162,17 @@ export default function AdminAddStudent(props) {
     }
 
     let getBasicInfo = () => {
+
         return (
             <>
-                <FxInput {...inputIdOb.first_name} />
-                <FxInput {...inputIdOb.last_name} />
-                <FxInput {...inputIdOb.mother_name} />
-                <FxInput {...inputIdOb.father_name} />
-                <FxInput {...inputIdOb.phone_number} />
+                <FxInput {...inputIdOb.first_name} defValue='First' />
+                <FxInput {...inputIdOb.last_name} defValue='Name' />
+                <FxInput {...inputIdOb.mother_name} defValue='Mother Name' />
+                <FxInput {...inputIdOb.father_name} defValue='Father' />
+                <FxInput {...inputIdOb.phone_number} defValue='9475929195' />
                 <FxInput {...inputIdOb.alternate_number} />
-                <FxInput {...inputIdOb.email_id} />
-                <FxInput {...inputIdOb.age} />
+                <FxInput {...inputIdOb.email_id} defValue={'1@x.com'} />
+                <FxInput {...inputIdOb.age} defValue='12' />
                 <FxSelect
                     id={inputIdOb.gender.id}
                     label={inputIdOb.gender.placeholder}

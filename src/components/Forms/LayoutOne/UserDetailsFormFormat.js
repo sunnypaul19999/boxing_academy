@@ -62,7 +62,7 @@ let userDetailsFormFormat = {
                         return validator.validate(value);
                     },
                     errorMsg: 'Please enter valid email',
-                    required: true
+                    disabled: true
                 },
                 age: {
                     id: 'age',

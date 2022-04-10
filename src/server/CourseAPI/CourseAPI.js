@@ -31,8 +31,8 @@ export default class CourseAPI {
         return DeleteCourseAPI.delCourse(id);
     }
 
-    static applyCourse(id) {
-        return ApplyCourseAPI.apply();
+    static applyCourse(reqBody) {
+        return ApplyCourseAPI.apply(reqBody);
     }
 
 }
