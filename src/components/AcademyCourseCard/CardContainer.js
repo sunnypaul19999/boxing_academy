@@ -197,7 +197,6 @@ export default function CardContainer(props) {
                             srsIDCount={srsIDCount++}
                             cardProp={cardProp}
                             checkSourceTrue={props.checkSourceTrue}
-
                         />);
                 }
             } else {

@@ -59,12 +59,28 @@ export default function CardToolbar(props) {
         );
     };
 
+    let userCourseMyLearningButton = () => {
+        return (
+            <span class="toolbar-item one">
+                <button
+                    id={idStore.user.course.enroll}
+                    type="button"
+                    class="btn btn-primary">MyLearning
+                </button>
+            </span>
+        );
+    };
+
     let getButtons = () => {
         if (props.authorityType === 'admin') {
             return adminButtons();
         } else if (props.authorityType === 'user') {
             if (props.cardOf === 'course') {
-                return userCourseEnrollButton();
+                if (props.cardOfType.allEnrolledCourse) {
+                    return userCourseMyLearningButton();
+                } else {
+                    return userCourseEnrollButton();
+                }
             }
         } else {
             return (<></>);

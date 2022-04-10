@@ -51,7 +51,8 @@ let getFullCardId = (authorityType, cardOf, srsIDCount) => {
 function CardToolbarWrapper(props) {
     let authorityType = props.authorityType;
     let cardOf = props.cardOf;
-    return <CardToolbar authorityType={authorityType} cardOf={cardOf} />
+    let cardOfType = props.cardOfType;
+    return <CardToolbar authorityType={authorityType} cardOf={cardOf} cardOfType={cardOfType} />
 }
 
 function CardImage(props) {
@@ -72,6 +73,8 @@ function CardBody(props) {
     let cardOf = props.cardOf;//academy or course
     let srsIDCount = props.srsIDCount;//integer count
     let cardProp = props.cardProp;//card details
+    let cardOfType = props.cardOfType;
+
 
     return (
         <div className="card-body">
@@ -87,7 +90,7 @@ function CardBody(props) {
                     strength={cardProp.strength}
                     cost={cardProp.cost}
                     rating={cardProp.rating} />
-                <CardToolbarWrapper authorityType={authorityType} cardOf={cardOf} />
+                <CardToolbarWrapper authorityType={authorityType} cardOf={cardOf} cardOfType={cardOfType} />
             </div>
         </div>
     );
@@ -102,9 +105,12 @@ export default function AcademyCourseCard(props) {
 
     let mainStoreDispatch = useDispatch();
 
+
+
     let [state] = useState({
         authorityType: (props.admin) ? 'admin' : 'user',
         cardOf: (props.course) ? 'course' : 'academy',
+        cardOfType: (props.course) ? props.course : props.academy,
         cardType: (props.grid) ? 'grid' : 'list',
         srsIDCount: props.srsIDCount,
         cardProp: cardProp,
@@ -224,6 +230,7 @@ export default function AcademyCourseCard(props) {
                     <CardBody
                         authorityType={state.authorityType}
                         cardOf={state.cardOf}
+                        cardOfType={state.cardOfType}
                         srsIDCount={state.srsIDCount}
                         cardProp={state.cardProp} />
                 </div>

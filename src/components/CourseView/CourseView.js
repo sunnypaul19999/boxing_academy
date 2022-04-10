@@ -108,7 +108,7 @@ export default function CourseView(props) {
             );
         } else {
             if (props.allEnrolledCourse) {
-                return (<CardContainer user course fetch={fetchAllEnrolledCourse} checkSourceTrue={() => { return true; }} />);
+                return (<CardContainer user course={{ allEnrolledCourse: true }} fetch={fetchAllEnrolledCourse} checkSourceTrue={() => { return true; }} />);
             } else {
                 return (<CardContainer user course fetch={fetchAllCourse} checkSourceTrue={checkSourceTrue} />);
             }
