@@ -9,7 +9,6 @@ import FxSelect, { FxSelectOption } from "components/Form/FxSelect";
 import CardContainerNotifier from "store/CardContainerNotifier/CardContainerNotifier";
 import { userDetailsFormFormat } from "components/Forms/LayoutOne/UserDetailsFormFormat";
 
-import ApplyCourseAPI from "server/CourseAPI/ApplyCourseAPI";
 import CourseAPI from "server/CourseAPI/CourseAPI";
 import Database from "database/Database";
 import StudentAPI from "server/StudentAPI/StudentAPI";
