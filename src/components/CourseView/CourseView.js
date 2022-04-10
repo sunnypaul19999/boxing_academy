@@ -6,6 +6,8 @@ import SearchBar from "components/SearchBar/SearchBar.js";
 import CardContainer from "components/AcademyCourseCard/CardContainer.js";
 import HoverButton from 'components/AcademyCourseCard/CardMakingTools/HoverButton.js';
 import CourseAPI from "server/CourseAPI/CourseAPI";
+import EnrolledCourseAPI from "server/EnrolledCourseAPI/EnrolledCourseAPI";
+import Database from "database/Database";
 
 function cardPropFormat(course) {
     return {
@@ -58,6 +60,25 @@ export default function CourseView(props) {
         return cardPropsData;
     }
 
+    let fetchAllEnrolledCourse = async () => {
+        let cardPropsData = [];
+        let payload = await EnrolledCourseAPI.fetchByUserId(await Database.getUserId()).then((response) => { return response.payload; });
+
+        if (payload.course[Symbol.iterator]) {
+
+            payload.course.forEach((details) => {
+                console.log(details);
+                cardPropsData.push(cardPropFormat(details.course));
+            });
+
+            return cardPropsData;
+        } else {
+            cardPropsData.push(cardPropFormat(payload.course.course));
+        }
+
+        return cardPropsData;
+    }
+
     let checkSourceTrue = async (id) => {
         try {
             await CourseAPI.fetchById(id)
@@ -86,7 +107,11 @@ export default function CourseView(props) {
                 </>
             );
         } else {
-            return (<CardContainer user course fetch={fetchAllCourse} checkSourceTrue={checkSourceTrue} />);
+            if (props.allEnrolledCourse) {
+                return (<CardContainer user course fetch={fetchAllEnrolledCourse} checkSourceTrue={() => { return true; }} />);
+            } else {
+                return (<CardContainer user course fetch={fetchAllCourse} checkSourceTrue={checkSourceTrue} />);
+            }
         }
     }
 
