@@ -1,8 +1,8 @@
 import axios from "axios";
 
-import { serverURL } from "config/serverConfig";
 import Database from "database/Database";
-import MainStore from "store/Main/MainStore";
+
+import { serverURL } from "config/serverConfig";
 
 export default class UserDetailsAPI {
   _email;
@@ -17,17 +17,13 @@ export default class UserDetailsAPI {
     this._email = email;
   }
 
-  get mainStoreState() {
-    return MainStore.store.getState();
-  }
-
   static _api(token, email) {
     let api = new UserDetailsAPI(token, email);
     return api;
   }
 
   _createRequest() {
-    let res = axios.get(`${serverURL}/user/${this._email}`, {
+    let res = axios.get(`${serverURL}/user/email/${this._email}`, {
       headers: {
         Authorization: `Bearer ${this._token}`
       }

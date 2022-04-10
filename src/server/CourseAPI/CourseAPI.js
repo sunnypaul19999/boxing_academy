@@ -1,4 +1,5 @@
 import AddCourseAPI from "./AddCourseAPI";
+import ApplyCourseAPI from "./ApplyCourseAPI";
 import DeleteCourseAPI from "./DeleteCourseAPI";
 import FetchCourseAPI from "./FetchCourseAPI";
 import UpdateCourseAPI from "./UpdateCourseAPI";
@@ -18,16 +19,20 @@ export default class CourseAPI {
         return FetchCourseAPI.fetchCourseByCourseId(id);
     }
 
-    static async add(reqBody) {
+    static add(reqBody) {
         return AddCourseAPI.addCourse(reqBody);
     }
 
-    static async update(reqBody) {
+    static update(reqBody) {
         return UpdateCourseAPI.updateCourse(reqBody);
     }
 
-    static async delete(id) {
+    static delete(id) {
         return DeleteCourseAPI.delCourse(id);
+    }
+
+    static applyCourse(id) {
+        return ApplyCourseAPI.apply();
     }
 
 }

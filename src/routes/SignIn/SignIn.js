@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import SignInError from "Handler/SignInHandler/SignInError.js";
 import Database from "database/Database";
+import UserDetailsAPI from "server/UserDetailsAPI/UersDetailsAPI.js";
 
 function SignIn(props) {
   let formRef = useRef(null);
@@ -44,7 +45,9 @@ function SignIn(props) {
   let onSignInSuccess = async (signInMsgPacket) => {
     try {
       await Database.setToken(signInMsgPacket.payload.token);
-      await Database.setCurrUserEmail(signInMsgPacket.payload.token);
+      await Database.setCurrUserEmail(signInMsgPacket.payload.email);
+      let userDetailsRes = await UserDetailsAPI.fetch(signInMsgPacket.payload.email);
+      await Database.setUserId(userDetailsRes.payload.id);
       toast(signInMsgPacket.message);
       navigate('/admin/academy');
     } catch (err) {

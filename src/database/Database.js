@@ -17,4 +17,12 @@ export default class Database {
     static getCurrUserEmail() {
         return localforage.getItem('currUseremail');
     }
+
+    static setUserId(id) {
+        return localforage.setItem('userId', id);
+    }
+
+    static getUserId() {
+        return localforage.getItem('userId');
+    }
 }

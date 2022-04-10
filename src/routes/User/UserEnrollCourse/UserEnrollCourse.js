@@ -1,22 +1,94 @@
+import { useNavigate, useParams } from "react-router-dom";
+
+import { toast } from "react-toastify";
+
 import Formxvi from "components/Form/Formxvi";
 import FxInput from "components/Form/FxInput";
 import FxSelect, { FxSelectOption } from "components/Form/FxSelect";
+
+import CardContainerNotifier from "store/CardContainerNotifier/CardContainerNotifier";
 import { userDetailsFormFormat } from "components/Forms/LayoutOne/UserDetailsFormFormat";
+
+import ApplyCourseAPI from "server/CourseAPI/ApplyCourseAPI";
+import CourseAPI from "server/CourseAPI/CourseAPI";
+
 
 export default function AdminAddStudent(props) {
 
+    let navigate = useNavigate();
+
+    let param = useParams();
+
     let inputIdOb = userDetailsFormFormat.student.add.input;
+
+    let userId = 1;
 
     let onFormSubmit = (formState) => {
         console.log('AdminUpdateStudent: form data');
         console.log(formState);
-        let sFormat = serverFormat(formState);
+
+        let stuPayload = addStudent(serverFormatAddStudent(formState));
+        applyCourse(serverFormatApplyCourse(stuPayload.studentId, userId));
     }
 
-    let serverFormat = (formState) => {
-        
-        
+
+    let serverFormatAddStudent = (formState) => {
+        console.log(formState);
+
+        return {
+            course: {
+                courseId: `${param.courseId}`,
+            },
+            student: {
+                user: {
+                    id: userId,
+                },
+                firstName: formState[inputIdOb.first_name],
+                lastName: formState[inputIdOb.last_name],
+                motherName: formState[inputIdOb.mother_name],
+                fatherName: formState[inputIdOb.father_name],
+                mobileNumber: `${formState[inputIdOb.mobileNumber]}*${formState[inputIdOb.alternate_number]}`,
+                studentEmail: formState[inputIdOb.email_id],
+                age: formState[inputIdOb.age],
+                gender: formState[inputIdOb.gender],
+                address: `${formState[inputIdOb.house_no]}*${formState[inputIdOb.street_name]}*${formState[inputIdOb.area_name]}*${formState[inputIdOb.pincode]}`,
+                state: formState[inputIdOb.state],
+            }
+        }
+
     }
+
+    let serverFormatApplyCourse = (stuId, userId) => {
+        return {
+            course: {
+                courseId: `${param.courseId}`,
+            },
+            student: {
+                studentId: stuId,
+            },
+            user: {
+                id: userId,
+            }
+        }
+    }
+
+    let addStudent = async (sformat) => {
+        console.log(sformat);
+        let response = await CourseAPI.applyCourse(sformat);
+        console.log(response.message);
+        return response.payload;
+    }
+
+    let applyCourse = async (sformat) => {
+        console.log(sformat);
+        let response = await CourseAPI.applyCourse(sformat);
+        console.log(response.message);
+        CardContainerNotifier.update();
+        navigate(-1);
+        toast(response.message);
+    }
+
+
 
     let getStateOptions = () => {
         let states = [
