@@ -65,7 +65,7 @@ export default class MainStore {
                 console.log('courseDetails');
                 nextState = produce(state, draft => {
                     let load = action.payload;
-                    console.log(load);
+                    //console.log(load);
                     draft.courseDetails = load;
                 });
                 return nextState;

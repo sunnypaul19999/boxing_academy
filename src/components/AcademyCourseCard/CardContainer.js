@@ -130,7 +130,7 @@ export default function CardContainer(props) {
     });
 
     useEffect(() => {
-        console.log('CardContainer: rendering ' + testSetCount++);
+        //console.log('CardContainer: rendering ' + testSetCount++);
         fetchCardProps();
 
         let gridViewChangeButton = document.getElementById('academyCourseCardAsGrid');

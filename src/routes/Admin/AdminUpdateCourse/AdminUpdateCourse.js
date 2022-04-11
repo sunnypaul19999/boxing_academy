@@ -25,7 +25,7 @@ export default function AdminUpdateCourse(props) {
     let getCourseId = () => { return preDetails.courseId; }
 
 
-    console.log(preDetails);
+    //console.log(preDetails);
 
 
     let onFormSubmit = (formState) => {

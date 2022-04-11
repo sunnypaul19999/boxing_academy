@@ -26,7 +26,7 @@ export default class FetchCourseAPI {
     }
 
     _createFetchCourseByAcademyIdReq = () => {
-        console.log(this._token);
+        //console.log(this._token);
         return axios.get(`${serverURL}/course/institute/${this._id}`, {
             headers: {
                 Authorization: `Bearer ${this._token}`
@@ -58,7 +58,7 @@ export default class FetchCourseAPI {
             statusCode: res.status
         };
 
-        console.log(this._response.payload.course);
+        //console.log(this._response.payload.course);
         this._response.message = 'Courses Fetched';
 
         return this._response;

@@ -82,7 +82,7 @@ export default function CardToolbar(props) {
                     }
                 } else {
                     let disabled = false;
-                    console.log(props.toolbarConfig)
+                    //console.log(props.toolbarConfig)
                     if (props.toolbarConfig) {
                         if (props.toolbarConfig.disable) {
                             if (props.toolbarConfig.disable.button) {

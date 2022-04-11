@@ -56,15 +56,13 @@ export default function CourseView(props) {
             let userId = await Database.getUserId();
             return EnrolledCourseAPI.getEnrollmentStatus(userId, courseId).then((res) => { return res.payload; });
         }
-        console.log(getAcademyId());
+        //console.log(getAcademyId());
         let toolbarConfig;
         if (payload.course[Symbol.iterator]) {
 
             for (const course of payload.course) {
-                console.log(props.allEnrolledCourse);
-                //if (props.allEnrolledCourse) {
+                toolbarConfig = null;
                 if (await isEnrolled(course.courseId)) { toolbarConfig = { disable: { button: { enroll: true } } } }
-                //}
                 cardPropsData.push(cardPropFormat(course, toolbarConfig));
             }
 

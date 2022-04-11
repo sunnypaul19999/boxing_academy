@@ -25,9 +25,10 @@ export default class FetchEnrolledCourseAPI {
         return req;
     }
 
-    _createFetchEnrollementStatus(studentId) {
-        console.log(this._token);
-        return axios.get(`${serverURL}/enrolledcourse/enrolledCourses/${this._userId}/${studentId}`, {
+    _createFetchEnrollementStatus(courseId) {
+        //console.log(this._token);
+        //this._courseId = courseId;
+        return axios.get(`${serverURL}/enrolledcourse/enrolledCourses/${this._userId}/${courseId}`, {
             headers: {
                 Authorization: `Bearer ${this._token}`
             }
@@ -58,8 +59,7 @@ export default class FetchEnrolledCourseAPI {
     _onFetchEnrollementStatusSuccess(res) {
         //console.log(this._userId);
         this._response.payload = res.data;
-
-        //payload is kept null
+        //console.log(this._userId + '/' + this._courseId + ' ' + this._response.payload);
         this._response.message = 'Enrollment Status fetched';
 
         return this._response;
@@ -95,11 +95,11 @@ export default class FetchEnrolledCourseAPI {
     }
 
 
-    static async fetchEnrollementStatus(userId, studentId) {
+    static async fetchEnrollementStatus(userId, courseId) {
         let token = await Database.getToken();
         let api = new FetchEnrolledCourseAPI(token, userId);
         try {
-            let httpRes = await api._createFetchEnrollementStatus(studentId);
+            let httpRes = await api._createFetchEnrollementStatus(courseId);
             let response = api._onFetchEnrollementStatusSuccess(httpRes);
             return response;
         } catch (err) {

@@ -6,8 +6,8 @@ export default class EnrolledCourseAPI {
         return FetchEnrolledCourseAPI.fetchEnrolledCourseByUserId(userId);
     }
 
-    static getEnrollmentStatus(userId, studentId) {
-        return FetchEnrolledCourseAPI.fetchEnrollementStatus(userId, studentId);
+    static getEnrollmentStatus(userId, courseId) {
+        return FetchEnrolledCourseAPI.fetchEnrollementStatus(userId, courseId);
     }
 
 }
