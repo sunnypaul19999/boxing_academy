@@ -29,7 +29,8 @@ function UIToolbar(props) {
     }
 
     let onLogout = (event) => {
-        event.stopPropgation();
+        event.stopPropagation();
+        console.log('logout');
         nav('/signin');
     }
 
@@ -40,7 +41,7 @@ function UIToolbar(props) {
                 <div className="card">
                     <div className="card-body">
                         <span className={`${toolbarType()} toolbar`}>
-                            <section className="sec-1">{appName()}{logout()}</section>
+                            <section className="sec-1">{appName()}</section>
                             <section className="sec-2">{logout()}</section>
                             <ToolbarMenu {...props} />
                         </span>
