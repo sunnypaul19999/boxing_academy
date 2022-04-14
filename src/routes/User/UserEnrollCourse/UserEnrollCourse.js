@@ -151,10 +151,10 @@ export default function AdminAddStudent(props) {
     let getAddressInfromationForm = () => {
         return (
             <Formxvi title='Address Infromation' child>
-                <FxInput {...inputIdOb.house_no} defValue='11' />
-                <FxInput {...inputIdOb.street_name} defValue='street name' />
-                <FxInput {...inputIdOb.area_name} defValue='area name' />
-                <FxInput {...inputIdOb.pincode} defValue='721305' />
+                <FxInput {...inputIdOb.house_no} />
+                <FxInput {...inputIdOb.street_name} />
+                <FxInput {...inputIdOb.area_name} />
+                <FxInput {...inputIdOb.pincode} />
                 <FxSelect {...inputIdOb.state}>
                     <FxSelectOption disabled value='Choose State' />
                     {getStateOptions()}
@@ -168,14 +168,14 @@ export default function AdminAddStudent(props) {
 
         return (
             <>
-                <FxInput {...inputIdOb.first_name} defValue='First' />
-                <FxInput {...inputIdOb.last_name} defValue='Name' />
-                <FxInput {...inputIdOb.mother_name} defValue='Mother Name' />
-                <FxInput {...inputIdOb.father_name} defValue='Father' />
-                <FxInput {...inputIdOb.phone_number} defValue='9475929195' />
+                <FxInput {...inputIdOb.first_name} />
+                <FxInput {...inputIdOb.last_name} />
+                <FxInput {...inputIdOb.mother_name} />
+                <FxInput {...inputIdOb.father_name} />
+                <FxInput {...inputIdOb.phone_number} />
                 <FxInput {...inputIdOb.alternate_number} />
-                <FxInput {...inputIdOb.email_id} defValue={'1@x.com'} />
-                <FxInput {...inputIdOb.age} defValue='12' />
+                <FxInput {...inputIdOb.email_id} />
+                <FxInput {...inputIdOb.age} />
                 <FxSelect
                     id={inputIdOb.gender.id}
                     label={inputIdOb.gender.placeholder}
