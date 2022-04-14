@@ -55,10 +55,12 @@ export default function FxTextarea(props) {
     });
 
     let isValid = () => {
+        let iLen = getValue().length;
         if (state.regex) {
             return Boolean(getValue().match(state.regex))
         }
-        return Boolean(getValue());
+        return (iLen > 0 && iLen <= 255);
+        //return Boolean(getValue());
     }
 
     let umbrellaParent = (inputElement) => {
