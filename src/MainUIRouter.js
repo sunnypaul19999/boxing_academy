@@ -21,7 +21,6 @@ import AdminUpdateCourse from "routes/Admin/AdminUpdateCourse/AdminUpdateCourse"
 import AdminAllCourse from "routes/Admin/AdminAllCourses/AdminAllCourses";
 import AdminAllStudents from "routes/Admin/AdminAllStudents/AdminAllStudents";
 import AdminAddStudent from "routes/Admin/AdminAddStudent/AdminAddStudent";
-import AdminUpdateStudent from "routes/Admin/AdminUpdateStudent/AdminUpdateStudent";
 import UserDashboard from "components/Dashboard/UserDashboard/UserDashboard";
 import UserAcademy from "routes/User/UserAcademy/UserAcademy";
 import UserCourse from "routes/User/UserCourse/UserCourse";
@@ -75,7 +74,6 @@ function MainUIRouter(props) {
               <Route path='students' element={<RootToast />}>
                 <Route index element={<AdminAllStudents />}></Route>
                 <Route path='add' element={<AdminAddStudent />}></Route>
-                <Route path=':studentId/edit' element={<AdminUpdateStudent />}></Route>
               </Route>
             </Route>
             <Route path='/user' element={<UserDashboard />}>
