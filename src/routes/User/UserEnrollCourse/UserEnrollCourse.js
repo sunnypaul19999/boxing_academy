@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
@@ -21,6 +21,8 @@ export default function AdminAddStudent(props) {
     let navigate = useNavigate();
 
     let param = useParams();
+
+    let loc = useLocation();
 
     let inputIdOb = userDetailsFormFormat.student.add.input;
 
@@ -174,7 +176,7 @@ export default function AdminAddStudent(props) {
                 <FxInput {...inputIdOb.father_name} />
                 <FxInput {...inputIdOb.phone_number} />
                 <FxInput {...inputIdOb.alternate_number} />
-                <FxInput {...inputIdOb.email_id} />
+                <FxInput {...inputIdOb.email_id} defValue={loc.state.studentEmail} />
                 <FxInput {...inputIdOb.age} />
                 <FxSelect
                     id={inputIdOb.gender.id}
