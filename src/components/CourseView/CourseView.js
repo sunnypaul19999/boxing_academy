@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 
@@ -8,6 +8,8 @@ import HoverButton from 'components/AcademyCourseCard/CardMakingTools/HoverButto
 import CourseAPI from "server/CourseAPI/CourseAPI";
 import EnrolledCourseAPI from "server/EnrolledCourseAPI/EnrolledCourseAPI";
 import Database from "database/Database";
+import { useEffect, useState } from "react";
+import CardContainerNotifier from "store/CardContainerNotifier/CardContainerNotifier";
 
 function cardPropFormat(course, toolbarConfig, breadCrumb) {
     let propFormat = {
@@ -37,8 +39,18 @@ onSearch
 */
 
 export default function CourseView(props) {
+    let [state, setState] = useState({
+        view: {
+            search: {
+                display: false,
+                payload: ''
+            }
+        }
+    });
 
     let nav = useNavigate();
+
+    let loc = useLocation();
 
     let param = useParams();
 
@@ -49,6 +61,23 @@ export default function CourseView(props) {
     let onAddCourseClicked = () => {
         nav('add');
     }
+
+    useEffect(() => {
+        let locState = loc.state;
+        if (locState) {
+            if (!locState.view.search.display) {
+                console.log(locState);
+                setState({
+                    view: {
+                        search: {
+                            display: false,
+                            payload: ''
+                        }
+                    }
+                });
+            }
+        }
+    }, [loc.state]);
 
     let getBreadCrumb = (course) => {
         let breadCrumb = null;
@@ -152,34 +181,113 @@ export default function CourseView(props) {
         }
     }
 
+    let getAllCourseAdminView = () => {
+        CardContainerNotifier.update();
+        if (state.view.search.display) {
+            console.log(state);
+            return (
+                <CardContainer
+                    admin
+                    course
+                    fetch={fetchSearchResults}
+                    checkSourceTrue={checkSourceTrue} />
+            );
+        }
+        return (
+            <CardContainer
+                admin
+                course
+                fetch={fetchAllCourse}
+                checkSourceTrue={checkSourceTrue} />
+        );
+    }
+
+    let getAcademyAllCourseAdminView = () => {
+        return (
+            <>
+                <CardContainer admin course fetch={fetchAllCourse} checkSourceTrue={checkSourceTrue} />
+                <HoverButton
+                    id='addCourseHoverButton'
+                    text='Add Course'
+                    onClick={onAddCourseClicked} />
+            </>
+        );
+    }
+
+    let getAllEnrolledCourseUserView = () => {
+        return (
+            <CardContainer
+                user
+                course={{
+                    type: {
+                        allEnrolledCourse: true
+                    }
+                }}
+                fetch={fetchAllEnrolledCourse}
+                checkSourceTrue={() => { return true; }} />
+        );
+    }
+
+    let getAcademyAllCourseUserView = () => {
+        return (
+            <CardContainer
+                user
+                course
+                fetch={fetchAllCourse}
+                checkSourceTrue={checkSourceTrue} />);
+    }
+
     let getView = () => {
         if (props.admin) {
             if (props.allCourses) {
-                return (
-                    <CardContainer admin course fetch={fetchAllCourse} checkSourceTrue={checkSourceTrue} />
-                );
+                return getAllCourseAdminView();
             }
-            return (
-                <>
-                    <CardContainer admin course fetch={fetchAllCourse} checkSourceTrue={checkSourceTrue} />
-                    <HoverButton
-                        id='addCourseHoverButton'
-                        text='Add Course'
-                        onClick={onAddCourseClicked} />
-                </>
-            );
+
+            return getAcademyAllCourseAdminView();
         } else {
             if (props.allEnrolledCourse) {
-                return (<CardContainer user course={{ type: { allEnrolledCourse: true } }} fetch={fetchAllEnrolledCourse} checkSourceTrue={() => { return true; }} />);
+                return getAllEnrolledCourseUserView();
             } else {
-                return (<CardContainer user course fetch={fetchAllCourse} checkSourceTrue={checkSourceTrue} />);
+                return getAcademyAllCourseUserView();
             }
         }
     }
 
+    let onSearch = (text) => {
+        setState({
+            view: {
+                search: {
+                    display: true,
+                    payload: text
+                }
+            }
+        });
+    }
+
+    let fetchSearchResults = async () => {
+        console.log('hello world');
+        let text = state.view.search.payload;
+        let results = await props.onSearch(text);
+        console.log(results);
+        let academyProp = [];
+        if (results) {
+            results.forEach((sResult) => { academyProp.push(cardPropFormat(sResult)); });
+        } else {
+            setState({
+                view: {
+                    search: {
+                        display: false,
+                        payload: ''
+                    }
+                }
+            });
+        }
+        return academyProp;
+    }
+
     return (
         <>
-            <SearchBar course onSearch={props.onSearch} />
+            <SearchBar course onSearch={onSearch} />
             {getView()}
         </>
     );

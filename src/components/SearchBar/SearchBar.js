@@ -58,6 +58,10 @@ export default function SearchBar(props) {
                         ref={sRef}
                         class="form-control search"
                         type="text"
+                        onInput={(event) => {
+                            event.stopPropagation();
+                            props.onSearch(sRef.current.value)
+                        }}
                         placeholder={idStore.course.placeholder} />
                     <span
                         id={idStore.course.searchButtonId}
