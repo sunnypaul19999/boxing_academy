@@ -1,12 +1,12 @@
 import SearchBar from "components/SearchBar/SearchBar.js";
 import CardContainer from "components/AcademyCourseCard/CardContainer.js";
 import HoverButton from 'components/AcademyCourseCard/CardMakingTools/HoverButton.js';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import AcademyAPI from "server/AcademyAPI/AcademyAPI";
 import { useDispatch } from "react-redux";
 import MainStore from "store/Main/MainStore";
 import Database from "database/Database";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CardContainerNotifier from "store/CardContainerNotifier/CardContainerNotifier";
 
 function cardPropFormat(academy) {
@@ -69,11 +69,30 @@ export default function AcademyView(props) {
 
     let nav = useNavigate();
 
+    let loc = useLocation();
+
     let mainStoreDispatch = useDispatch();
 
     let onAddAcademyClicked = () => {
         nav('add');
     }
+
+    useEffect(() => {
+        let locState = loc.state;
+        if (locState) {
+            if (!locState.view.search.display) {
+                console.log(locState);
+                setState({
+                    view: {
+                        search: {
+                            display: false,
+                            payload: ''
+                        }
+                    }
+                });
+            }
+        }
+    }, [loc.state]);
 
     let fetchAllAcademy = async () => {
         let cardPropsData = [];
@@ -105,6 +124,7 @@ export default function AcademyView(props) {
     }
 
     let getAllAcademyAdminView = () => {
+        CardContainerNotifier.update();
         return (
             <>
                 <CardContainer admin academy fetch={fetchAllAcademy} checkSourceTrue={checkSourceTrue} />
@@ -130,6 +150,7 @@ export default function AcademyView(props) {
     }
 
     let getAllAcademyUserView = () => {
+        CardContainerNotifier.update();
         return (
             <CardContainer user academy fetch={fetchAllAcademy} checkSourceTrue={checkSourceTrue} />
         );
@@ -181,7 +202,18 @@ export default function AcademyView(props) {
         let results = await props.onSearch(text);
         console.log(results);
         let academyProp = [];
-        results.forEach((sResult) => { academyProp.push(cardPropFormat(sResult)); });
+        if (results) {
+            results.forEach((sResult) => { academyProp.push(cardPropFormat(sResult)); });
+        } else {
+            setState({
+                view: {
+                    search: {
+                        display: false,
+                        payload: ''
+                    }
+                }
+            });
+        }
         return academyProp;
     }
 

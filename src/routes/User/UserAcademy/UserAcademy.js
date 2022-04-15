@@ -6,6 +6,7 @@ import Database from "database/Database";
 export default function UserAcademy(props) {
     let onSearch = async (searchTerm) => {
         console.log(searchTerm);
+        searchTerm = searchTerm || '';
         let sResults = [];
         try {
             sResults = await axios.get(`http://localhost:8080/institute/search/${searchTerm}`, {

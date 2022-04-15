@@ -67,7 +67,16 @@ function ToolbarMenu(props) {
 
     let adminAcademyOnClick = (event) => {
         event.stopPropagation();
-        nav('academy');
+        nav('academy', {
+            state: {
+                view: {
+                    search: {
+                        display: false,
+                        payload: ''
+                    }
+                }
+            }
+        });
     };
 
     let activateAdminCourses = () => {
@@ -78,7 +87,16 @@ function ToolbarMenu(props) {
 
     let adminCourseOnClick = (event) => {
         event.stopPropagation();
-        nav('courses');
+        nav('courses', {
+            state: {
+                view: {
+                    search: {
+                        display: false,
+                        payload: ''
+                    }
+                }
+            }
+        });
     };
 
     let activateAdminStudents = () => {

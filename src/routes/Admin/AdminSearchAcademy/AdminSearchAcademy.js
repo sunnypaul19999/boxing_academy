@@ -4,7 +4,7 @@ import AcademyView from "components/AcademyView/AcademyView";
 import Database from "database/Database";
 
 
-export default function AdminAcademy(props) {
+export default function AdminSearchAcademy(props) {
     let onSearch = async (searchTerm) => {
         console.log(searchTerm);
         searchTerm = searchTerm || '';
@@ -21,6 +21,6 @@ export default function AdminAcademy(props) {
     }
 
     return (
-        <AcademyView admin onSearch={onSearch} />
+        <AcademyView admin search onSearch={onSearch} />
     );
 }
