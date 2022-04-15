@@ -1,10 +1,10 @@
-//props: title & description
+//props: title & description,breadCrumb
 export default function CardInfoOne(props) {
 
     let title = () => {
         return (
             <div className="item one">
-                <b>{props.title}</b>
+                <span style={{ fontSize: '14px', textDecoration: 'underline' }}>{props.breadCrumb}</span>/<b>{props.title}</b>
             </div>
         );
     };

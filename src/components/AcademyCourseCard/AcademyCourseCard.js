@@ -22,6 +22,7 @@ import { toast } from 'react-toastify';
 //id (id received from server must be passed here)
 //url (if academy pass image url)
 //title, description, duration, timing, strength, location, cost, rating
+//breadCrumb
 //  --------------------------
 //checkSourceTrue(id) --[id is card id]
 //------------------------------------------------------>
@@ -102,6 +103,7 @@ function CardBody(props) {
             <div className="details">
                 <CardInfoOne
                     title={cardProp.title}
+                    breadCrumb={cardProp.breadCrumb}
                     description={cardProp.description} />
                 {getCardInfoTwo()}
                 <CardToolbarWrapper authorityType={authorityType} cardOf={cardOf} cardOfType={cardOfType} toolbarConfig={toolbarConfig} />

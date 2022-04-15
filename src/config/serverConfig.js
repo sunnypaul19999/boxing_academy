@@ -1,1 +1,1 @@
-export const serverURL = 'http://localhost:8080';
+export const serverURL = 'http://979f-2405-201-9009-b02b-b8ac-eda7-68c4-adea.ngrok.io';

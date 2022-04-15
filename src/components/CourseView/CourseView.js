@@ -9,8 +9,8 @@ import CourseAPI from "server/CourseAPI/CourseAPI";
 import EnrolledCourseAPI from "server/EnrolledCourseAPI/EnrolledCourseAPI";
 import Database from "database/Database";
 
-function cardPropFormat(course, toolbarConfig) {
-    return {
+function cardPropFormat(course, toolbarConfig, showInstituteBreadCrumb) {
+    let propFormat = {
         id: course.courseId,
         title: course.courseName,
         description: course.courseDesc,
@@ -20,6 +20,12 @@ function cardPropFormat(course, toolbarConfig) {
         rating: course.rating,
         toolbarConfig: toolbarConfig,
     };
+
+    if (showInstituteBreadCrumb) {
+        propFormat.breadCrumb = course.institute.instituteName
+    }
+
+    return propFormat;
 }
 
 /*
@@ -47,7 +53,7 @@ export default function CourseView(props) {
         let cardPropsData = [];
         let payload;
         if (props.allCourses) {
-            payload = await CourseAPI.fetchAll().then((response) => { return response.payload; });
+            payload = await CourseAPI.fetchAll().then((response) => { console.log(response.payload); return response.payload; });
         } else {
             payload = await CourseAPI.fetchByAcadmeyId(getAcademyId()).then((response) => { return response.payload; });
         }
@@ -63,7 +69,7 @@ export default function CourseView(props) {
             for (const course of payload.course) {
                 toolbarConfig = null;
                 if (await isEnrolled(course.courseId)) { toolbarConfig = { disable: { button: { enroll: true } } } }
-                cardPropsData.push(cardPropFormat(course, toolbarConfig));
+                cardPropsData.push(cardPropFormat(course, toolbarConfig, true));
             }
 
             return cardPropsData;
