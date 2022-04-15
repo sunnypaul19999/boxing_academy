@@ -117,7 +117,16 @@ function ToolbarMenu(props) {
 
     let userAcademyOnClick = (event) => {
         event.stopPropagation();
-        nav('academy');
+        nav('academy', {
+            state: {
+                view: {
+                    search: {
+                        display: false,
+                        payload: ''
+                    }
+                }
+            }
+        });
     };
 
     let activateEnrolledCoursesAcademy = () => {
@@ -127,7 +136,16 @@ function ToolbarMenu(props) {
 
     let userEnrolledCourseOnClick = (event) => {
         event.stopPropagation();
-        nav('courses');
+        nav('courses', {
+            state: {
+                view: {
+                    search: {
+                        display: false,
+                        payload: ''
+                    }
+                }
+            }
+        });
     };
 
 

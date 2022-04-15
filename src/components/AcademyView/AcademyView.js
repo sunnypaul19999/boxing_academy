@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import AcademyAPI from "server/AcademyAPI/AcademyAPI";
 import { useDispatch } from "react-redux";
 import MainStore from "store/Main/MainStore";
-import Database from "database/Database";
 import { useEffect, useState } from "react";
 import CardContainerNotifier from "store/CardContainerNotifier/CardContainerNotifier";
 
