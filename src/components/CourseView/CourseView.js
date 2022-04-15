@@ -9,7 +9,7 @@ import CourseAPI from "server/CourseAPI/CourseAPI";
 import EnrolledCourseAPI from "server/EnrolledCourseAPI/EnrolledCourseAPI";
 import Database from "database/Database";
 
-function cardPropFormat(course, { toolbarConfig, breadCrumb }) {
+function cardPropFormat(course, toolbarConfig, breadCrumb) {
     let propFormat = {
         id: course.courseId,
         title: course.courseName,
@@ -49,51 +49,70 @@ export default function CourseView(props) {
         nav('add');
     }
 
+    let getBreadCrumb = (course) => {
+        let breadCrumb = null;
+        if (props.allCourses || props.allEnrolledCourse) {
+            breadCrumb = {
+                crumb: course.institute.instituteName,
+            };
+            if (props.admin) {
+                breadCrumb.onClick = () => { nav(`/admin/academy/${course.institute.instituteId}/courses`); }
+            } else {
+                breadCrumb.onClick = () => { nav(`/user/academy/${course.institute.instituteId}/courses`); }
+            }
+        }
+
+        return breadCrumb;
+    }
+
+    let isCourseEnrolled = async (courseId) => {
+        let userId = await Database.getUserId();
+        return EnrolledCourseAPI.getEnrollmentStatus(userId, courseId).then((res) => { return res.payload; });
+    }
+
+    let getToolbarConfig = async (courseId) => {
+        let config = null;
+        if (await isCourseEnrolled(courseId)) {
+            config = {
+                disable: {
+                    button: {
+                        enroll: true
+                    }
+                }
+            }
+        }
+
+        return config;
+    }
+
     let fetchAllCourse = async () => {
         let cardPropsData = [];
         let payload;
         if (props.allCourses) {
-            payload = await CourseAPI.fetchAll().then((response) => { console.log(response.payload); return response.payload; });
+            //all courses of all academies
+            payload = await CourseAPI.fetchAll().then((response) => { return response.payload; });
         } else {
+            //all courses of an academy
             payload = await CourseAPI.fetchByAcadmeyId(getAcademyId()).then((response) => { return response.payload; });
         }
 
-        let isEnrolled = async (courseId) => {
-            let userId = await Database.getUserId();
-            return EnrolledCourseAPI.getEnrollmentStatus(userId, courseId).then((res) => { return res.payload; });
-        }
         //console.log(getAcademyId());
         let toolbarConfig;
         if (payload.course[Symbol.iterator]) {
 
             for (const course of payload.course) {
-                toolbarConfig = null;
-                if (await isEnrolled(course.courseId)) { toolbarConfig = { disable: { button: { enroll: true } } } }
+                toolbarConfig = await getToolbarConfig(course.courseId);
 
-                if (props.admin) { 
-                    
-                }
-                cardPropsData.push(cardPropFormat(course, {
-                    toolbarConfig: toolbarConfig,
-                    breadCrumb: {
-                        crumb: course.institute.instituteName,
-                        onClick: () => { nav(`admin/academy/${course.institute.instituteId}`); }
-                    }
-                }));
+                cardPropsData.push(cardPropFormat(course, toolbarConfig, getBreadCrumb(course)));
             }
 
             return cardPropsData;
         } else {
             let course = payload.course;
 
-            if (props.allEnrolledCourse) {
-                if (await isEnrolled(course.courseId)) { toolbarConfig = { disable: { button: { enroll: true } } } }
-            }
+            toolbarConfig = await getToolbarConfig(course.courseId);
 
-            cardPropsData.push(cardPropFormat(course), {
-                toolbarConfig: toolbarConfig,
-                breadCrumb: { onClick: () => { nav(`admin/academy/${course.institute.instituteId}`); } }
-            });
+            cardPropsData.push(cardPropFormat(course), toolbarConfig, getBreadCrumb(course));
         }
 
         return cardPropsData;
@@ -109,12 +128,13 @@ export default function CourseView(props) {
                 console.log(details);
                 let courseDetails = details.course;
 
-                cardPropsData.push(cardPropFormat(courseDetails));
+                cardPropsData.push(cardPropFormat(courseDetails, null, getBreadCrumb(courseDetails)));
             });
 
             return cardPropsData;
         } else {
-            cardPropsData.push(cardPropFormat(payload.course.course));
+            let course = payload.course.course;
+            cardPropsData.push(cardPropFormat(course, null, getBreadCrumb(course)));
         }
 
         return cardPropsData;
