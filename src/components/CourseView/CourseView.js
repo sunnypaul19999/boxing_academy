@@ -9,7 +9,7 @@ import CourseAPI from "server/CourseAPI/CourseAPI";
 import EnrolledCourseAPI from "server/EnrolledCourseAPI/EnrolledCourseAPI";
 import Database from "database/Database";
 
-function cardPropFormat(course, toolbarConfig, showInstituteBreadCrumb) {
+function cardPropFormat(course, { toolbarConfig, breadCrumb }) {
     let propFormat = {
         id: course.courseId,
         title: course.courseName,
@@ -21,8 +21,8 @@ function cardPropFormat(course, toolbarConfig, showInstituteBreadCrumb) {
         toolbarConfig: toolbarConfig,
     };
 
-    if (showInstituteBreadCrumb) {
-        propFormat.breadCrumb = course.institute.instituteName
+    if (breadCrumb) {
+        propFormat.breadCrumb = breadCrumb;
     }
 
     return propFormat;
@@ -69,7 +69,17 @@ export default function CourseView(props) {
             for (const course of payload.course) {
                 toolbarConfig = null;
                 if (await isEnrolled(course.courseId)) { toolbarConfig = { disable: { button: { enroll: true } } } }
-                cardPropsData.push(cardPropFormat(course, toolbarConfig, true));
+
+                if (props.admin) { 
+                    
+                }
+                cardPropsData.push(cardPropFormat(course, {
+                    toolbarConfig: toolbarConfig,
+                    breadCrumb: {
+                        crumb: course.institute.instituteName,
+                        onClick: () => { nav(`admin/academy/${course.institute.instituteId}`); }
+                    }
+                }));
             }
 
             return cardPropsData;
@@ -80,7 +90,10 @@ export default function CourseView(props) {
                 if (await isEnrolled(course.courseId)) { toolbarConfig = { disable: { button: { enroll: true } } } }
             }
 
-            cardPropsData.push(cardPropFormat(course), toolbarConfig);
+            cardPropsData.push(cardPropFormat(course), {
+                toolbarConfig: toolbarConfig,
+                breadCrumb: { onClick: () => { nav(`admin/academy/${course.institute.instituteId}`); } }
+            });
         }
 
         return cardPropsData;

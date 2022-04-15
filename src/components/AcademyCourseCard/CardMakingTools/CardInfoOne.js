@@ -2,9 +2,18 @@
 export default function CardInfoOne(props) {
 
     let title = () => {
+        let breadCrumb;
+        if (props.breadCrumb) {
+            breadCrumb = <span style={{
+                fontSize: '14px',
+                textDecoration: 'underline',
+                color: 'blue',
+                cursor: 'pointer'
+            }} onClick={props.breadCrumb.onClick}>{props.breadCrumb.crumb}/</span>
+        }
         return (
             <div className="item one">
-                <span style={{ fontSize: '14px', textDecoration: 'underline' }}>{props.breadCrumb}</span>/<b>{props.title}</b>
+                {(breadCrumb) ? breadCrumb : <></>}<b>{props.title}</b>
             </div>
         );
     };
