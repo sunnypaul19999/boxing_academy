@@ -36,11 +36,18 @@ export default function SearchBar(props) {
                         id={idStore.academy.searchInputId}
                         class="form-control search"
                         type="text"
+                        onInput={(event) => {
+                            event.stopPropagation();
+                            props.onSearch(sRef.current.value)
+                        }}
                         placeholder={idStore.academy.placeholder} />
                     <span
                         id={idStore.academy.searchButtonId}
                         class="material-icons search-icon"
-                        onClick={(event) => { event.stopPropagation(); props.onSearch(sRef.current) }}>search</span>
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            props.onSearch(sRef.current.value)
+                        }}>search</span>
                 </>
             );
         } else if (props.course) {
@@ -55,7 +62,10 @@ export default function SearchBar(props) {
                     <span
                         id={idStore.course.searchButtonId}
                         class="material-icons search-icon"
-                        onClick={(event) => { event.stopPropagation(); props.onSearch(sRef.current) }}>search</span>
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            props.onSearch(sRef.current.value)
+                        }}>search</span>
                 </>
             );
         } else {

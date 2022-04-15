@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import AcademyAPI from "server/AcademyAPI/AcademyAPI";
 import { useDispatch } from "react-redux";
 import MainStore from "store/Main/MainStore";
+import Database from "database/Database";
+import { useState } from "react";
+import CardContainerNotifier from "store/CardContainerNotifier/CardContainerNotifier";
 
 function cardPropFormat(academy) {
     return {
@@ -55,6 +58,15 @@ function RealTimeAcademyFetchWrapper(props) {
 }
 
 export default function AcademyView(props) {
+    let [state, setState] = useState({
+        view: {
+            search: {
+                display: false,
+                payload: ''
+            }
+        }
+    });
+
     let nav = useNavigate();
 
     let mainStoreDispatch = useDispatch();
@@ -92,27 +104,87 @@ export default function AcademyView(props) {
         }
     }
 
+    let getAllAcademyAdminView = () => {
+        return (
+            <>
+                <CardContainer admin academy fetch={fetchAllAcademy} checkSourceTrue={checkSourceTrue} />
+                <HoverButton
+                    id='addAcademyHoverButton'
+                    text='Add Academy'
+                    onClick={onAddAcademyClicked} />
+            </>
+        );
+    }
+
+    let getSearchAcademyAdminView = () => {
+        CardContainerNotifier.update();
+        return (
+            <>
+                <CardContainer admin academy fetch={fetchSearchResults} checkSourceTrue={checkSourceTrue} />
+                <HoverButton
+                    id='addAcademyHoverButton'
+                    text='Add Academy'
+                    onClick={onAddAcademyClicked} />
+            </>
+        );
+    }
+
+    let getAllAcademyUserView = () => {
+        return (
+            <CardContainer user academy fetch={fetchAllAcademy} checkSourceTrue={checkSourceTrue} />
+        );
+    }
+
+    let getSearchAcademyUserView = () => {
+        CardContainerNotifier.update();
+        return (
+            <CardContainer
+                user
+                academy
+                fetch={fetchSearchResults}
+                checkSourceTrue={checkSourceTrue} />
+        );
+    }
+
     let getView = () => {
         if (props.admin) {
-            return (
-                <>
-                    <CardContainer admin academy fetch={fetchAllAcademy} checkSourceTrue={checkSourceTrue} />
-                    <HoverButton
-                        id='addAcademyHoverButton'
-                        text='Add Academy'
-                        onClick={onAddAcademyClicked} />
-                </>
-            );
+            if (state.view.search.display) {
+                console.log('search');
+                return getSearchAcademyAdminView();
+            } else {
+                return getAllAcademyAdminView();
+            }
         } else {
-            return (
-                <CardContainer user academy fetch={fetchAllAcademy} checkSourceTrue={checkSourceTrue} />
-            );
+            if (state.view.search.display) {
+                console.log('search');
+                return getSearchAcademyUserView();
+            } else {
+                return getAllAcademyUserView();
+            }
         }
     }
 
-    let onSearch = (searchElement) => {
-        console.log(searchElement.value);
+    let onSearch = (text) => {
+        setState({
+            view: {
+                search: {
+                    display: true,
+                    payload: text
+                }
+            }
+        });
     }
+
+    let fetchSearchResults = async () => {
+        console.log('hello world')
+        let text = state.view.search.payload;
+        let results = await props.onSearch(text);
+        console.log(results);
+        let academyProp = [];
+        results.forEach((sResult) => { academyProp.push(cardPropFormat(sResult)); });
+        return academyProp;
+    }
+
 
     return (
         <>
