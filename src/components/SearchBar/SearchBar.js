@@ -1,9 +1,13 @@
 import 'assets/css/search/search.css';
+import { useRef } from 'react';
 
 //------------props-----------
 //academy | course | students
+//onSearchInput
 //----------------------------
 export default function SearchBar(props) {
+
+    let sRef = useRef(null);
 
     let idStore = {
         academy: {
@@ -27,22 +31,42 @@ export default function SearchBar(props) {
         if (props.academy) {
             return (
                 <>
-                    <input id={idStore.academy.searchInputId} class="form-control search" type="text" placeholder={idStore.academy.placeholder} />
-                    <span id={idStore.academy.searchButtonId} class="material-icons search-icon">search</span>
+                    <input
+                        ref={sRef}
+                        id={idStore.academy.searchInputId}
+                        class="form-control search"
+                        type="text"
+                        placeholder={idStore.academy.placeholder} />
+                    <span
+                        id={idStore.academy.searchButtonId}
+                        class="material-icons search-icon"
+                        onClick={(event) => { event.stopPropagation(); props.onSearch(sRef.current) }}>search</span>
                 </>
             );
         } else if (props.course) {
             return (
                 <>
-                    <input id={idStore.course.searchInputId} class="form-control search" type="text" placeholder={idStore.course.placeholder} />
-                    <span id={idStore.course.searchButtonId} class="material-icons search-icon">search</span>
+                    <input
+                        id={idStore.course.searchInputId}
+                        ref={sRef}
+                        class="form-control search"
+                        type="text"
+                        placeholder={idStore.course.placeholder} />
+                    <span
+                        id={idStore.course.searchButtonId}
+                        class="material-icons search-icon"
+                        onClick={(event) => { event.stopPropagation(); props.onSearch(sRef.current) }}>search</span>
                 </>
             );
         } else {
             if (props.students) {
                 return (
                     <>
-                        <input id={idStore.students.searchInputId} class="form-control search" type="text" placeholder={idStore.students.placeholder} />
+                        <input
+                            id={idStore.students.searchInputId}
+                            class="form-control search"
+                            type="text"
+                            placeholder={idStore.students.placeholder} />
                         <span id={idStore.students.searchButtonId} class="material-icons search-icon">search</span>
                     </>
                 );

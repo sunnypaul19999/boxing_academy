@@ -18,7 +18,7 @@ function cardPropFormat(academy) {
     };
 }
 
-function RealTimeFetchWrapper(props) {
+function RealTimeAcademyFetchWrapper(props) {
 
     let mainStoreDispatch = useDispatch();
 
@@ -110,12 +110,16 @@ export default function AcademyView(props) {
         }
     }
 
+    let onSearch = (searchElement) => {
+        console.log(searchElement.value);
+    }
+
     return (
         <>
-            <SearchBar academy />
-            <RealTimeFetchWrapper>
+            <SearchBar academy onSearch={onSearch} />
+            <RealTimeAcademyFetchWrapper>
                 {getView()}
-            </RealTimeFetchWrapper>
+            </RealTimeAcademyFetchWrapper>
         </>
-    )
+    );
 }

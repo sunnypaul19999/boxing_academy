@@ -33,6 +33,7 @@ admin
 user
 allCourses
 allEnrolledCourse
+onSearch
 */
 
 export default function CourseView(props) {
@@ -178,7 +179,7 @@ export default function CourseView(props) {
 
     return (
         <>
-            <SearchBar course />
+            <SearchBar course onSearch={props.onSearch} />
             {getView()}
         </>
     );
