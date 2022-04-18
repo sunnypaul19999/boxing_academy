@@ -115,8 +115,32 @@ export default function CourseView(props) {
         return config;
     }
 
-    let fetchAllCourse = async () => {
+    let getAllCourseCardPropData = async (rawResAllCourses) => {
         let cardPropsData = [];
+
+        let toolbarConfig;
+
+        console.log(rawResAllCourses);
+
+        if (rawResAllCourses[Symbol.iterator]) {
+
+            for (const course of rawResAllCourses) {
+                toolbarConfig = await getToolbarConfig(course.courseId);
+
+                cardPropsData.push(cardPropFormat(course, toolbarConfig, getBreadCrumb(course)));
+            }
+
+            return cardPropsData;
+        } else {
+            let course = rawResAllCourses;
+
+            toolbarConfig = await getToolbarConfig(course.courseId);
+
+            cardPropsData.push(cardPropFormat(course), toolbarConfig, getBreadCrumb(course));
+        }
+    }
+
+    let fetchAllCourse = async () => {
         let payload;
         if (props.allCourses) {
             //all courses of all academies
@@ -126,26 +150,8 @@ export default function CourseView(props) {
             payload = await CourseAPI.fetchByAcadmeyId(getAcademyId()).then((response) => { return response.payload; });
         }
 
-        //console.log(getAcademyId());
-        let toolbarConfig;
-        if (payload.course[Symbol.iterator]) {
 
-            for (const course of payload.course) {
-                toolbarConfig = await getToolbarConfig(course.courseId);
-
-                cardPropsData.push(cardPropFormat(course, toolbarConfig, getBreadCrumb(course)));
-            }
-
-            return cardPropsData;
-        } else {
-            let course = payload.course;
-
-            toolbarConfig = await getToolbarConfig(course.courseId);
-
-            cardPropsData.push(cardPropFormat(course), toolbarConfig, getBreadCrumb(course));
-        }
-
-        return cardPropsData;
+        return getAllCourseCardPropData(payload.course);
     }
 
     let fetchAllEnrolledCourse = async () => {
@@ -183,8 +189,10 @@ export default function CourseView(props) {
 
     let getAllCourseAdminView = () => {
         CardContainerNotifier.update();
+
         if (state.view.search.display) {
             console.log(state);
+
             return (
                 <CardContainer
                     admin
@@ -193,6 +201,7 @@ export default function CourseView(props) {
                     checkSourceTrue={checkSourceTrue} />
             );
         }
+
         return (
             <CardContainer
                 admin
@@ -202,17 +211,6 @@ export default function CourseView(props) {
         );
     }
 
-    let getAcademyAllCourseAdminView = () => {
-        return (
-            <>
-                <CardContainer admin course fetch={fetchAllCourse} checkSourceTrue={checkSourceTrue} />
-                <HoverButton
-                    id='addCourseHoverButton'
-                    text='Add Course'
-                    onClick={onAddCourseClicked} />
-            </>
-        );
-    }
 
     let getAllEnrolledCourseUserView = () => {
         return (
@@ -228,7 +226,58 @@ export default function CourseView(props) {
         );
     }
 
+
+    let getAcademyAllCourseAdminView = () => {
+        CardContainerNotifier.update();
+
+        if (state.view.search.display) {
+            console.log(state);
+
+            return (
+                <>
+                    <CardContainer
+                        admin
+                        course
+                        fetch={fetchSearchResults}
+                        checkSourceTrue={checkSourceTrue} />
+                    <HoverButton
+                        id='addCourseHoverButton'
+                        text='Add Course'
+                        onClick={onAddCourseClicked} />
+                </>
+            );
+        }
+
+        return (
+            <>
+                <CardContainer
+                    admin
+                    course
+                    fetch={fetchAllCourse}
+                    checkSourceTrue={checkSourceTrue} />
+                <HoverButton
+                    id='addCourseHoverButton'
+                    text='Add Course'
+                    onClick={onAddCourseClicked} />
+            </>
+        );
+    }
+
+
     let getAcademyAllCourseUserView = () => {
+        CardContainerNotifier.update();
+
+        if (state.view.search.display) {
+            console.log(state);
+
+            return (
+                <CardContainer
+                    user
+                    course
+                    fetch={fetchSearchResults}
+                    checkSourceTrue={checkSourceTrue} />);
+        }
+
         return (
             <CardContainer
                 user
@@ -254,6 +303,7 @@ export default function CourseView(props) {
     }
 
     let onSearch = (text) => {
+        console.log('search course --->' + text)
         setState({
             view: {
                 search: {
@@ -265,24 +315,31 @@ export default function CourseView(props) {
     }
 
     let fetchSearchResults = async () => {
-        console.log('hello world');
         let text = state.view.search.payload;
+
         let results = await props.onSearch(text);
-        console.log(results);
-        let academyProp = [];
+
         if (results) {
-            results.forEach((sResult) => { academyProp.push(cardPropFormat(sResult)); });
+            return getAllCourseCardPropData(results)
+            /*results.forEach((sResult) => {
+                console.log(sResult);
+                academyProp.push(cardPropFormat(sResult));
+            });*///getAllCourseCardPropData(sResult)
+
         } else {
+            console.log('search results is empty');
+
             setState({
                 view: {
                     search: {
                         display: false,
-                        payload: ''
+                        payload: text
                     }
                 }
             });
         }
-        return academyProp;
+
+        return [];
     }
 
     return (
