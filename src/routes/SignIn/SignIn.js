@@ -44,6 +44,7 @@ function SignIn(props) {
 
   let onSignInSuccess = async (signInMsgPacket) => {
     try {
+      console.log(signInMsgPacket.payload.token);
       await Database.setToken(signInMsgPacket.payload.token);
       await Database.setCurrUserEmail(signInMsgPacket.payload.email);
       let userDetailsRes = await UserDetailsAPI.fetch(signInMsgPacket.payload.email);

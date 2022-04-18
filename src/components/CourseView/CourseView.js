@@ -213,6 +213,24 @@ export default function CourseView(props) {
 
 
     let getAllEnrolledCourseUserView = () => {
+        CardContainerNotifier.update();
+
+        if (state.view.search.display) {
+            console.log(state);
+
+            return (
+                <CardContainer
+                    user
+                    course={{
+                        type: {
+                            allEnrolledCourse: true
+                        }
+                    }}
+                    fetch={fetchSearchResults}
+                    checkSourceTrue={() => { return true; }} />
+            );
+        }
+
         return (
             <CardContainer
                 user
