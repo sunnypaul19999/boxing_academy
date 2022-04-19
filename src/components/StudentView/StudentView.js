@@ -22,6 +22,10 @@ function StudentTableRow(props) {
             <td key={`studentRow${state.index}Col${2}`}>{state.view[3]} {state.view[4]}</td>
             <td key={`studentRow${state.index}Col${3}`}>{(state.view[5].endsWith('*')) ? state.view[5].substring(0, state.view[5].length - 1) : state.view[5]}</td>
             <td key={`studentRow${state.index}Col${4}`}>{state.view[6]}</td>
+            <td>
+                <span className="material-icons edit-icon">edit</span>
+                <span className="material-icons delete-icon">cancel</span>
+            </td>
         </tr>
     );
 }
@@ -71,6 +75,16 @@ export default function StudentView(props) {
             );
         }
 
+        if (rows.length < 1) {
+            rows.push(
+                <tr>
+                    <td>
+                        Nothing here!
+                    </td>
+                </tr>
+            );
+        }
+
         return rows;
     }
 
@@ -104,7 +118,7 @@ export default function StudentView(props) {
 
     return (
         <>
-            <SearchBar course onSearch={onSearch} />
+            <SearchBar students gridViewOff listViewOff onSearch={onSearch} />
             <div className="table-container">
                 <table>
                     <tbody>
@@ -113,6 +127,7 @@ export default function StudentView(props) {
                             <td>Student Name</td>
                             <td>Mobile Number</td>
                             <td>Enrolled Course</td>
+                            <td>Action</td>
                         </tr>
                         {getRows()}
                     </tbody>
