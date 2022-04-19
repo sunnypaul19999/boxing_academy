@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import 'assets/css/table-container/table-container.css';
 
@@ -12,6 +12,7 @@ import { serverURL } from "config/serverConfig";
 import Database from "database/Database";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { deleteStudentEvent } from "./CustomEvent/deleteStudentEvent";
 
 const displayTypeAll = Symbol('displayTypeAll');
 const displayTypeSearch = Symbol('displayTypeSearch');
@@ -48,11 +49,12 @@ function StudentTableRow(props) {
     let onDelete = async (event) => {
         event.stopPropagation();
 
-        axios.get(`${serverURL}/Student/deleteStudent/${state.view[2]}`, {
+        axios.delete(`${serverURL}/Student/deleteStudent/${state.view[2]}`, {
             headers: {
                 Authorization: `Bearer ${await Database.getToken()}`
             }
         }).then((response) => {
+            deleteStudentEvent(event.target, state.view[2]);
             toast(`Student Deleted ${state.view[2]}`);
         }).catch((err) => {
             let status = err['response'].status;
@@ -74,7 +76,7 @@ function StudentTableRow(props) {
             <td key={`studentRow${state.index}Col${4}`}>{state.view[6]}</td>
             <td>
                 <span className="material-icons edit-icon" onClick={onEdit}>edit</span>
-                <span className="material-icons delete-icon">cancel</span>
+                <span className="material-icons delete-icon" onClick={onDelete}>cancel</span>
             </td>
         </tr>
     );
@@ -84,6 +86,7 @@ export default function StudentView(props) {
 
     let [state, setState] = useState({ data: null, displayType: displayTypeAll, searchKeyword: null });
 
+    let tableContainerRef = useRef();
 
     useEffect(() => {
         if (state.displayType === displayTypeAll) {
@@ -95,7 +98,17 @@ export default function StudentView(props) {
                 setState({ ...state, data: data });
             });
         }
+
+        tableContainerRef.current.addEventListener('deleteStudentEvent', onDeleteStudentEvent);
     }, []);
+
+    let onDeleteStudentEvent = async (event) => {
+        event.stopPropagation();
+        console.log('delete student');
+        let data = await props.getData();
+
+        setState({ data: data, displayType: displayTypeAll, searchKeyword: null });
+    }
 
 
     let getRows = () => {
@@ -169,7 +182,7 @@ export default function StudentView(props) {
     return (
         <>
             <SearchBar students gridViewOff listViewOff onSearch={onSearch} />
-            <div className="table-container">
+            <div ref={tableContainerRef} className="table-container">
                 <table>
                     <tbody>
                         <tr>
