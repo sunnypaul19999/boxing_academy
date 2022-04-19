@@ -4,6 +4,22 @@ import StudentView from "components/StudentView/StudentView";
 
 import Database from "database/Database";
 
+export let onEnrolledStudent = async (searchTerm) => {
+    console.log(searchTerm);
+    searchTerm = searchTerm || '';
+    let sResults = [];
+    try {
+        sResults = await axios.get(`http://localhost:8080/Student/search?keyword=${searchTerm}`, {
+            headers: {
+                Authorization: `Bearer ${await Database.getToken()}`
+            }
+        }).then((resposne) => { return resposne.data });
+        //console.log(sResults);
+        return sResults;
+    } catch (err) { }
+}
+
+
 export default function AdminAllStudents() {
 
     let getData = async () => {
@@ -48,5 +64,5 @@ export default function AdminAllStudents() {
         ];
     }
 
-    return (<StudentView getData={getData} />)
+    return (<StudentView getData={getData} onSearch={onEnrolledStudent} />)
 }

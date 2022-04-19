@@ -4,6 +4,10 @@ import 'assets/css/table-container/table-container.css';
 
 import { SpinnerLoader } from "components/AcademyCourseCard/CardContainer";
 import SearchBar from "components/SearchBar/SearchBar";
+import objectHash from "object-hash";
+
+const displayTypeAll = Symbol('displayTypeAll');
+const displayTypeSearch = Symbol('displayTypeSearch');
 
 function StudentTableRow(props) {
     let [state, setState] = useState({
@@ -24,18 +28,26 @@ function StudentTableRow(props) {
 
 export default function StudentView(props) {
 
-    let [state, setState] = useState({ data: null });
+    let [state, setState] = useState({ data: null, displayType: displayTypeAll, searchKeyword: null });
+
 
     useEffect(() => {
-        props.getData().then((data) => {
-            setState({ data: data });
-        });
-    }, [props]);
+        if (state.displayType === displayTypeAll) {
+            props.getData().then((data) => {
+                setState({ ...state, data: data });
+            });
+        } else {
+            fetchSearchResults().then((data) => {
+                setState({ ...state, data: data });
+            });
+        }
+    }, []);
 
 
     let getRows = () => {
         let data = state.data;
-        console.log(data);
+
+        console.log(state);
 
         let rows = [];
 
@@ -44,7 +56,7 @@ export default function StudentView(props) {
                 data.forEach((view, index) => {
                     if (index) {
                         rows.push(
-                            <StudentTableRow key={`studentRowComp${index}`} index={index} view={view} />
+                            <StudentTableRow key={objectHash(view)} index={index} view={view} />
                         );
                     }
                 });
@@ -62,10 +74,37 @@ export default function StudentView(props) {
         return rows;
     }
 
+    let onSearch = async (text) => {
+        console.log('search course --->' + text);
+
+        if (text) {
+            let results = await fetchSearchResults(text);
+
+            setState({ data: results, displayType: displayTypeSearch, searchKeyword: text });
+        } else {
+            let data = await props.getData();
+
+            setState({ data: data, displayType: displayTypeAll, searchKeyword: null });
+        }
+
+    }
+
+    let fetchSearchResults = async (text) => {
+        //let text = state.searchKeyword;
+
+        if (text) {
+            let results = await props.onSearch(text);
+            return results;
+        }
+
+        return [];
+
+    }
+
 
     return (
         <>
-            <SearchBar course onSearch={() => { }} />
+            <SearchBar course onSearch={onSearch} />
             <div className="table-container">
                 <table>
                     <tbody>
