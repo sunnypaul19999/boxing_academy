@@ -183,6 +183,7 @@ export default function StudentView(props) {
         <>
             <SearchBar students gridViewOff listViewOff onSearch={onSearch} />
             <div ref={tableContainerRef} className="table-container">
+            <div id='tableName' className="glow">Admin Student View</div>
                 <table>
                     <tbody>
                         <tr>

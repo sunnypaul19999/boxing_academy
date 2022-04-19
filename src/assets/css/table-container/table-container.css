@@ -36,6 +36,22 @@
 
 }
 
+.table-container #tableName {
+    font-size: 25px;
+    width: 99%;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 2px;
+    line-height: 45px;
+    border-style: solid;
+    border-color: rgb(58, 199, 154);
+    background-color: rgba(58, 199, 154, 0.385);
+    border-radius: 10px;
+    box-shadow: 0 10px 9px rgba(19, 14, 14, 0.349);
+}
+
 .table-container table tbody .edit-icon {
     color: blue;
     font-size: 16px;
