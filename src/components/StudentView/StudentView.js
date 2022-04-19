@@ -5,6 +5,12 @@ import 'assets/css/table-container/table-container.css';
 import { SpinnerLoader } from "components/AcademyCourseCard/CardContainer";
 import SearchBar from "components/SearchBar/SearchBar";
 import objectHash from "object-hash";
+import axios from "axios";
+
+import { serverURL } from "config/serverConfig";
+
+import Database from "database/Database";
+import { toast } from "react-toastify";
 
 const displayTypeAll = Symbol('displayTypeAll');
 const displayTypeSearch = Symbol('displayTypeSearch');
@@ -14,6 +20,26 @@ function StudentTableRow(props) {
         index: props.index,
         view: props.view
     });
+
+    let onDelete = async (event) => {
+        event.stopPropagation();
+
+        axios.get(`${serverURL}/Student/deleteStudent/${state.view[2]}`, {
+            headers: {
+                Authorization: `Bearer ${await Database.getToken()}`
+            }
+        }).then((response) => {
+            toast(`Student Deleted ${state.view[2]}`);
+        }).catch((err) => {
+            let status = err['response'].status;
+
+            if (status === 500) {
+                toast('Opps! Network error');
+            } else {
+                toast('Student Not found');
+            }
+        });
+    }
 
 
     return (

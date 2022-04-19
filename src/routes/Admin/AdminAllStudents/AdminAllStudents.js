@@ -2,6 +2,8 @@ import axios from "axios";
 
 import StudentView from "components/StudentView/StudentView";
 
+import { serverURL } from "config/serverConfig";
+
 import Database from "database/Database";
 
 export let onEnrolledStudent = async (searchTerm) => {
@@ -9,7 +11,7 @@ export let onEnrolledStudent = async (searchTerm) => {
     searchTerm = searchTerm || '';
     let sResults = [];
     try {
-        sResults = await axios.get(`http://localhost:8080/Student/search?keyword=${searchTerm}`, {
+        sResults = await axios.get(`${serverURL}/Student/search?keyword=${searchTerm}`, {
             headers: {
                 Authorization: `Bearer ${await Database.getToken()}`
             }
