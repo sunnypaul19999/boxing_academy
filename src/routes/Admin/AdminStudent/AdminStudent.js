@@ -1,22 +1,8 @@
-import axios from "axios";
-
 import StudentView from "components/StudentView/StudentView";
 
-import Database from "database/Database";
+export default function AdminStudent() {
 
-export default function AdminAllStudents() {
-
-    let getData = async () => {
-        let view = [];
-        try {
-            view = await axios.get(`http://localhost:8080/Student/adminStudentView`, {
-                headers: {
-                    Authorization: `Bearer ${await Database.getToken()}`
-                }
-            }).then((resposne) => { return resposne.data });
-            //console.log(view);
-            return view;
-        } catch (err) { }
+    let getData = () => {
         return [
             [
                 "userId",

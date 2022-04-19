@@ -86,7 +86,7 @@ const cardPropsData = [
 ];
 
 
-function SpinnerLoader() {
+export function SpinnerLoader() {
     return (
         <div className="loading-spinner" style={{
             width: '100%',
