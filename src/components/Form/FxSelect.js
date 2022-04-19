@@ -16,6 +16,7 @@ options: [
 */
 //required [optional]
 //disabled [optional]
+//defValue
 //errorMsg [on input invalid error msg]
 //---------------------------
 
@@ -43,6 +44,7 @@ export default function FxSelect(props) {
     let [state] = useState({
         id: props.id,
         label: props.label,
+        defSelectIndex: props.defSelectIndex,
         options: props.options,
         required: (props.required) ? true : false,
         disabled: (props.disabled) ? true : false,
@@ -51,10 +53,13 @@ export default function FxSelect(props) {
 
     let setDefaultInputValue = useCallback(
         () => {
-            setValue(0);
+            if (state.defSelectIndex) {
+                setValue(state.defSelectIndex);
+                setTimeout(doValidation, 0);
+            }
             //setTimeout(doValidation, 0);
         },
-        [state.defValue]
+        [state.defSelectIndex]
     );
 
     useEffect(() => {

@@ -149,109 +149,121 @@ let userDetailsFormFormat = {
                 first_name: {
                     id: 'editFirstName',
                     name: 'first_name',
-                    type: 'text',
-                    placeholder: 'First Name',
-                    required: true
-                },
-                father_name: {
-                    id: 'editFatherName',
-                    name: 'father_name',
-                    type: 'text',
-                    placeholder: 'Father Name',
-                    required: true
-                },
-                mother_name: {
-                    id: 'editMotherName',
-                    name: 'mother_name',
-                    type: 'text',
-                    placeholder: 'Mother Name',
-                    required: true
-                },
-                email_id: {
-                    id: 'editEmailId',
-                    name: 'email_id',
-                    type: 'email',
-                    placeholder: 'Email',
-                    required: true
-                },
-                age: {
-                    id: 'editAge',
-                    name: 'age',
-                    type: 'number',
-                    placeholder: 'Age',
+                    label: 'First Name',
+                    regex: _regex.name,
+                    errorMsg: 'Must be 10-30 characters long',
                     required: true
                 },
                 last_name: {
                     id: 'editLastName',
                     name: 'last_name',
-                    type: 'text',
-                    placeholder: 'Last Name',
+                    label: 'Last Name',
+                    regex: _regex.name,
+                    errorMsg: 'Must be 10-30 characters long',
                     required: true
                 },
-                gender: {
-                    id: 'male/female',
-                    name: 'gender',
-                    type: 'text',
-                    placeholder: 'Gender',
+                mother_name: {
+                    id: 'editMotherName',
+                    name: 'mother_name',
+                    label: 'Mother Name',
+                    regex: _regex.name,
+                    errorMsg: 'Must be 10-30 characters long',
+                    required: true
+                },
+                father_name: {
+                    id: 'editFatherName',
+                    name: 'father_name',
+                    label: 'Father Name',
+                    regex: _regex.name,
+                    errorMsg: 'Must be 10-30 characters long',
                     required: true
                 },
                 phone_number: {
                     id: 'editPhoneNumber1',
                     name: 'phone_number',
-                    type: 'tel',
-                    pattern: `^[0-9]{10}$`,
-                    placeholder: 'Primary Phone Number',
+                    label: 'Primary Phone Number',
+                    regex: _regex.contactNumber,
+                    errorMsg: 'Please enter valid phone number',
                     required: true
                 },
                 alternate_number: {
                     id: 'editPhoneNumber2',
                     name: 'alternate_number',
-                    type: 'tel',
-                    pattern: `^[0-9]{10}$`,
-                    placeholder: 'Alternate Phone Number'
+                    label: 'Alternate Phone Number',
+                    regex: _regex.contactNumber,
+                    errorMsg: 'Please enter valid phone number',
+                    required: false,
                 },
+                email_id: {
+                    id: 'editEmailId',
+                    name: 'email_id',
+                    label: 'Email',
+                    validator: (value) => {
+                        return validator.validate(value);
+                    },
+                    errorMsg: 'Please enter valid email',
+                    disabled: true
+                },
+                age: {
+                    id: 'editAge',
+                    name: 'age',
+                    label: 'Age',
+                    regex: _regex.age,
+                    errorMsg: 'Age limit above 5 and below 60',
+                    required: true
+                },
+                gender: {
+                    id: 'male/female',
+                    name: 'gender',
+                    placeholder: 'Gender',
+                    required: true
+                },
+
                 house_no: {
                     id: 'editHouseNo',
                     name: 'house_no',
-                    type: 'text',
-                    placeholder: 'House No:',
+                    label: 'House No:',
+                    regex: _regex.houseNo,
+                    errorMsg: 'House no: look like 12, 12a, 56/58, 56/58a',
                     required: true
                 },
                 street_name: {
                     id: 'editStreetName',
                     name: 'street_name',
-                    type: 'text',
-                    placeholder: 'Street Name',
+                    label: 'Street Name',
+                    regex: _regex.name,
+                    errorMsg: 'Please enter valid street number',
                     required: true
                 },
                 area_name: {
                     id: 'editAreaName',
                     name: 'area_name',
-                    type: 'text',
-                    placeholder: 'Area Name',
+                    label: 'Area Name',
+                    regex: _regex.name,
+                    errorMsg: 'Please enter valid area name',
                     required: true
                 },
                 pincode: {
                     id: 'editPincode',
                     name: 'pincode',
-                    type: 'text',
-                    pattern: "^[1-9][0-9]{5}$",
-                    placeholder: 'Pincode',
+                    label: 'Pincode',
+                    regex: _regex.pincode,
+                    errorMsg: 'Please enter valid pincode',
                     required: true
                 },
                 state: {
                     id: 'editState',
                     name: 'state',
-                    type: 'text',
-                    placeholder: 'State',
+                    label: 'State',
+                    errorMsg: 'Please select a valid state',
                     required: true
                 },
                 nationality: {
                     id: 'editNationality',
                     name: 'nationality',
-                    type: 'text',
-                    placeholder: 'Nationality',
-                    required: true
+                    label: 'Nationality',
+                    defValue: 'India',
+                    disabled: true
                 },
             },
             button: {

@@ -11,6 +11,7 @@ import { serverURL } from "config/serverConfig";
 
 import Database from "database/Database";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const displayTypeAll = Symbol('displayTypeAll');
 const displayTypeSearch = Symbol('displayTypeSearch');
@@ -20,6 +21,29 @@ function StudentTableRow(props) {
         index: props.index,
         view: props.view
     });
+
+    let nav = useNavigate();
+
+    let onEdit = async (event) => {
+        event.stopPropagation();
+
+        axios.get(`${serverURL}/Student/${state.view[2]}`, {
+            headers: {
+                Authorization: `Bearer ${await Database.getToken()}`
+            }
+        }).then((response) => {
+            console.log(response.data);
+            nav(`${state.view[2]}/edit`, { state: { data: response.data } });
+        }).catch((err) => {
+            let status = err['response'].status;
+
+            if (status === 500) {
+                toast('Opps! Network error');
+            } else {
+                toast('Student Not found');
+            }
+        });
+    }
 
     let onDelete = async (event) => {
         event.stopPropagation();
@@ -46,10 +70,10 @@ function StudentTableRow(props) {
         <tr key={`studentRow${state.index}`}>
             <td key={`studentRow${state.index}Col${1}`}>{state.view[2]}</td>
             <td key={`studentRow${state.index}Col${2}`}>{state.view[3]} {state.view[4]}</td>
-            <td key={`studentRow${state.index}Col${3}`}>{(state.view[5].endsWith('*')) ? state.view[5].substring(0, state.view[5].length - 1) : state.view[5]}</td>
+            <td key={`studentRow${state.index}Col${3}`}>{(state.view[5].split('*')[0]) ? state.view[5].substring(0, state.view[5].length - 1) : state.view[5]}</td>
             <td key={`studentRow${state.index}Col${4}`}>{state.view[6]}</td>
             <td>
-                <span className="material-icons edit-icon">edit</span>
+                <span className="material-icons edit-icon" onClick={onEdit}>edit</span>
                 <span className="material-icons delete-icon">cancel</span>
             </td>
         </tr>

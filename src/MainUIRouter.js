@@ -29,6 +29,7 @@ import UserEnrollCourse from "routes/User/UserEnrollCourse/UserEnrollCourse";
 
 
 import { ToastContainer } from "react-toastify";
+import AdminUpdateStudent from "routes/Admin/AdminUpdateStudent/AdminUpdateStudent";
 
 function RootToast() {
 
@@ -75,6 +76,7 @@ function MainUIRouter(props) {
               <Route path='students' element={<RootToast />}>
                 <Route index element={<AdminAllStudents />}></Route>
                 <Route path='add' element={<AdminAddStudent />}></Route>
+                <Route path=':studentId/edit' element={<AdminUpdateStudent />}></Route>
               </Route>
             </Route>
             <Route path='/user' element={<UserDashboard />}>

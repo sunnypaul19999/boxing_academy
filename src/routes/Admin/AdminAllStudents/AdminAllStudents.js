@@ -27,7 +27,7 @@ export default function AdminAllStudents() {
     let getData = async () => {
         let view = [];
         try {
-            view = await axios.get(`http://localhost:8080/Student/adminStudentView`, {
+            view = await axios.get(`${serverURL}/Student/adminStudentView`, {
                 headers: {
                     Authorization: `Bearer ${await Database.getToken()}`
                 }
@@ -35,35 +35,6 @@ export default function AdminAllStudents() {
             //console.log(view);
             return view;
         } catch (err) { }
-        return [
-            [
-                "userId",
-                "courseId",
-                "studentId",
-                "firstName",
-                "lastName",
-                "mobileNumber",
-                "enrolledCourseName"
-            ],
-            [
-                1,
-                20,
-                18,
-                "First",
-                "Name",
-                "9475929195*",
-                "Judo Pro"
-            ],
-            [
-                1,
-                30,
-                18,
-                "First",
-                "Name",
-                "9475929195*",
-                "Master Defense "
-            ]
-        ];
     }
 
     return (<StudentView getData={getData} onSearch={onEnrolledStudent} />)
