@@ -56,6 +56,8 @@ export default function FxSelect(props) {
             if (state.defSelectIndex) {
                 setValue(state.defSelectIndex);
                 setTimeout(doValidation, 0);
+            } else {
+                setValue(0);
             }
             //setTimeout(doValidation, 0);
         },
