@@ -27,7 +27,10 @@ export default function AdminAddStudent(props) {
     let inputIdOb = userDetailsFormFormat.student.add.input;
 
     let isEnrolled = () => {
-        return loc.state.isEnrolled;
+        if (loc.state.isEnrolled) {
+            return true;
+        }
+        return false;
     }
 
     let onFormSubmit = async (formState) => {
@@ -155,9 +158,6 @@ export default function AdminAddStudent(props) {
     }
 
     let getAddressInfromationForm = () => {
-        if (isEnrolled()) {
-            return (<></>);
-        }
         return (
             <Formxvi title='Address Infromation' child>
                 <FxInput {...inputIdOb.house_no} />
@@ -199,8 +199,6 @@ export default function AdminAddStudent(props) {
         );
 
     }
-
-
 
 
 
