@@ -3,12 +3,14 @@ import CourseView from "components/CourseView/CourseView";
 
 import Database from "database/Database";
 
+import { serverURL } from "config/serverConfig";
+
 export let onAllCourseSearch = async (searchTerm) => {
     console.log(searchTerm);
     searchTerm = searchTerm || '';
     let sResults = [];
     try {
-        sResults = await axios.get(`http://localhost:8080/course/search/${searchTerm}`, {
+        sResults = await axios.get(`${serverURL}/course/search/${searchTerm}`, {
             headers: {
                 Authorization: `Bearer ${await Database.getToken()}`
             }

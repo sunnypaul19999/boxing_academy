@@ -3,6 +3,8 @@ import AcademyView from "components/AcademyView/AcademyView";
 
 import Database from "database/Database";
 
+import { serverURL } from "config/serverConfig";
+
 
 export default function AdminAcademy(props) {
     let onSearch = async (searchTerm) => {
@@ -10,7 +12,7 @@ export default function AdminAcademy(props) {
         searchTerm = searchTerm || '';
         let sResults = [];
         try {
-            sResults = await axios.get(`http://localhost:8080/institute/search/${searchTerm}`, {
+            sResults = await axios.get(`${serverURL}/institute/search/${searchTerm}`, {
                 headers: {
                     Authorization: `Bearer ${await Database.getToken()}`
                 }
