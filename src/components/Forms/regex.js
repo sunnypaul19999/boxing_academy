@@ -1,6 +1,6 @@
 export const _regex = {
     name: '^[a-zA-Z ]{3,}$',
-    contactNumber: '^[0-9]{10}$',
+    contactNumber: '^[6-9]\\d{9}$',
     number: '^[0-9]{1,}$',
     imageURL: '(https?:\/\/.*\.(?:png|jpg))',
     address: '^[a-zA-Z0-9^,// ]{3,}$',
